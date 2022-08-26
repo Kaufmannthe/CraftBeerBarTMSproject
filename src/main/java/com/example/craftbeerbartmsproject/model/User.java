@@ -25,6 +25,7 @@ public class User {
     private String address;
     private String gender;
     private String phoneNumber;
+    private String email;
     @ElementCollection(targetClass = Roles.class)
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)

@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByLoginAndPassword(String login, String password) {
-        return userRepository.getUserByLoginAndPassword(login, password);
+    public User findUserByLoginAndPassword(String login, String password) {
+        return userRepository.findUserByLoginAndPassword(login, password);
     }
 }

@@ -38,9 +38,9 @@ public class UserController {
     @PostMapping(value = "/login")
     public ModelAndView loginUser(@ModelAttribute(name = "user") @NotNull User user) {
         ModelAndView view = new ModelAndView();
-        User result = service.getUserByLoginAndPassword(user.getLogin(), user.getPassword());
+        User result = service.findUserByLoginAndPassword(user.getLogin(), user.getPassword());
         if (!Objects.equals(result.getFirstName(), "")) {
-            view.addObject("userLogin", result );
+            view.addObject("userLogin", result);
             view.setViewName("user/profile");
         } else {
             view.setViewName("user/login");
