@@ -39,6 +39,10 @@ public class ModeratorController {
 
         List<Producer> listOfProducer = producerService.findAll();
 
+        Producer producer = new Producer(1, "Artem", "Minsk","1",
+                "test","test","test",false,"test");
+        listOfProducer.add(producer);
+
         view.addObject("listOfProducts", listOfTypes);
         view.addObject("listOfProducers", listOfProducer);
         view.setViewName("moderator/productRegistration");
@@ -50,9 +54,10 @@ public class ModeratorController {
         ModelAndView view = new ModelAndView();
         productService.add(product);
         view.addObject(product);
-        view.setViewName("redirect://shop");
+        view.setViewName("user/shopMenu");
         return view;//
     }
+
     @GetMapping("/terms")
     public ModelAndView termsPage(){
         ModelAndView view = new ModelAndView();
