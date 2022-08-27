@@ -77,4 +77,5 @@ public class UserController {
         view.setViewName("user/shopMenu");
         return view;
     }
+
 }

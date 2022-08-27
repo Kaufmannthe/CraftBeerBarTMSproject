@@ -55,55 +55,67 @@
                                 <div class="form-outline mb-4">
                                     <label>Type of Product:</label>
                                     <select th:field="*{product.type}">
-                                        <option th:each="type : ${list}"
+                                        <option th:each="type : ${listOfProducts}"
                                                 th:value="${type}"
                                                 th:text="${type.toString()}">
                                         </option>
                                     </select>
                                 </div>
 
-                                    <div class="form-outline mb-4">
-                                        <input name="name" type="text" id="form3Example1cg"
-                                               class="form-control form-control-lg"/>
-                                        <label class="form-label" for="form3Example1cg">Product Name</label>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <!--<input type="password" id="form3Example4cg"
-                                               class="form-control form-control-lg"/>
-                                        <label class="form-label" for="form3Example4cg">Producer</label>-->
-                                        <select th:field="*{product.producer}">
-                                            <option th:each="producer : ${list}"
-                                                    th:value="${type}"
-                                                    th:text="${type.toString()}">
-                                            </option>
-                                        </select>
-                                    </div>
+                                <div class="form-outline mb-4">
+                                    <input name="name" type="text" id="productName"
+                                           class="form-control form-control-lg"/>
+                                    <label class="form-label" for="productName">Product Name</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label>Choose Producer:</label>
+                                    <select th:field="*{product.producer}">
+                                        <option th:each="producer : ${listOfProducers}"
+                                                th:value="${producer}"
+                                                th:text="${producer.name}">
+                                        </option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-outline mb-4">
-                                        <input type="password" id="form3Example4cdg"
-                                               class="form-control form-control-lg"/>
-                                        <label class="form-label" for="form3Example4cdg">Repeat your password</label>
-                                    </div>
+                                <div style="width: 50px; text-align: center; float: left;" class="form-outline mb-4">
+                                    <input type="password" id="paramsAlc"
+                                           class="form-control form-control-lg"/>
+                                    <label class="form-label" for="paramsAlc">Alc%</label>
 
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value=""
-                                               id="form2Example3cg"/>
-                                        <label class="form-check-label" for="form2Example3g">
-                                            I agree all statements in <a href="#!" class="text-body"><u>Terms of
-                                            service</u></a>
-                                        </label>
-                                    </div>
+                                </div>
+                                <div style="width: 50px; text-align: center; float: left; margin-left: 5px">
+                                    <input type="password" id="paramsIBU"
+                                           class="form-control form-control-lg"/>
+                                    <label class="form-label" for="paramsIBU">IBU</label>
+                                </div>
+                                <div style="width: 50px; text-align: center; float: left; margin-left: 5px">
+                                    <input type="password" id="paramsWeight"
+                                           class="form-control form-control-lg"/>
+                                    <label class="form-label" for="paramsWeight">Weight</label>
+                                </div>
+                                <div style="width: 50px; text-align: center; float: left; margin-left: 5px">
+                                    <input type="password" id="paramsPrice"
+                                           class="form-control form-control-lg"/>
+                                    <label class="form-label" for="paramsPrice">Price</label>
+                                </div>
 
-                                    <div class="d-flex justify-content-center">
-                                        <button type="button"
-                                                class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
-                                            Register
-                                        </button>
-                                    </div>
+                                <div class="form-check d-flex justify-content-center mb-5">
+                                    <input class="form-check-input me-2" type="checkbox" value=""
+                                           id="checkStatements"/>
+                                    <label class="form-check-label" for="checkStatements">
+                                        I agree all statements in <a th:href="@{/moderator/terms}" class="text-body"><u>Terms
+                                        of
+                                        service</u></a>
+                                    </label>
+                                </div>
 
-                                    <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                                                                                                            class="fw-bold text-body"><u>Login
-                                        here</u></a></p>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="button"
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                        Create
+                                    </button>
+                                </div>
 
                             </form>
 

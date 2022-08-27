@@ -1,7 +1,9 @@
 package com.example.craftbeerbartmsproject.controller;
 
+import com.example.craftbeerbartmsproject.model.Producer;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
+import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +22,42 @@ import java.util.List;
 @RequestMapping("/moderator")
 public class ModeratorController {
 
-    ProductService service;
+    ProductService productService;
+    ProducerService producerService;
 
     @Autowired
-    public ModeratorController(ProductService service) {
-        this.service = service;
+    public ModeratorController(ProductService productService, ProducerService producerService) {
+        this.productService = productService;
+        this.producerService = producerService;
     }
 
     @GetMapping("/product_registration")
-    public ModelAndView productRegistrationPage(@ModelAttribute ("product")Product product){
+    public ModelAndView productRegistrationPage(@ModelAttribute("product") Product product) {
         ModelAndView view = new ModelAndView();
 
         List<ProductType> listOfTypes = new ArrayList<>(Arrays.asList(ProductType.values()));
 
-        view.addObject("list", listOfTypes);
+        List<Producer> listOfProducer = producerService.findAll();
+
+        view.addObject("listOfProducts", listOfTypes);
+        view.addObject("listOfProducers", listOfProducer);
         view.setViewName("moderator/productRegistration");
         return view;
     }
+
     @PostMapping("/product_registration")
-    public ModelAndView productRegistration(@ModelAttribute ("product")Product product){
+    public ModelAndView productRegistration(@ModelAttribute("product") Product product) {
         ModelAndView view = new ModelAndView();
-        service.add(product);
+        productService.add(product);
         view.addObject(product);
         view.setViewName("redirect://shop");
         return view;//
+    }
+    @GetMapping("/terms")
+    public ModelAndView termsPage(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("moderator/termsOfService");
+        return view;
     }
 
 }
