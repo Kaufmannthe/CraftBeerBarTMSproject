@@ -22,7 +22,7 @@ public class Producer {
     private String specialization;
     private String description;
     private String numberOfSignatory;
-    private boolean isChecked;
+    private float rating;
     @CollectionTable(name = "producer", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "signatory")
     private String signatory;

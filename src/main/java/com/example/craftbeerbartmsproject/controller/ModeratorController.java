@@ -40,7 +40,7 @@ public class ModeratorController {
         List<Producer> listOfProducer = producerService.findAll();
 
         Producer producer = new Producer(1, "Artem", "Minsk","1",
-                "test","test","test",false,"test");
+                "test","test","test",5,"test");
         listOfProducer.add(producer);
 
         view.addObject("listOfProducts", listOfTypes);
