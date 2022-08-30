@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/registerStyles.css}">
 </head>
 <body>
-<form  th:action="@{/}" class="sa-innate-form"
+<form th:action="@{/}" class="sa-innate-form"
       method="get">
     <button type="submit">Back</button>
 </form>
@@ -41,14 +41,12 @@
                             <label>Phone Number</label>
                             <input type="text" name="phone_number" id="phone_number" required>
                             <label>Signatory</label>
-                            <select th:field="*{user.id}" name="id">
+                            <select th:field="*{producer.signatory}" name="signatory" id="signatory">
                                 <option th:each="u : ${userList}"
-                                        th:value="${u.id}"
+                                        th:value="${u.login}"
                                         th:text="${u.login}">
                                 </option>
                             </select>
-<!--                            <label>Signatory's ID</label>
-                            <input type="text" name="signatory" id="signatory" required>-->
                             <label>Password</label>
                             <input type="password" name="password" id="password" required>
                             <label>Confirm password</label>

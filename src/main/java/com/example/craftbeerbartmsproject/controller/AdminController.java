@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,22 +32,10 @@ public class AdminController {
     }
 
     @GetMapping("/producer_registration")
-    public ModelAndView addProducerPage(@ModelAttribute("user") User user) {
+    public ModelAndView addProducerPage(@ModelAttribute("producer") Producer producer) {
         ModelAndView view = new ModelAndView();
-        User user1 = new User(1, "Artem", "Bohan", "Kaufmannthe", "111", false,
-                23, "Minsk",
-                "Male", "123", "k@gm.com", Set.of(Roles.USER, Roles.ADMIN, Roles.MODERATOR));
-        User user2 = new User(1, "Artem", "Bohan", "Jpa", "111", false,
-                23, "Minsk",
-                "Male", "123", "k@gm.com", Set.of(Roles.USER, Roles.ADMIN, Roles.MODERATOR));
-        User user3 = new User(1, "Artem", "Bohan", "Kek4", "111", false,
-                23, "Minsk",
-                "Male", "123", "k@gm.com", Set.of(Roles.USER, Roles.ADMIN, Roles.MODERATOR));
-        List<User> list = new ArrayList<>();
-        list.add(user1);
-        list.add(user2);
-        list.add(user3);
-        view.addObject("userList", list);
+        List<User> allUsers = userService.findAll();
+        view.addObject("userList", allUsers);
         view.setViewName("admin/producerRegistration");
         return view;
     }
