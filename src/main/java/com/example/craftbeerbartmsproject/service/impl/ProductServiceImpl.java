@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
+    public Product findById(long id) {
         return repository.findById(id);
     }
 
@@ -49,7 +49,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product add(Product product) {
-        return repository.save(product);
+        product.setDataCreated(LocalDate.now());
+        repository.save(product);
+        repository.flush();
+        return product;
     }
 
     @Override

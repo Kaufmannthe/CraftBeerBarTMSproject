@@ -51,6 +51,7 @@
                             <h2 class="text-uppercase text-center mb-5">Create a new product</h2>
 
                             <form th:action="@{/moderator/product_registration}" method="post">
+                                <div type="hidden"></div>
                                 <div class="form-outline mb-4">
                                     <label>Type of Product:</label>
                                     <select th:field="*{product.type}" name="type">

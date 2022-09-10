@@ -1,7 +1,7 @@
 package com.example.craftbeerbartmsproject.controller;
 
-import com.example.craftbeerbartmsproject.model.Roles;
-import com.example.craftbeerbartmsproject.model.User;
+import com.example.craftbeerbartmsproject.model.*;
+import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +9,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.LongStream;
 
 @Controller
 public class UserController {
 
     UserService service;
+    ProductService productService;
 
     @Autowired
-    public UserController(UserService service) {
+    public UserController(UserService service, ProductService productService) {
         this.service = service;
+        this.productService = productService;
     }
 
     @GetMapping(value = "/")
@@ -73,8 +77,32 @@ public class UserController {
 
     @GetMapping("/shop")
     public ModelAndView shopPage(@ModelAttribute("user") @NotNull User user) {
+        int originNumber = (int) productService.findAll().stream().findFirst().get().getId();
+        int boundNumber = productService.findAll().size();
+
+        Random random = new Random();
         ModelAndView view = new ModelAndView();
+
+        List<Product> resultList = new ArrayList<>();
+
+
+        long[] longs = random.longs(4, originNumber, boundNumber).toArray();
+
+        for (long i : longs) {
+            resultList.add(productService.findById(i));
+        }
+
+
+        view.addObject("productList", resultList);
         view.setViewName("user/shopMenu");
+        return view;
+    }
+
+    @GetMapping("/shop/product/{id}")
+    public ModelAndView productPage(@PathVariable(name = "id") Product product) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("product", product);
+        view.setViewName("user/product");
         return view;
     }
 

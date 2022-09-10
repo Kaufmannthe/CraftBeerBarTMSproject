@@ -16,15 +16,15 @@ import java.time.LocalDate;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private int price;
     @ManyToOne
     @JoinColumn(name = "producer_id")
     private Producer producer;
     private String name;
-    private float weight;
-    private float strength;
-    private float density;
+    private double weight;
+    private double strength;
+    private double density;
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private ProductType type;
