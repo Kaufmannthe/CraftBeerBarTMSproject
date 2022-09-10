@@ -3,9 +3,9 @@ package com.example.craftbeerbartmsproject.controller;
 import com.example.craftbeerbartmsproject.model.Producer;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
+import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
-import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +40,7 @@ public class ModeratorController {
         List<Producer> listOfProducer = producerService.findAll();
 
         Producer producer = new Producer(1, "Artem", "Minsk","1",
-                "test","test","test",5,"Artem");
+                "test","test","test",5,new User());
         listOfProducer.add(producer);
 
         view.addObject("listOfProducts", listOfTypes);

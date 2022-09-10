@@ -43,7 +43,7 @@
                             <label>Signatory</label>
                             <select th:field="*{producer.signatory}" name="signatory" id="signatory">
                                 <option th:each="u : ${userList}"
-                                        th:value="${u.login}"
+                                        th:value="${u.id}"
                                         th:text="${u.login}">
                                 </option>
                             </select>

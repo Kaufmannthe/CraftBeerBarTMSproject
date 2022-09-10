@@ -70,7 +70,7 @@
                                     <label>Choose Producer:</label>
                                     <select th:field="*{product.producer}" name="producer">
                                         <option th:each="producer : ${listOfProducers}"
-                                                th:value="${producer.name}"
+                                                th:value="${producer.id}"
                                                 th:text="${producer.name}">
                                         </option>
                                     </select>
