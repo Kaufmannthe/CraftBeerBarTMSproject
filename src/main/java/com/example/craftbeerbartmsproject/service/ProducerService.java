@@ -3,7 +3,9 @@ package com.example.craftbeerbartmsproject.service;
 import com.example.craftbeerbartmsproject.model.Producer;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +22,6 @@ public interface ProducerService {
     Producer add(Producer producer);
 
     void delete(Producer producer);
+
+    String saveImage(MultipartFile file) throws IOException;
 }

@@ -64,10 +64,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String saveImage(MultipartFile file) throws IOException {
-        String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\product_picture\\";
+        String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\user_picture\\";
         byte[] bytes = file.getBytes();
         Path path = Paths.get(folder + file.getOriginalFilename());
         Files.write(path,bytes);
-        return "/img/uploaded/product_picture/" + file.getOriginalFilename();
+        return "/img/uploaded/user_picture/" + file.getOriginalFilename();
     }
 }

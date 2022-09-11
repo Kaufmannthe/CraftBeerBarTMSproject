@@ -31,4 +31,19 @@ public class Producer {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;
 
+    private String picture;
+
+    public Producer(long id, String name, String address, String phoneNumber, String specialization,
+                    String description, String numberOfSignatory, float rating, User signatory, LocalDate dataCreated) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.specialization = specialization;
+        this.description = description;
+        this.numberOfSignatory = numberOfSignatory;
+        this.rating = rating;
+        this.signatory = signatory;
+        this.dataCreated = dataCreated;
+    }
 }

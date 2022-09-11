@@ -6,8 +6,13 @@ import com.example.craftbeerbartmsproject.repository.ProductRepository;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -58,5 +63,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Product product) {
         repository.delete(product);
+    }
+
+    @Override
+    public String saveImage(MultipartFile file) throws IOException {
+        String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\product_picture\\";
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(folder + file.getOriginalFilename());
+        Files.write(path,bytes);
+        return "/img/uploaded/product_picture/" + file.getOriginalFilename();
     }
 }

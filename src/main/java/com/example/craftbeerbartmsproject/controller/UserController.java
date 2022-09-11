@@ -63,9 +63,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/registration")
-    public ModelAndView registerUser(@ModelAttribute("user") User user) {
+    public ModelAndView registerUser(@ModelAttribute("user") User user,
+                                     @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
         user.setRole(Set.of(Roles.USER));
+        user.setPicture(service.saveImage(file));
         service.add(user);
         view.setViewName("user/landing");
         return view;
@@ -88,14 +90,11 @@ public class UserController {
 
         List<Product> resultList = new ArrayList<>();
 
-
         long[] longs = random.longs(4, originNumber, boundNumber).toArray();
-
 
         for (long i : longs) {
             resultList.add(productService.findById(i));
         }
-
 
         view.addObject("productList", resultList);
         view.setViewName("user/shopMenu");

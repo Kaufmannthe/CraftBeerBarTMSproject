@@ -46,4 +46,25 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Cart cart;
 
+    private String picture;
+
+    public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age, String address,
+                String gender, String phoneNumber, String email, LocalDate dataCreated, Set<Roles> role,
+                List<Contacts> contactsList, Cart cart) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+        this.isActive = isActive;
+        this.age = age;
+        this.address = address;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.dataCreated = dataCreated;
+        this.role = role;
+        this.contactsList = contactsList;
+        this.cart = cart;
+    }
 }

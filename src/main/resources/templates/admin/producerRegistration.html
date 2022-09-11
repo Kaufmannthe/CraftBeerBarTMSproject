@@ -29,7 +29,9 @@
                 <div class="tab-content">
                     <div class="innter-form">
                         <form th:action="@{/admin/producer_registration}" class="sa-innate-form"
-                              method="post">
+                              method="post" enctype="multipart/form-data">
+                            <input type="file" name="imageFile"/>
+                            <hr>
                             <label>Producer Name</label>
                             <input type="text" name="name" id="name" required>
                             <label>Address</label>
