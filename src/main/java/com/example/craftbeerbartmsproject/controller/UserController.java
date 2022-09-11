@@ -6,9 +6,12 @@ import com.example.craftbeerbartmsproject.service.UserService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.LongStream;
@@ -78,7 +81,7 @@ public class UserController {
     @GetMapping("/shop")
     public ModelAndView shopPage(@ModelAttribute("user") @NotNull User user) {
         int originNumber = (int) productService.findAll().stream().findFirst().get().getId();
-        int boundNumber = productService.findAll().size();
+        long boundNumber = productService.findAll().size();
 
         Random random = new Random();
         ModelAndView view = new ModelAndView();
@@ -87,6 +90,7 @@ public class UserController {
 
 
         long[] longs = random.longs(4, originNumber, boundNumber).toArray();
+
 
         for (long i : longs) {
             resultList.add(productService.findById(i));
@@ -105,5 +109,4 @@ public class UserController {
         view.setViewName("user/product");
         return view;
     }
-
 }

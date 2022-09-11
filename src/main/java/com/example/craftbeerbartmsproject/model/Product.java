@@ -30,4 +30,18 @@ public class Product {
     private ProductType type;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;
+    private String picture;
+
+    public Product(long id, int price, Producer producer, String name, double weight, double strength, double density,
+                   ProductType type, LocalDate dataCreated) {
+        this.id = id;
+        this.price = price;
+        this.producer = producer;
+        this.name = name;
+        this.weight = weight;
+        this.strength = strength;
+        this.density = density;
+        this.type = type;
+        this.dataCreated = dataCreated;
+    }
 }

@@ -49,9 +49,11 @@
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Create a new product</h2>
-
-                            <form th:action="@{/moderator/product_registration}" method="post">
+                            <form th:action="@{/moderator/product_registration}" method="post"
+                                  enctype="multipart/form-data">
+                                <input type="file" name="imageFile"/>
                                 <div type="hidden"></div>
+                                <hr>
                                 <div class="form-outline mb-4">
                                     <label>Type of Product:</label>
                                     <select th:field="*{product.type}" name="type">

@@ -5,9 +5,15 @@ import com.example.craftbeerbartmsproject.repository.UserRepository;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -54,5 +60,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByLoginAndPassword(String login, String password) {
         return userRepository.findUserByLoginAndPassword(login, password);
+    }
+
+    @Override
+    public String saveImage(MultipartFile file) throws IOException {
+        String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\product_picture\\";
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(folder + file.getOriginalFilename());
+        Files.write(path,bytes);
+        return "/img/uploaded/product_picture/" + file.getOriginalFilename();
     }
 }

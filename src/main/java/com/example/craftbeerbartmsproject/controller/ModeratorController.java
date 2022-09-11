@@ -3,17 +3,16 @@ package com.example.craftbeerbartmsproject.controller;
 import com.example.craftbeerbartmsproject.model.Producer;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
-import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
+import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +24,13 @@ public class ModeratorController {
     ProductService productService;
     ProducerService producerService;
 
+    UserService userService;
+
     @Autowired
-    public ModeratorController(ProductService productService, ProducerService producerService) {
+    public ModeratorController(ProductService productService, ProducerService producerService, UserService userService) {
         this.productService = productService;
         this.producerService = producerService;
+        this.userService = userService;
     }
 
     @GetMapping("/product_registration")
@@ -46,12 +48,13 @@ public class ModeratorController {
     }
 
     @PostMapping("/product_registration")
-    public ModelAndView productRegistration(@ModelAttribute("product") Product product) {
+    public ModelAndView productRegistration(@ModelAttribute("product") Product product,
+                                            @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
+        product.setPicture(userService.saveImage(file));
         productService.add(product);
-        view.addObject(product);
-        view.setViewName("redirect://shopMenu");
-        return view;//
+        view.setViewName("redirect:/shop");
+        return view;
     }
 
     @GetMapping("/terms")
@@ -60,5 +63,6 @@ public class ModeratorController {
         view.setViewName("moderator/termsOfService");
         return view;
     }
+
 
 }

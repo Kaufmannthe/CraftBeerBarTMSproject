@@ -67,8 +67,8 @@
             <div class="col mb-5" th:each="pl : ${productList}" >
                 <div class="card h-100">
                     <!-- Product image-->
-                    <img class="card-img-top"
-                         th:src="@{https://wonder-day.com/wp-content/uploads/2020/10/wonder-day-among-us-png-43.png}"
+                    <img width="256" height="256" class="card-img-top"
+                         th:src="${pl.getPicture()}"
                          alt="..."/>
                     <!-- Product details-->
                     <div class="card-body p-4">
