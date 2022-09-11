@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
+        user.setDataCreated(LocalDate.now());
         return userRepository.save(user);
     }
 

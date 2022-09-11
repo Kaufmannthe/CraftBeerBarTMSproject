@@ -67,7 +67,9 @@ public class UserController {
                                      @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
         user.setRole(Set.of(Roles.USER));
-        user.setPicture(service.saveImage(file));
+        if (!Objects.equals(file.getOriginalFilename(), "")) {
+            user.setPicture(service.saveImage(file));
+        }
         service.add(user);
         view.setViewName("user/landing");
         return view;
