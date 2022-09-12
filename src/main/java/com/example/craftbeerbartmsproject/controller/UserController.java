@@ -84,21 +84,35 @@ public class UserController {
 
     @GetMapping("/shop")
     public ModelAndView shopPage(@ModelAttribute("user") @NotNull User user) {
+        ModelAndView view = new ModelAndView();
+        Random random = new Random();
+        List<Product> resultList = new ArrayList<>();
+        Set<Long> set = new LinkedHashSet<>();
+
         List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
         int productCount = productService.findAll().size();
 
         long originNumber = (int) productService.findAll().stream().findFirst().get().getId();
-        long boundNumber = listOfProducts.get(productCount -1).getId();
+        long boundNumber = listOfProducts.get(productCount - 1).getId();
 
 
-        Random random = new Random();
-        ModelAndView view = new ModelAndView();
+        if (productService.findAll().size() >= 4) {
+            while (set.size() < 4) {
+                long randomId = random.nextLong(originNumber, boundNumber + 1);
+                if (productService.findById(randomId).getDataCreated() != null) {
+                    set.add(randomId);
+                }
+            }
+        } else {
+            while (set.size() < productService.findAll().size()) {
+                long randomId = random.nextLong(originNumber, boundNumber + 1);
+                if (productService.findById(randomId).getDataCreated() != null) {
+                    set.add(randomId);
+                }
+            }
+        }
 
-        List<Product> resultList = new ArrayList<>();
-
-        long[] longs = random.longs(4, originNumber, boundNumber).toArray();
-
-        for (long i : longs) {
+        for (long i : set) {
             resultList.add(productService.findById(i));
         }
 
@@ -115,7 +129,7 @@ public class UserController {
         int productCount = productService.findAll().size();
 
         long min = (int) productService.findAll().stream().findFirst().get().getId();
-        long max = listOfProducts.get(productCount -1).getId();
+        long max = listOfProducts.get(productCount - 1).getId();
 
         view.addObject("min", min);
         view.addObject("max", max);

@@ -17,7 +17,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int price;
+    private double price;
     @ManyToOne
     @JoinColumn(name = "producer_id")
     private Producer producer;

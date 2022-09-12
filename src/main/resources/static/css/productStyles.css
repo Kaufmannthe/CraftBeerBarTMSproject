@@ -76,7 +76,7 @@ body {
 }
 
 img {
-    height: fit-content;
+    height: border-box;
     width: 75%;
     padding: 1rem
 }
