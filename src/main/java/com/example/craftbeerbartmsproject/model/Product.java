@@ -31,6 +31,7 @@ public class Product {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;
     private String picture;
+    private double rating;
 
     public Product(long id, int price, Producer producer, String name, double weight, double strength, double density,
                    ProductType type, LocalDate dataCreated) {

@@ -84,8 +84,12 @@ public class UserController {
 
     @GetMapping("/shop")
     public ModelAndView shopPage(@ModelAttribute("user") @NotNull User user) {
-        int originNumber = (int) productService.findAll().stream().findFirst().get().getId();
-        long boundNumber = productService.findAll().size();
+        List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
+        int productCount = productService.findAll().size();
+
+        long originNumber = (int) productService.findAll().stream().findFirst().get().getId();
+        long boundNumber = listOfProducts.get(productCount -1).getId();
+
 
         Random random = new Random();
         ModelAndView view = new ModelAndView();
@@ -106,6 +110,15 @@ public class UserController {
     @GetMapping("/shop/product/{id}")
     public ModelAndView productPage(@PathVariable(name = "id") Product product) {
         ModelAndView view = new ModelAndView();
+
+        List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
+        int productCount = productService.findAll().size();
+
+        long min = (int) productService.findAll().stream().findFirst().get().getId();
+        long max = listOfProducts.get(productCount -1).getId();
+
+        view.addObject("min", min);
+        view.addObject("max", max);
         view.addObject("product", product);
         view.setViewName("user/product");
         return view;

@@ -22,7 +22,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(186, 216, 125);
+    background-color: #C7C7C7;
     font-size: 0.8rem;
     font-family: 'Work Sans'
 }
