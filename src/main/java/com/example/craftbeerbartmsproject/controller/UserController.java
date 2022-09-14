@@ -5,6 +5,7 @@ import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +79,7 @@ public class UserController {
     @GetMapping("/profile/{login}")
     public ModelAndView profileUser(@PathVariable(name = "login") @NotNull User login) {
         ModelAndView view = new ModelAndView();
+        view.addObject("login", login);
         view.setViewName("user/profile");
         return view;
     }
@@ -135,6 +137,32 @@ public class UserController {
         view.addObject("max", max);
         view.addObject("product", product);
         view.setViewName("user/product");
+        return view;
+    }
+
+    @GetMapping("/shop/product/all")
+    public ModelAndView allProducts(@ModelAttribute(name = "product") Product product) {
+        ModelAndView view = new ModelAndView();
+
+        List<Product> productList = productService.findAll();
+        view.addObject("productList", productList);
+        view.setViewName("user/all_products");
+        return view;
+    }
+
+    @GetMapping("/shop/{sort}_list")
+    public ModelAndView filtering(@PathVariable(name = "sort") String s) {
+        ModelAndView view = new ModelAndView();
+        List<Product> productList = new ArrayList<>();
+        List<Product> allProducts = productService.findAll();
+
+        for (Product p : allProducts) {
+            if (p.getType().name().toLowerCase().equals(s)) {
+                productList.add(p);
+            }
+        }
+        view.addObject("productList", productList);
+        view.setViewName("user/productFilter");
         return view;
     }
 }
