@@ -46,13 +46,8 @@ public class UserController {
     @PostMapping(value = "/login")
     public ModelAndView loginUser(@ModelAttribute(name = "user") @NotNull User user) {
         ModelAndView view = new ModelAndView();
-        User result = service.findUserByLoginAndPassword(user.getLogin(), user.getPassword());
-        if (!Objects.equals(result.getFirstName(), "")) {
-            view.addObject("userLogin", result);
-            view.setViewName("user/profile");
-        } else {
-            view.setViewName("user/login");
-        }
+        view.addObject("userLogin", user);
+        view.setViewName("user/profile");
         return view;
     }
 
@@ -67,7 +62,6 @@ public class UserController {
     public ModelAndView registerUser(@ModelAttribute("user") User user,
                                      @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
-        user.setRole(Set.of(Roles.USER));
         if (!Objects.equals(file.getOriginalFilename(), "")) {
             user.setPicture(service.saveImage(file));
         }

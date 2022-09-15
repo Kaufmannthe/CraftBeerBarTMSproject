@@ -1,12 +1,12 @@
 package com.example.craftbeerbartmsproject.config;
 
-import com.example.craftbeerbartmsproject.repository.UserRepository;
-import com.example.craftbeerbartmsproject.service.impl.BackUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -19,13 +19,16 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    @Autowired
-    private final UserRepository userRepository;
 
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SecurityConfig(
+            AuthenticationConfiguration authenticationConfiguration, UserDetailsService userDetailsService) {
+        this.authenticationConfiguration = authenticationConfiguration;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -39,26 +42,13 @@ public class SecurityConfig {
                 authorizeHttpRequests(
                         request -> request.antMatchers(
                                         "/", "/shop/product/**", "/shop", "/registration",
-                                        "/shop/**","/moderator/product_registration").permitAll()
+                                        "/shop/**", "/moderator/product_registration").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/login").permitAll())
-                .logout(LogoutConfigurer::permitAll)
-        /*.exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedException))*/;
+                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"));
+        /*.exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedException))*/
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new BackUserDetailsServiceImpl(userRepository, passwordEncoder());
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity security,
-                                                       UserDetailsService userDetailsService) throws Exception {
-        return security.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder()).and().build();
-
     }
 
     @Bean
@@ -66,4 +56,14 @@ public class SecurityConfig {
         return web -> web.ignoring().antMatchers("/css/**", "/img/**", "/js/**");
     }
 
+    @Bean
+    AuthenticationManager authenticationManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+
+    @Autowired
+    void configure(AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
 }
