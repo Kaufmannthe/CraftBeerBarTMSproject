@@ -5,6 +5,7 @@ import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.LongStream;
@@ -43,14 +45,6 @@ public class UserController {
         return view;
     }
 
-    @PostMapping(value = "/login")
-    public ModelAndView loginUser(@ModelAttribute(name = "user") @NotNull User user) {
-        ModelAndView view = new ModelAndView();
-        view.addObject("userLogin", user);
-        view.setViewName("user/profile");
-        return view;
-    }
-
     @GetMapping(value = "/registration")
     public ModelAndView registerPage() {
         ModelAndView view = new ModelAndView();
@@ -70,10 +64,12 @@ public class UserController {
         return view;
     }
 
-    @GetMapping("/profile/{login}")
-    public ModelAndView profileUser(@PathVariable(name = "login") @NotNull User login) {
+    @GetMapping("/profile")
+    public ModelAndView profileUser(Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        view.addObject("login", login);
+        String userName = authentication.getName();
+        User user = service.findByLogin(userName);
+        view.addObject("userLogin", user);
         view.setViewName("user/profile");
         return view;
     }
@@ -159,4 +155,5 @@ public class UserController {
         view.setViewName("user/productFilter");
         return view;
     }
+
 }

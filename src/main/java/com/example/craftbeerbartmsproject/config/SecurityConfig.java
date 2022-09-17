@@ -1,5 +1,6 @@
 package com.example.craftbeerbartmsproject.config;
 
+import com.example.craftbeerbartmsproject.controller.handler.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +26,13 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(
-            AuthenticationConfiguration authenticationConfiguration, UserDetailsService userDetailsService) {
+    private final AccessDeniedException accessDeniedException;
+
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,
+                          UserDetailsService userDetailsService, AccessDeniedException accessDeniedException) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.userDetailsService = userDetailsService;
+        this.accessDeniedException = accessDeniedException;
     }
 
     @Bean
@@ -42,11 +46,11 @@ public class SecurityConfig {
                 authorizeHttpRequests(
                         request -> request.antMatchers(
                                         "/", "/shop/product/**", "/shop", "/registration",
-                                        "/shop/**", "/moderator/product_registration").permitAll()
+                                        "/shop/**", "/moderator/product_registration", "/security/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/login").permitAll())
-                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"));
-        /*.exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedException))*/
+                .logout(LogoutConfigurer::permitAll)
+                .exceptionHandling().accessDeniedHandler(accessDeniedException);
 
         return http.build();
     }
