@@ -1,7 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Login</title>
-    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css">
+    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet"
+          id="bootstrap-css">
     <script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js}"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
@@ -24,31 +25,19 @@
                 </ul>
                 <div class="tab-content">
                     <div id="sectionA" class="tab-pane fade in active">
-                        <div class="innter-form" >
+                        <div class="innter-form">
                             <form th:action="@{/login}" class="sa-innate-form"
                                   method=post>
                                 <label>Email Address/Login</label>
                                 <input type="text" name="username">
                                 <label>Password</label>
                                 <input type="password" name="password">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
                                 <button type="submit">Sign In</button>
                             </form>
                             <a href="">Forgot Password?
-
                             </a>
                         </div>
-                        <div class="social-login">
-                            <p>- - - - - - - - - - - - - Sign In With - - - - - - - - - - - - - </p>
-                            <ul>
-                                <li><a href=""><i class="fa fa-facebook"></i>Facebook</a></li>
-                                <li><a href=""><i class="fa fa-google-plus"></i>Google+</a></li>
-                                <li><a href=""><i class="fa fa-twitter"></i> Twitter</a></li>
-                            </ul>
-
-                        </div>
-                        <br>
-                        <br>
                     </div>
                 </div>
             </div>
