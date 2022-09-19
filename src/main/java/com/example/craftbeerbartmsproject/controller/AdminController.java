@@ -1,8 +1,6 @@
 package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.model.Producer;
-import com.example.craftbeerbartmsproject.model.ProductType;
-import com.example.craftbeerbartmsproject.model.Roles;
 import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
@@ -45,8 +43,8 @@ public class AdminController {
         ModelAndView view = new ModelAndView();
         producer.setPicture(producerService.saveImage(file));
         producerService.add(producer);
-        view.addObject(producer);
-        view.setViewName("user/landing");//to-do
+        view.addObject("producerLogin",producer);
+        view.setViewName("moderator/profile");
         return view;
     }
 }

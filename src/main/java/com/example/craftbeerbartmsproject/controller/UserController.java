@@ -46,8 +46,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/registration")
-    public ModelAndView registerPage() {
+    public ModelAndView registerPage(@ModelAttribute ("user")User user) {
         ModelAndView view = new ModelAndView();
+        List<Roles> rolesList = new ArrayList<>(){};
+        rolesList.add(Roles.USER);
+        rolesList.add(Roles.ADMIN);
+        view.addObject("roleList",rolesList);
         view.setViewName("user/registration");
         return view;
     }

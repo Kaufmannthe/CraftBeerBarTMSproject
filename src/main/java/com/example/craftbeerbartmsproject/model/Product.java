@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -17,16 +18,23 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     private double price;
     @ManyToOne
     @JoinColumn(name = "producer_id")
+    @NotNull
     private Producer producer;
+    @NotNull
     private String name;
+    @NotNull
     private double weight;
+    @NotNull
     private double strength;
+    @NotNull
     private double density;
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
+    @NotNull
     private ProductType type;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;

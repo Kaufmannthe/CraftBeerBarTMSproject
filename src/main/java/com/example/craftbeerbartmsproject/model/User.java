@@ -1,11 +1,15 @@
 package com.example.craftbeerbartmsproject.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -20,15 +24,23 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     private String login;
+    @NotNull
     private String password;
     private boolean isActive;
+    @NotNull
     private int age;
+    @NotNull
     private String address;
     private String gender;
+    @NotNull
     private String phoneNumber;
+    @NotNull
     private String email;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;
@@ -37,6 +49,8 @@ public class User {
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
+    @NotNull
+    @Size(max = 3)
     private Set<Roles> role;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

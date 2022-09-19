@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         user.setDataCreated(LocalDate.now());
         user.setActive(true);
-        user.setRole(new HashSet<>(List.of(Roles.USER)));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

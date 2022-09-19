@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -18,15 +19,23 @@ public class Producer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     private String name;
+    @NotNull
     private String address;
+    @NotNull
     private String phoneNumber;
+    @NotNull
     private String specialization;
+    @NotNull
     private String description;
+    @NotNull
     private String numberOfSignatory;
+    @NotNull
     private float rating;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "signatory_id")
+    @NotNull
     private User signatory;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;

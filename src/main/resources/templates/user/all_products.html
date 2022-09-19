@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -23,8 +24,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Cart</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="isAuthenticated()"
+                                        th:href="@{/}">Cart</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        sec:authorize="hasAuthority('MODERATOR')"
                                         th:href="@{/moderator/product_registration}">Create</a></li>
                 <li class="nav-item dropdown">
                     <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"

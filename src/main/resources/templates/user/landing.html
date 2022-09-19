@@ -42,6 +42,16 @@
                 <li class="nav-item"><a class="nav-link" href="">Social(!)</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/shop}">Shop</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">News(!)</a></li>
+                <li class="nav-item dropdown">
+                    <a sec:authorize="hasAuthority('ADMIN')" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/admin/producer_registration}">Create Producer</a></li>
+                        <li><a class="dropdown-item" th:href="@{/registration}">Create User</a></li>
+                        <li><a class="dropdown-item" href="">New Arrivals</a></li>
+                    </ul>
+
+                </li>
 
                 <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
                                         th:href="@{/profile}">Profile</a></li>

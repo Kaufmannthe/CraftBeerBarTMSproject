@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Registration</title>
     <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet"
@@ -9,6 +10,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/registerStyles.css}">
 </head>
 <body>
+<form th:action="@{/}" class="sa-innate-form"
+      method="get">
+    <button type="submit">Back</button>
+</form>
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -53,6 +58,19 @@
                                        id="other_gender"
                                        value="Other"/>
                                 <label class="form-check-label" for="other_gender">Other</label>
+                                <input th:field="*{user.role}" th:value="${user.setRole('USER')}" th:name="role" type="hidden"
+                                       sec:authorize="isAnonymous()">
+                                <br>
+                                <label sec:authorize="hasAuthority('ADMIN')">Role</label>
+                                <br>
+                                <label>
+                                    <select sec:authorize="hasAuthority('ADMIN')" th:field="*{user.role}" name="role">
+                                        <option th:each="role : ${roleList}"
+                                                th:value="${role}"
+                                                th:text="${role.name()}">
+                                        </option>
+                                    </select>
+                                </label>
                                 <br>
                                 <label>Password</label>
                                 <input type="password" name="password" required>
@@ -62,16 +80,16 @@
                             <button type="submit">Join Us</button>
                         </form>
                     </div>
-<!--                    <div class="social-login">
-                        <p>- - - - - - - - - - - - - Register With - - - - - - - - - - - - - </p>
-                        <ul>
-                            <li><a href=""><i class="fa fa-facebook"></i> Facebook</a></li>
-                            <li><a href=""><i class="fa fa-google-plus"></i> Google+</a></li>
-                            <li><a href=""><i class="fa fa-twitter"></i> Twitter</a></li>
-                        </ul>
-                        <br>
-                        <br>
-                    </div>-->
+                    <!--                    <div class="social-login">
+                                            <p>- - - - - - - - - - - - - Register With - - - - - - - - - - - - - </p>
+                                            <ul>
+                                                <li><a href=""><i class="fa fa-facebook"></i> Facebook</a></li>
+                                                <li><a href=""><i class="fa fa-google-plus"></i> Google+</a></li>
+                                                <li><a href=""><i class="fa fa-twitter"></i> Twitter</a></li>
+                                            </ul>
+                                            <br>
+                                            <br>
+                                        </div>-->
                 </div>
             </div>
         </div>
