@@ -25,6 +25,6 @@ public class AccessDeniedException implements AccessDeniedHandler {
         if (auth != null) {
             logger.info("User '" + auth.getName() + "' attempted to access the protected URL: " + request.getRequestURI());
         }
-        response.sendRedirect(request.getContextPath() + "/403");
+        response.sendRedirect(request.getContextPath() + "/404");
     }
 }
