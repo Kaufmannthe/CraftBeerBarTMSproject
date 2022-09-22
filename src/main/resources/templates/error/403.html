@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <title>Error 403</title>
 </head>
 <body>
 
@@ -8,14 +9,11 @@
 
     <div class="starter-template">
         <h1>403 - Access is denied</h1>
-        <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]',
+        <div th:inline="text">Hello [[${#httpServletRequest.remoteUser}]],
             you do not have permission to access this page.</div>
     </div>
 
 </div>
 <!-- /.container -->
-
-<div th:replace="fragments/footer :: footer"></div>
-
 </body>
 </html>

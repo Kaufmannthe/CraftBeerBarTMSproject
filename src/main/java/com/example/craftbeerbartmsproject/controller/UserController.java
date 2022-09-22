@@ -5,6 +5,7 @@ import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -69,6 +70,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView profileUser(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         String userName = authentication.getName();

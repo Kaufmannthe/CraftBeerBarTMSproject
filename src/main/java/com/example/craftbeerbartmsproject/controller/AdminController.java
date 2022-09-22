@@ -6,6 +6,7 @@ import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
     ProductService productService;
     ProducerService producerService;

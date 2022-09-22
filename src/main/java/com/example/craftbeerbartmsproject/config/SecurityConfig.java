@@ -45,11 +45,11 @@ public class SecurityConfig {
         http.
                 authorizeHttpRequests(
                         request -> request.antMatchers(
-                                        "/", "/shop/product/**", "/shop", "/registration",
+                                        "/", "/shop", "/registration",
                                         "/shop/**", "/moderator/product_registration", "/security/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/login").permitAll())
-                .logout(LogoutConfigurer::permitAll)
+                .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"))
                 .exceptionHandling().accessDeniedHandler(accessDeniedException);
 
         return http.build();
