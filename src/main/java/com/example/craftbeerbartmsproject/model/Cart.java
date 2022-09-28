@@ -3,22 +3,34 @@ package com.example.craftbeerbartmsproject.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
-@Entity(name = "user_cart")
-@Table(name = "user_cart")
+@Entity
+@Table(name = "Cart")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+
+    private long userId;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @CreatedDate
+    private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
-    @OneToOne(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private User user;
+
+    public Cart(long userId, Product product) {
+        this.userId = userId;
+        this.product = product;
+    }
 }

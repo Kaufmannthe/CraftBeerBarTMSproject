@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        user.setDataCreated(LocalDate.now());
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);

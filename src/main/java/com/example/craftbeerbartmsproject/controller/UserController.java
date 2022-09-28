@@ -1,6 +1,7 @@
 package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.model.*;
+import com.example.craftbeerbartmsproject.service.CartService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import com.sun.istack.NotNull;
@@ -23,13 +24,16 @@ import java.util.stream.LongStream;
 @Controller
 public class UserController {
 
-    UserService service;
+    UserService userService;
     ProductService productService;
 
-    @Autowired
-    public UserController(UserService service, ProductService productService) {
-        this.service = service;
+    CartService cartService;
+
+
+    public UserController(UserService service, ProductService productService, CartService cartService) {
+        this.userService = service;
         this.productService = productService;
+        this.cartService = cartService;
     }
 
     @GetMapping(value = "/")
@@ -47,12 +51,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/registration")
-    public ModelAndView registerPage(@ModelAttribute ("user")User user) {
+    public ModelAndView registerPage(@ModelAttribute("user") User user) {
         ModelAndView view = new ModelAndView();
-        List<Roles> rolesList = new ArrayList<>(){};
+        List<Roles> rolesList = new ArrayList<>() {
+        };
         rolesList.add(Roles.USER);
         rolesList.add(Roles.ADMIN);
-        view.addObject("roleList",rolesList);
+        view.addObject("roleList", rolesList);
         view.setViewName("user/registration");
         return view;
     }
@@ -62,9 +67,9 @@ public class UserController {
                                      @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
         if (!Objects.equals(file.getOriginalFilename(), "")) {
-            user.setPicture(service.saveImage(file));
+            user.setPicture(userService.saveImage(file));
         }
-        service.add(user);
+        userService.add(user);
         view.setViewName("user/landing");
         return view;
     }
@@ -73,8 +78,8 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView profileUser(Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        String userName = authentication.getName();
-        User user = service.findByLogin(userName);
+        User user = getUser(authentication);
+
         view.addObject("userLogin", user);
         view.setViewName("user/profile");
         return view;
@@ -160,6 +165,40 @@ public class UserController {
         view.addObject("productList", productList);
         view.setViewName("user/productFilter");
         return view;
+    }
+
+    @GetMapping("/cart")
+    public ModelAndView cart(Authentication authentication) {
+        ModelAndView view = new ModelAndView();
+        User user = getUser(authentication);
+
+        List<Cart> cartList = new ArrayList<>(cartService.all(user.getId()));
+
+        List<Product> productList = new ArrayList<>();
+
+        for (Cart i : cartList){
+            productList.add(i.getProduct());
+        }
+
+        view.addObject("listOfProducts", productList);
+
+        view.setViewName("/user/cart");
+        return view;
+    }
+
+
+    @PostMapping("/cart")
+    public ModelAndView addCart(Authentication authentication, @ModelAttribute("product") Product product) {
+        ModelAndView view = new ModelAndView();
+        User user = getUser(authentication);
+        cartService.add(product, user);
+        view.setViewName("/user/shopMenu");
+        return view;
+    }
+
+    private User getUser(Authentication authentication) {
+        String userName = authentication.getName();
+        return userService.findByLogin(userName);
     }
 
 }

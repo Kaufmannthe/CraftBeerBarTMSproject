@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +45,7 @@ public class SecurityConfig {
                 authorizeHttpRequests(
                         request -> request.antMatchers(
                                         "/", "/shop", "/registration",
-                                        "/shop/**", "/moderator/product_registration", "/security/**").permitAll()
+                                        "/shop/**", "/moderator/product_registration", "/security/**", "/cart").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/login").permitAll())
                 .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"))

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -43,6 +44,7 @@ public class User {
     @NotNull
     private String email;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @CreatedDate
     private LocalDate dataCreated;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
@@ -61,6 +63,7 @@ public class User {
     private Cart cart;
 
     private String picture;
+
 
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age, String address,
                 String gender, String phoneNumber, String email, LocalDate dataCreated, Set<Roles> role,
