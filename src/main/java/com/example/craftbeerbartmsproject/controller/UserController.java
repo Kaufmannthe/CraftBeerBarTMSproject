@@ -192,7 +192,7 @@ public class UserController {
         ModelAndView view = new ModelAndView();
         User user = getUser(authentication);
         cartService.add(product, user);
-        view.setViewName("/user/shopMenu");
+        view.setViewName("/user/all_products");
         return view;
     }
 

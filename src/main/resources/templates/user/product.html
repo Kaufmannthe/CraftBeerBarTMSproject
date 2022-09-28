@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -83,7 +84,8 @@
                         <form th:action="@{/cart}" method="post" id="productForm">
                             <div class="col text-right align-self-center">
                                 <input th:value="${product.getId()}" name="product" type="hidden">
-                                <button sec:authorize="isAuthenticated()" class="btn">Add to cart</button>
+                                <button sec:authorize="isAuthenticated()" class="btn">Add to Cart
+                                </button>
                             </div>
                         </form>
                     </div>
