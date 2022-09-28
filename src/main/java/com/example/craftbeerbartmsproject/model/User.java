@@ -3,6 +3,8 @@ package com.example.craftbeerbartmsproject.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +24,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     private String firstName;
@@ -42,8 +45,9 @@ public class User {
     @NotNull
     private String email;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @CreatedDate
-    private LocalDate dataCreated;
+    @CreationTimestamp()
+    @Temporal(TemporalType.DATE)
+    private Date dataCreated;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
@@ -64,7 +68,7 @@ public class User {
 
 
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age, String address,
-                String gender, String phoneNumber, String email, LocalDate dataCreated, Set<Roles> role,
+                String gender, String phoneNumber, String email, Date dataCreated, Set<Roles> role,
                 List<Contacts> contactsList/*, Cart cart*/) {
         this.id = id;
         this.firstName = firstName;

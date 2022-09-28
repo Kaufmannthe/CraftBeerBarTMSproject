@@ -21,13 +21,11 @@ public class Cart {
 
     private long userId;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @CreatedDate
-    private LocalDate date;
-
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    private int quantity;
 
     public Cart(long userId, Product product) {
         this.userId = userId;
