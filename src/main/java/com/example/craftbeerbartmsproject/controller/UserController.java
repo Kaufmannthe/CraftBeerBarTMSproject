@@ -176,11 +176,12 @@ public class UserController {
 
         List<Product> productList = new ArrayList<>();
 
-        for (Cart i : cartList){
+        for (Cart i : cartList) {
             productList.add(i.getProduct());
         }
 
         view.addObject("listOfProducts", productList);
+        view.addObject("listOfCarts", cartList);
 
         view.setViewName("/user/cart");
         return view;
@@ -191,8 +192,18 @@ public class UserController {
     public ModelAndView addCart(Authentication authentication, @ModelAttribute("product") Product product) {
         ModelAndView view = new ModelAndView();
         User user = getUser(authentication);
+
         cartService.add(product, user);
-        view.setViewName("/user/all_products");
+
+        view.setViewName("redirect:/shop/product/all");
+        return view;
+    }
+    @GetMapping("/cart/{id}")
+    public ModelAndView deleteProductFromCart(@PathVariable (name = "id") Cart cart){
+        ModelAndView view = new ModelAndView();
+        cartService.delete(cart);
+
+        view.setViewName("redirect:/cart");
         return view;
     }
 

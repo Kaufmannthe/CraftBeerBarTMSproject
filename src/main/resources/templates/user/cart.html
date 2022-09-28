@@ -63,6 +63,7 @@
 <header class="bg-dark py-5">
     <div class="text-center text-white">
         <h1 class="display-4 fw-bolder">Your Cart</h1>
+        <p th:if="${listOfProducts.isEmpty()}">The cart is empty :(</p>
     </div>
 </header>
 <section class="py-5">
@@ -94,8 +95,12 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                    th:href="@{/shop/product/{id}(id = ${product.getId()})}">Delete</a>
+                                                    th:href="@{/cart/{id}(id =
+                                                     ${listOfCarts.get(listOfProducts.indexOf(product)).getId()})}">Delete</a>
+
                         </div>
+                    </div>
+                    <div>
                     </div>
                 </div>
             </div>

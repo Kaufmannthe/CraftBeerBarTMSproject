@@ -1,14 +1,12 @@
 package com.example.craftbeerbartmsproject.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -23,7 +21,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @NotNull
     private String firstName;
@@ -59,15 +57,15 @@ public class User {
     @JoinColumn(name = "contact_list")
     private List<Contacts> contactsList;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Cart cart;
+/*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Cart cart;*/
 
     private String picture;
 
 
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age, String address,
                 String gender, String phoneNumber, String email, LocalDate dataCreated, Set<Roles> role,
-                List<Contacts> contactsList, Cart cart) {
+                List<Contacts> contactsList/*, Cart cart*/) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -82,6 +80,6 @@ public class User {
         this.dataCreated = dataCreated;
         this.role = role;
         this.contactsList = contactsList;
-        this.cart = cart;
+        /*this.cart = cart;*/
     }
 }
