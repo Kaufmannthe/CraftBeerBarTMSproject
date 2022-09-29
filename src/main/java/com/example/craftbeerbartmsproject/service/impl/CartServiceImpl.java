@@ -5,8 +5,10 @@ import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.repository.CartRepository;
 import com.example.craftbeerbartmsproject.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +16,7 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
 
+    @Autowired
     public CartServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
     }
@@ -29,5 +32,10 @@ public class CartServiceImpl implements CartService {
 
     public void delete(Cart cart) {
         cartRepository.delete(cart);
+    }
+
+    @Override
+    public List<Cart> findCartsByUsername(User authUser) {
+        return new ArrayList<>(all(authUser.getId()));
     }
 }

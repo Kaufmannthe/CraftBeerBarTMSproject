@@ -22,11 +22,9 @@ import java.util.List;
 @RequestMapping("/moderator")
 @PreAuthorize("hasAnyAuthority('MODERATOR', 'ADMIN')")
 public class ModeratorController {
-
-    ProductService productService;
-    ProducerService producerService;
-
-    UserService userService;
+    private final ProductService productService;
+    private final ProducerService producerService;
+    private final UserService userService;
 
     @Autowired
     public ModeratorController(ProductService productService, ProducerService producerService, UserService userService) {
@@ -38,13 +36,8 @@ public class ModeratorController {
     @GetMapping("/product_registration")
     public ModelAndView productRegistrationPage(@ModelAttribute("product") Product product) {
         ModelAndView view = new ModelAndView();
-
-        List<ProductType> listOfTypes = new ArrayList<>(Arrays.asList(ProductType.values()));
-
-        List<Producer> listOfProducer = producerService.findAll();
-
-        view.addObject("listOfProducts", listOfTypes);
-        view.addObject("listOfProducers", listOfProducer);
+        view.addObject("listOfProducts", Arrays.asList(ProductType.values()));
+        view.addObject("listOfProducers", producerService.findAll());
         view.setViewName("moderator/productRegistration");
         return view;
     }

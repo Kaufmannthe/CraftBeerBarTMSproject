@@ -1,9 +1,7 @@
 package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.model.*;
-import com.example.craftbeerbartmsproject.service.CartService;
-import com.example.craftbeerbartmsproject.service.ProductService;
-import com.example.craftbeerbartmsproject.service.UserService;
+import com.example.craftbeerbartmsproject.service.*;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,16 +22,20 @@ import java.util.stream.LongStream;
 @Controller
 public class UserController {
 
-    UserService userService;
-    ProductService productService;
+    private final UserService userService;
+    private final ProductService productService;
+    private final CartService cartService;
+    private final RegistrationService registrationService;
+    private final ShopService shopService;
 
-    CartService cartService;
-
-
-    public UserController(UserService service, ProductService productService, CartService cartService) {
-        this.userService = service;
+    public UserController(UserService userService, ProductService productService,
+                          CartService cartService, RegistrationService registrationService,
+                          ShopService shopService) {
+        this.userService = userService;
         this.productService = productService;
         this.cartService = cartService;
+        this.registrationService = registrationService;
+        this.shopService = shopService;
     }
 
     @GetMapping(value = "/")
@@ -53,11 +55,7 @@ public class UserController {
     @GetMapping(value = "/registration")
     public ModelAndView registerPage(@ModelAttribute("user") User user) {
         ModelAndView view = new ModelAndView();
-        List<Roles> rolesList = new ArrayList<>() {
-        };
-        rolesList.add(Roles.USER);
-        rolesList.add(Roles.ADMIN);
-        view.addObject("roleList", rolesList);
+        view.addObject("roleList", registrationService.rolesForAdminsUserRegistration());
         view.setViewName("user/registration");
         return view;
     }
@@ -66,9 +64,7 @@ public class UserController {
     public ModelAndView registerUser(@ModelAttribute("user") User user,
                                      @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
-        if (!Objects.equals(file.getOriginalFilename(), "")) {
-            user.setPicture(userService.saveImage(file));
-        }
+        registrationService.pictureCheckUser(user, file);
         userService.add(user);
         view.setViewName("user/landing");
         return view;
@@ -78,9 +74,7 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView profileUser(Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        User user = getUser(authentication);
-
-        view.addObject("userLogin", user);
+        view.addObject("userLogin", userService.getAuthUser(authentication));
         view.setViewName("user/profile");
         return view;
     }
@@ -88,54 +82,17 @@ public class UserController {
     @GetMapping("/shop")
     public ModelAndView shopPage(@ModelAttribute("user") @NotNull User user) {
         ModelAndView view = new ModelAndView();
-        Random random = new Random();
-        List<Product> resultList = new ArrayList<>();
-        Set<Long> set = new LinkedHashSet<>();
-
-        List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
-        int productCount = productService.findAll().size();
-
-        long originNumber = (int) productService.findAll().stream().findFirst().get().getId();
-        long boundNumber = listOfProducts.get(productCount - 1).getId();
-
-
-        if (productService.findAll().size() >= 4) {
-            while (set.size() < 4) {
-                long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId).getDataCreated() != null) {
-                    set.add(randomId);
-                }
-            }
-        } else {
-            while (set.size() < productService.findAll().size()) {
-                long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId).getDataCreated() != null) {
-                    set.add(randomId);
-                }
-            }
-        }
-
-        for (long i : set) {
-            resultList.add(productService.findById(i));
-        }
-
-        view.addObject("productList", resultList);
+        view.addObject("productList", shopService.randomUniqueProductsList());
         view.setViewName("user/shopMenu");
         return view;
     }
 
+
     @GetMapping("/shop/product/{id}")
     public ModelAndView productPage(@PathVariable(name = "id") Product product) {
         ModelAndView view = new ModelAndView();
-
-        List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
-        int productCount = productService.findAll().size();
-
-        long min = (int) productService.findAll().stream().findFirst().get().getId();
-        long max = listOfProducts.get(productCount - 1).getId();
-
-        view.addObject("min", min);
-        view.addObject("max", max);
+        view.addObject("min", shopService.minimalIndex());
+        view.addObject("max", shopService.maximumIndex());
         view.addObject("product", product);
         view.setViewName("user/product");
         return view;
@@ -144,25 +101,15 @@ public class UserController {
     @GetMapping("/shop/product/all")
     public ModelAndView allProducts(@ModelAttribute(name = "product") Product product) {
         ModelAndView view = new ModelAndView();
-
-        List<Product> productList = productService.findAll();
-        view.addObject("productList", productList);
+        view.addObject("productList", productService.findAll());
         view.setViewName("user/all_products");
         return view;
     }
 
     @GetMapping("/shop/{sort}_list")
-    public ModelAndView filtering(@PathVariable(name = "sort") String s) {
+    public ModelAndView filtering(@PathVariable(name = "sort") String name) {
         ModelAndView view = new ModelAndView();
-        List<Product> productList = new ArrayList<>();
-        List<Product> allProducts = productService.findAll();
-
-        for (Product p : allProducts) {
-            if (p.getType().name().toLowerCase().equals(s)) {
-                productList.add(p);
-            }
-        }
-        view.addObject("productList", productList);
+        view.addObject("productList", shopService.sortProductsByName(name));
         view.setViewName("user/productFilter");
         return view;
     }
@@ -170,46 +117,27 @@ public class UserController {
     @GetMapping("/cart")
     public ModelAndView cart(Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        User user = getUser(authentication);
-
-        List<Cart> cartList = new ArrayList<>(cartService.all(user.getId()));
-
-        List<Product> productList = new ArrayList<>();
-
-        for (Cart i : cartList) {
-            productList.add(i.getProduct());
-        }
-
-        view.addObject("listOfProducts", productList);
-        view.addObject("listOfCarts", cartList);
-
+        view.addObject("listOfProducts", productService.findProductsByCarts
+                (cartService.findCartsByUsername(userService.getAuthUser(authentication))));
+        view.addObject("listOfCarts",
+                cartService.findCartsByUsername(userService.getAuthUser(authentication)));
         view.setViewName("/user/cart");
         return view;
     }
 
-
     @PostMapping("/cart")
     public ModelAndView addCart(Authentication authentication, @ModelAttribute("product") Product product) {
         ModelAndView view = new ModelAndView();
-        User user = getUser(authentication);
-
-        cartService.add(product, user);
-
+        cartService.add(product, userService.getAuthUser(authentication));
         view.setViewName("redirect:/shop/product/all");
         return view;
     }
+
     @GetMapping("/cart/{id}")
-    public ModelAndView deleteProductFromCart(@PathVariable (name = "id") Cart cart){
+    public ModelAndView deleteProductFromCart(@PathVariable(name = "id") Cart cart) {
         ModelAndView view = new ModelAndView();
         cartService.delete(cart);
-
         view.setViewName("redirect:/cart");
         return view;
     }
-
-    private User getUser(Authentication authentication) {
-        String userName = authentication.getName();
-        return userService.findByLogin(userName);
-    }
-
 }

@@ -8,10 +8,14 @@ import java.util.List;
 
 public interface CartService {
 
-    public void add(Product product, User user);
+    void add(Product product, User user);
 
-    public List<Cart> all(long userId);
+    List<Cart> all(long userId);
 
-    public void delete(Cart cart);
+    void delete(Cart cart);
+
+    List<Cart> findCartsByUsername(User authUser);
+
+
 
 }

@@ -1,7 +1,9 @@
 package com.example.craftbeerbartmsproject.service;
 
+import com.example.craftbeerbartmsproject.model.Cart;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
+import com.example.craftbeerbartmsproject.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,4 +26,6 @@ public interface ProductService {
     void delete(Product product);
 
     String saveImage(MultipartFile file) throws IOException;
+
+    List<Product> findProductsByCarts(List<Cart> carts);
 }

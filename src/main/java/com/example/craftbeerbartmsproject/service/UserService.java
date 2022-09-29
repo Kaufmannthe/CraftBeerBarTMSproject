@@ -1,6 +1,7 @@
 package com.example.craftbeerbartmsproject.service;
 
 import com.example.craftbeerbartmsproject.model.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,4 +25,6 @@ public interface UserService {
     User findUserByLoginAndPassword(String login, String password);
 
     String saveImage(MultipartFile file) throws IOException;
+
+    User getAuthUser(Authentication authentication);
 }

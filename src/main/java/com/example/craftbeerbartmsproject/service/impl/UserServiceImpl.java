@@ -5,6 +5,7 @@ import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.repository.UserRepository;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -78,5 +80,11 @@ public class UserServiceImpl implements UserService {
         Path path = Paths.get(folder + file.getOriginalFilename());
         Files.write(path,bytes);
         return "/img/uploaded/user_picture/" + file.getOriginalFilename();
+    }
+
+    @Override
+    public User getAuthUser(Authentication authentication) {
+        String userName = authentication.getName();
+        return findByLogin(userName);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 @Transactional
 public class ProducerServiceImpl implements ProducerService {
 
-    ProducerRepository repository;
+    private final ProducerRepository repository;
 
     @Autowired
     public ProducerServiceImpl(ProducerRepository repository) {
@@ -64,4 +64,6 @@ public class ProducerServiceImpl implements ProducerService {
         Files.write(path,bytes);
         return "/img/uploaded/producer_picture/" + file.getOriginalFilename();
     }
+
+
 }

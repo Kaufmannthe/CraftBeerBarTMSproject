@@ -1,8 +1,11 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
+import com.example.craftbeerbartmsproject.model.Cart;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
+import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.repository.ProductRepository;
+import com.example.craftbeerbartmsproject.service.CartService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +17,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    ProductRepository repository;
+    private final ProductRepository repository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository repository) {
@@ -70,7 +74,17 @@ public class ProductServiceImpl implements ProductService {
         String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\product_picture\\";
         byte[] bytes = file.getBytes();
         Path path = Paths.get(folder + file.getOriginalFilename());
-        Files.write(path,bytes);
+        Files.write(path, bytes);
         return "/img/uploaded/product_picture/" + file.getOriginalFilename();
+    }
+
+    @Override
+    public List<Product> findProductsByCarts(List<Cart> carts) {
+        List<Product> productList = new ArrayList<>();
+
+        for (Cart i : carts) {
+            productList.add(i.getProduct());
+        }
+        return productList;
     }
 }
