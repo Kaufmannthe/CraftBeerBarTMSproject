@@ -31,4 +31,6 @@ public interface UserService {
     User updateAuthUser(Authentication authentication, User user);
 
     void deletePhoto(Authentication authentication);
+
+    void updatePassword(Authentication authentication, User user);
 }

@@ -79,6 +79,7 @@ public class UserController {
         return view;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile/edit")
     public ModelAndView profileEditPage(Authentication authentication) {
         ModelAndView view = new ModelAndView();
@@ -87,6 +88,7 @@ public class UserController {
         return view;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/edit")
     public ModelAndView profileEdit(@ModelAttribute("user") User user, Authentication authentication,
                                     @RequestParam("imageFile") MultipartFile file) throws IOException {
@@ -96,10 +98,20 @@ public class UserController {
         view.setViewName("redirect:/profile");
         return view;
     }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/edit/photo")
     public ModelAndView deletePhoto(Authentication authentication){
         ModelAndView view = new ModelAndView();
         userService.deletePhoto(authentication);
+        view.setViewName("redirect:/profile");
+        return view;
+    }
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/profile/edit_password")
+    public ModelAndView passwordEdit(@ModelAttribute ("user") User user, Authentication authentication){
+        ModelAndView view = new ModelAndView();
+        userService.updatePassword(authentication, user);
         view.setViewName("redirect:/profile");
         return view;
     }
@@ -111,7 +123,6 @@ public class UserController {
         view.setViewName("user/shopMenu");
         return view;
     }
-
 
     @GetMapping("/shop/product/{id}")
     public ModelAndView productPage(@PathVariable(name = "id") Product product) {

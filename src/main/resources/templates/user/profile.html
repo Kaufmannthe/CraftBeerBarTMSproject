@@ -129,7 +129,7 @@
                                 <h6 class="mb-0">Gender</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <th:block th:text="${userLogin.gender   }"/>
+                                <th:block th:text="${userLogin.gender}"/>
                             </div>
                         </div>
                         <hr>
@@ -138,7 +138,7 @@
                                 <a class="btn btn-info " target="__blank"
                                    th:href="@{/profile/edit}">Edit</a>
                                 <a class="btn btn-info " target="__blank"
-                                   href="${pageContext.request.contextPath}/controller?command=password_edit">Change
+                                   th:href="@{/profile/edit_password}">Change
                                     password</a>
                             </div>
                         </div>

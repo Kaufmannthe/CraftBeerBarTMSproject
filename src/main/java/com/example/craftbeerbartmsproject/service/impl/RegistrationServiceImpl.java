@@ -35,7 +35,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (!Objects.equals(file.getOriginalFilename(), "")) {
             user.setPicture(userService.saveImage(file));
         }
-
     }
 
     @Override

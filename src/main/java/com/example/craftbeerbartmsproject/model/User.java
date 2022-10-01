@@ -69,7 +69,7 @@ public class User {
 
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age, String address,
                 String gender, String phoneNumber, String email, Date dataCreated, Set<Roles> role,
-                List<Contacts> contactsList/*, Cart cart*/) {
+                List<Contacts> contactsList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

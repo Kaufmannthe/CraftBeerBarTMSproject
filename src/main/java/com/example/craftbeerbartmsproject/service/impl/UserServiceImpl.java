@@ -91,17 +91,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateAuthUser(Authentication authentication, User user) {
         User authUser = getAuthUser(authentication);
-        return new User(
-                authUser.getId(), user.getFirstName(), user.getLastName(), authUser.getLogin(), authUser.getPassword(),
-                user.isActive(), authUser.getAge(), user.getAddress(), authUser.getGender(), authUser.getPhoneNumber(),
-                user.getEmail(), authUser.getDataCreated(), authUser.getRole(), authUser.getContactsList(), user.getPicture()
-        );
+        if (authUser.getPicture() != null) {
+            return new User(
+                    authUser.getId(), user.getFirstName(), user.getLastName(), authUser.getLogin(), authUser.getPassword(),
+                    user.isActive(), authUser.getAge(), user.getAddress(), authUser.getGender(), authUser.getPhoneNumber(),
+                    user.getEmail(), authUser.getDataCreated(), authUser.getRole(), authUser.getContactsList(),
+                    authUser.getPicture());
+        } else {
+            authUser.setPicture(user.getPicture());
+            return update(authUser);
+        }
     }
 
     @Override
     public void deletePhoto(Authentication authentication) {
         User authUser = getAuthUser(authentication);
         authUser.setPicture(null);
+        update(authUser);
+    }
+
+    @Override
+    public void updatePassword(Authentication authentication, User user) {
+        User authUser = getAuthUser(authentication);
+        authUser.setPassword(user.getPassword());
         update(authUser);
     }
 }
