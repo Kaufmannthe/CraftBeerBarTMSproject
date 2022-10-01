@@ -20,7 +20,7 @@
             </ol>
         </nav>
         <!-- /Breadcrumb -->
-        <form th:action="@{/edit}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/edit}" method="post" enctype="multipart/form-data" onsubmit="return profileCheckEdit()">
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">
@@ -50,7 +50,7 @@
                             </label>
                         </div>
                     </div>
-                    <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+                    <progress id="progressBar" value="0" max="100" style="width:350px;"></progress>
                     <h3 id="status"></h3>
                     <p id="loaded_n_total" class="result"></p>
                 </div>
@@ -62,7 +62,7 @@
                                     <h6 class="mb-0">First Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.firstName}" id="firstName" name="firstName">
+                                    <input th:field="*{user.firstName}" id="firstName" name="firstName" required>
                                 </div>
                             </div>
                             <hr>
@@ -71,7 +71,7 @@
                                     <h6 class="mb-0">Last Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.lastName}" id="lastName" name="lastName">
+                                    <input th:field="*{user.lastName}" id="lastName" name="lastName" required>
                                 </div>
                             </div>
                             <hr>
@@ -80,7 +80,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.email}" id="email" name="email">
+                                    <input th:field="*{user.email}" id="email" name="email" required>
                                 </div>
                             </div>
                             <hr>
@@ -89,7 +89,7 @@
                                     <h6 class="mb-0">Mobile</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.phoneNumber}" id="phoneNumber" name="phoneNumber">
+                                    <input th:field="*{user.phoneNumber}" id="phoneNumber" name="phoneNumber" required>
                                 </div>
                             </div>
                             <hr>
@@ -98,12 +98,22 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.address}" id="address" name="address">
+                                    <input th:field="*{user.address}" id="address" name="address" required>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Age</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input th:field="*{user.age}" id="age" name="address" required>
                                 </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Save</button>
                     </div>
+                    <span id="message" style="color:red"></span><br><br>
                 </div>
             </div>
         </form>

@@ -30,27 +30,21 @@
                             <input type="file" name="imageFile"/>
                             <hr>
                             <label>Name</label>
-                            <input type="text" name="firstName" id="firstName">
-                            <span id="messageFirstName" style="color:red"></span><br><br>
+                            <input type="text" name="firstName" id="firstName" required>
                             <label>Surname</label>
-                            <input type="text" name="lastName" id="lastName">
-                            <span id="messageLastName" style="color:red"></span><br><br>
+                            <input type="text" name="lastName" id="lastName" required>
                             <label>Login</label>
-                            <input type="text" name="login" id="login">
-                            <span id="messageLogin" style="color:red"></span><br><br>
+                            <input type="text" name="login" id="login" required>
                             <label>Email Address</label>
-                            <input type="text" name="email" id="email">
-                            <span id="messageEmail" style="color:red"></span><br><br>
+                            <input type="text" name="email" id="email" required>
                             <label>Address</label>
-                            <input type="text" name="address" id="address">
-                            <span id="messageAddress" style="color:red"></span><br><br>
+                            <input type="text" name="address" id="address" required>
                             <label>Age</label>
                             <br>
                             <input type="text" name="age" id="age">
                             <span id="messageAge" style="color:red"></span><br><br>
                             <label>Mobile</label>
-                            <input type="text" name="phoneNumber" id="phoneNumber">
-                            <span id="messagePhoneNumber" style="color:red"></span><br><br>
+                            <input type="text" name="phoneNumber" id="phoneNumber" required>
                             <input class="form-check-input" type="radio" name="gender"
                                    id="female_gender"
                                    value="Female" checked/>
@@ -82,9 +76,9 @@
                                 </label>
                                 <br>
                                 <label>Password</label>
-                                <input type="password" name="password" >
+                                <input type="password" name="password" required >
                                 <label>Password Confirm</label>
-                                <input type="password" name="password_confirm">
+                                <input type="password" name="password_confirm" required>
                                 <span id="messagePassword" style="color:red"></span><br><br>
                             </div>
                             <button type="submit">Join Us</button>
@@ -105,7 +99,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/js/formCheck.js"></script>
 <script type="text/javascript" src="/js/passwordConfirm.js"></script>
 </body>
 </html>
