@@ -15,7 +15,7 @@
         <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/}">Craft Beer Club</a></li>
-                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                <li class="breadcrumb-item active" aria-current="page">Profile</li>
             </ol>
         </nav>
         <!-- /Breadcrumb -->
@@ -42,6 +42,11 @@
                             </div>
 
                             <div class="mt-3">
+                                <th:block th:if="${userLogin.getPicture() != null}">
+                                    <form th:action="@{/edit/photo}" method="post">
+                                        <button class="btn btn-outline-primary">Delete Photo</button>
+                                    </form>
+                                </th:block>
                                 <h4>
                                     <th:block th:text="${userLogin.firstName}"/>
                                 </h4>
@@ -131,7 +136,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <a class="btn btn-info " target="__blank"
-                                   href="${pageContext.request.contextPath}/controller?command=profile_edit">Edit</a>
+                                   th:href="@{/profile/edit}">Edit</a>
                                 <a class="btn btn-info " target="__blank"
                                    href="${pageContext.request.contextPath}/controller?command=password_edit">Change
                                     password</a>

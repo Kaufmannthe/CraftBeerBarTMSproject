@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\user_picture\\";
         byte[] bytes = file.getBytes();
         Path path = Paths.get(folder + file.getOriginalFilename());
-        Files.write(path,bytes);
+        Files.write(path, bytes);
         return "/img/uploaded/user_picture/" + file.getOriginalFilename();
     }
 
@@ -86,5 +86,22 @@ public class UserServiceImpl implements UserService {
     public User getAuthUser(Authentication authentication) {
         String userName = authentication.getName();
         return findByLogin(userName);
+    }
+
+    @Override
+    public User updateAuthUser(Authentication authentication, User user) {
+        User authUser = getAuthUser(authentication);
+        return new User(
+                authUser.getId(), user.getFirstName(), user.getLastName(), authUser.getLogin(), authUser.getPassword(),
+                user.isActive(), authUser.getAge(), user.getAddress(), authUser.getGender(), authUser.getPhoneNumber(),
+                user.getEmail(), authUser.getDataCreated(), authUser.getRole(), authUser.getContactsList(), user.getPicture()
+        );
+    }
+
+    @Override
+    public void deletePhoto(Authentication authentication) {
+        User authUser = getAuthUser(authentication);
+        authUser.setPicture(null);
+        update(authUser);
     }
 }

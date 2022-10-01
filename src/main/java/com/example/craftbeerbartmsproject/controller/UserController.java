@@ -79,6 +79,31 @@ public class UserController {
         return view;
     }
 
+    @GetMapping("/profile/edit")
+    public ModelAndView profileEditPage(Authentication authentication) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("user", userService.getAuthUser(authentication));
+        view.setViewName("/user/profileEdit");
+        return view;
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView profileEdit(@ModelAttribute("user") User user, Authentication authentication,
+                                    @RequestParam("imageFile") MultipartFile file) throws IOException {
+        ModelAndView view = new ModelAndView();
+        registrationService.pictureCheckUser(user,file);
+        userService.update(userService.updateAuthUser(authentication, user));
+        view.setViewName("redirect:/profile");
+        return view;
+    }
+    @PostMapping("/edit/photo")
+    public ModelAndView deletePhoto(Authentication authentication){
+        ModelAndView view = new ModelAndView();
+        userService.deletePhoto(authentication);
+        view.setViewName("redirect:/profile");
+        return view;
+    }
+
     @GetMapping("/shop")
     public ModelAndView shopPage(@ModelAttribute("user") @NotNull User user) {
         ModelAndView view = new ModelAndView();
@@ -140,4 +165,5 @@ public class UserController {
         view.setViewName("redirect:/cart");
         return view;
     }
+
 }

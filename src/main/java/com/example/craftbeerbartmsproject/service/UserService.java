@@ -27,4 +27,8 @@ public interface UserService {
     String saveImage(MultipartFile file) throws IOException;
 
     User getAuthUser(Authentication authentication);
+
+    User updateAuthUser(Authentication authentication, User user);
+
+    void deletePhoto(Authentication authentication);
 }
