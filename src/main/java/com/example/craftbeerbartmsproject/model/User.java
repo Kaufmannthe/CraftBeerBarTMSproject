@@ -9,9 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -26,23 +24,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull
+
     private String firstName;
-    @NotNull
+
     private String lastName;
-    @NotNull
+
     private String login;
-    @NotNull
+
     private String password;
+
     private boolean isActive;
-    @NotNull
+
     private int age;
-    @NotNull
+
     private String address;
     private String gender;
-    @NotNull
+
     private String phoneNumber;
-    @NotNull
+
     private String email;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @CreationTimestamp()
@@ -53,7 +52,6 @@ public class User {
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    @NotNull
     @Size(max = 3)
     private Set<Roles> role;
 
@@ -67,8 +65,8 @@ public class User {
     private String picture;
 
 
-    public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age, String address,
-                String gender, String phoneNumber, String email, Date dataCreated, Set<Roles> role,
+    public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age,
+                String address, String gender, String phoneNumber, String email, Date dataCreated, Set<Roles> role,
                 List<Contacts> contactsList) {
         this.id = id;
         this.firstName = firstName;
@@ -84,6 +82,6 @@ public class User {
         this.dataCreated = dataCreated;
         this.role = role;
         this.contactsList = contactsList;
-        /*this.cart = cart;*/
+
     }
 }

@@ -93,7 +93,7 @@ public class UserController {
     public ModelAndView profileEdit(@ModelAttribute("user") User user, Authentication authentication,
                                     @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
-        registrationService.pictureCheckUser(user,file);
+        registrationService.pictureCheckUser(user, file);
         userService.update(userService.updateAuthUser(authentication, user));
         view.setViewName("redirect:/profile");
         return view;
@@ -101,15 +101,23 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/edit/photo")
-    public ModelAndView deletePhoto(Authentication authentication){
+    public ModelAndView deletePhoto(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         userService.deletePhoto(authentication);
         view.setViewName("redirect:/profile");
         return view;
     }
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile/edit_password")
+    public ModelAndView passwordEditPage() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("user/passwordEditor");
+        return view;
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/profile/edit_password")
-    public ModelAndView passwordEdit(@ModelAttribute ("user") User user, Authentication authentication){
+    public ModelAndView passwordEdit(@ModelAttribute("user") User user, Authentication authentication) {
         ModelAndView view = new ModelAndView();
         userService.updatePassword(authentication, user);
         view.setViewName("redirect:/profile");

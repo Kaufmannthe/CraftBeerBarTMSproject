@@ -25,24 +25,32 @@
                 <div class="tab-content">
                     <div class="innter-form">
                         <form th:action="@{/registration}" class="sa-innate-form"
-                              method="post" enctype="multipart/form-data">
+                              method="post" enctype="multipart/form-data" onsubmit="return formCheckConfirm()">
                             <label>Avatar upload</label>
                             <input type="file" name="imageFile"/>
                             <hr>
                             <label>Name</label>
                             <input type="text" name="firstName" id="firstName">
+                            <span id="messageFirstName" style="color:red"></span><br><br>
                             <label>Surname</label>
                             <input type="text" name="lastName" id="lastName">
+                            <span id="messageLastName" style="color:red"></span><br><br>
                             <label>Login</label>
-                            <input type="text" name="login" id="login" required>
+                            <input type="text" name="login" id="login">
+                            <span id="messageLogin" style="color:red"></span><br><br>
                             <label>Email Address</label>
-                            <input type="text" name="email" id="email" required>
+                            <input type="text" name="email" id="email">
+                            <span id="messageEmail" style="color:red"></span><br><br>
                             <label>Address</label>
                             <input type="text" name="address" id="address">
+                            <span id="messageAddress" style="color:red"></span><br><br>
                             <label>Age</label>
+                            <br>
                             <input type="text" name="age" id="age">
+                            <span id="messageAge" style="color:red"></span><br><br>
                             <label>Mobile</label>
-                            <input type="text" name="phoneNumber" id="phoneNumber" required>
+                            <input type="text" name="phoneNumber" id="phoneNumber">
+                            <span id="messagePhoneNumber" style="color:red"></span><br><br>
                             <input class="form-check-input" type="radio" name="gender"
                                    id="female_gender"
                                    value="Female" checked/>
@@ -58,7 +66,8 @@
                                        id="other_gender"
                                        value="Other"/>
                                 <label class="form-check-label" for="other_gender">Other</label>
-                                <input th:field="*{user.role}" th:value="${user.setRole('USER')}" th:name="role" type="hidden"
+                                <input th:field="*{user.role}" th:value="${user.setRole('USER')}" th:name="role"
+                                       type="hidden"
                                        sec:authorize="isAnonymous()">
                                 <br>
                                 <label sec:authorize="hasAuthority('ADMIN')">Role</label>
@@ -73,9 +82,10 @@
                                 </label>
                                 <br>
                                 <label>Password</label>
-                                <input type="password" name="password" required>
+                                <input type="password" name="password" >
                                 <label>Password Confirm</label>
-                                <input type="password" name="password_confirm" required>
+                                <input type="password" name="password_confirm">
+                                <span id="messagePassword" style="color:red"></span><br><br>
                             </div>
                             <button type="submit">Join Us</button>
                         </form>
@@ -94,5 +104,8 @@
             </div>
         </div>
     </div>
+</div>
+<script type="text/javascript" src="/js/formCheck.js"></script>
+<script type="text/javascript" src="/js/passwordConfirm.js"></script>
 </body>
 </html>

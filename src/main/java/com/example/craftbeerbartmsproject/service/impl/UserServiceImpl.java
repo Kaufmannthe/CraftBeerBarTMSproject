@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(Authentication authentication, User user) {
         User authUser = getAuthUser(authentication);
-        authUser.setPassword(user.getPassword());
+        authUser.setPassword(passwordEncoder.encode(user.getPassword()));
         update(authUser);
     }
 }
