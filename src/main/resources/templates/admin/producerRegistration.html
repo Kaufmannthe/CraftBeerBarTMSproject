@@ -1,12 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en" >
 <head>
     <title>Producer Registration</title>
-    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet"
+    <link th:href="@{/maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css}" rel="stylesheet"
           id="bootstrap-css">
-    <script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js}"></script>
-    <script th:src="@{//code.jquery.com/jquery-1.11.1.min.js}"></script>
+    <script th:src="@{/maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{/code.jquery.com/jquery-1.11.1.min.js}"></script>
     <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/registerStyles.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
 </head>
 <body>
 <form th:action="@{/}" class="sa-innate-form"
@@ -41,7 +42,7 @@
                             <label>Email Address</label>
                             <input type="text" name="email" id="email" required>
                             <label>Phone Number</label>
-                            <input type="text" name="phone_number" id="phone_number" required>
+                            <input type="text" name="phoneNumber" id="phone_number" required>
                             <label>Signatory</label>
                             <select th:field="*{producer.signatory}" name="signatory" id="signatory">
                                 <option th:each="u : ${userList}"
@@ -49,6 +50,8 @@
                                         th:text="${u.login}">
                                 </option>
                             </select>
+                            <input th:field="*{producer.role}" th:value="${producer.setRole('MODERATOR')}" th:name="role"
+                                   type="hidden">
                             <label>Password</label>
                             <input type="password" name="password" id="password" required>
                             <label>Confirm password</label>

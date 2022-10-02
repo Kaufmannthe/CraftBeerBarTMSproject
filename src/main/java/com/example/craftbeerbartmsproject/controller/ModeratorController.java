@@ -8,6 +8,7 @@ import com.example.craftbeerbartmsproject.service.ProductService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +50,14 @@ public class ModeratorController {
         product.setPicture(userService.saveImage(file));
         productService.add(product);
         view.setViewName("redirect:/shop/product/" + product.getId());
+        return view;
+    }
+
+    @GetMapping("/producer_profile")
+    public ModelAndView producerProfilePage(Authentication authentication) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("producer", producerService.findByName(authentication.getName()));
+        view.setViewName("/moderator/profile");
         return view;
     }
 

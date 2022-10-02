@@ -4,6 +4,7 @@ import com.example.craftbeerbartmsproject.model.Producer;
 import com.example.craftbeerbartmsproject.repository.ProducerRepository;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class ProducerServiceImpl implements ProducerService {
 
     private final ProducerRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProducerServiceImpl(ProducerRepository repository) {
+    public ProducerServiceImpl(ProducerRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,7 +51,10 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public Producer add(Producer producer) {
-        return repository.save(producer);
+        producer.setPassword(passwordEncoder.encode(producer.getPassword()));
+        repository.save(producer);
+        producer.setNumberOfSignatory(producer.getSignatory().getPhoneNumber());
+        return producer;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class ProducerServiceImpl implements ProducerService {
         String folder = "C:\\CraftBeerBarTMSproject\\src\\main\\resources\\static\\img\\uploaded\\producer_picture\\";
         byte[] bytes = file.getBytes();
         Path path = Paths.get(folder + file.getOriginalFilename());
-        Files.write(path,bytes);
+        Files.write(path, bytes);
         return "/img/uploaded/producer_picture/" + file.getOriginalFilename();
     }
 

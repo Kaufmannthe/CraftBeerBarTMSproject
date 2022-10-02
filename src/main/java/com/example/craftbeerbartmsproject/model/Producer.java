@@ -7,7 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "producer")
@@ -19,32 +21,38 @@ public class Producer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull
+    private String login;
+    private String password;
     private String name;
-    @NotNull
     private String address;
-    @NotNull
+    private String email;
     private String phoneNumber;
-    @NotNull
     private String specialization;
-    @NotNull
     private String description;
-    @NotNull
     private String numberOfSignatory;
-    @NotNull
     private float rating;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "signatory_id")
-    @NotNull
     private User signatory;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCreated;
 
     private String picture;
 
-    public Producer(long id, String name, String address, String phoneNumber, String specialization,
-                    String description, String numberOfSignatory, float rating, User signatory, LocalDate dataCreated) {
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    @Size(max = 3)
+    private Set<Roles> role;
+
+
+    public Producer(long id, String login, String password, String name, String address, String phoneNumber,
+                    String specialization, String description, String numberOfSignatory, float rating, User signatory,
+                    LocalDate dataCreated) {
         this.id = id;
+        this.login = login;
+        this.password = password;
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
