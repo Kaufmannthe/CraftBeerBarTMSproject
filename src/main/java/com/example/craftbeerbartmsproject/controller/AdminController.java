@@ -45,8 +45,7 @@ public class AdminController {
         ModelAndView view = new ModelAndView();
         registrationService.pictureCheckProducer(producer, file);
         producerService.add(producer);
-        view.addObject("producerLogin", producer);
-        view.setViewName("moderator/profile");
+        view.setViewName("redirect:/");
         return view;
     }
 }

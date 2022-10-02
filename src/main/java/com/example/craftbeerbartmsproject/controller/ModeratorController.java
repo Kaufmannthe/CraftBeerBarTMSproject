@@ -53,10 +53,10 @@ public class ModeratorController {
         return view;
     }
 
-    @GetMapping("/producer_profile")
+    @GetMapping("/profile")
     public ModelAndView producerProfilePage(Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        view.addObject("producer", producerService.findByName(authentication.getName()));
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
         view.setViewName("/moderator/profile");
         return view;
     }

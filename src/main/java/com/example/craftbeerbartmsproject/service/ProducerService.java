@@ -23,4 +23,6 @@ public interface ProducerService {
 
     String saveImage(MultipartFile file) throws IOException;
 
+    Producer findByLogin(String login);
+
 }

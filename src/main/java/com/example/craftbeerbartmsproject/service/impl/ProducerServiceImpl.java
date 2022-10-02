@@ -53,7 +53,6 @@ public class ProducerServiceImpl implements ProducerService {
     public Producer add(Producer producer) {
         producer.setPassword(passwordEncoder.encode(producer.getPassword()));
         repository.save(producer);
-        producer.setNumberOfSignatory(producer.getSignatory().getPhoneNumber());
         return producer;
     }
 
@@ -69,6 +68,11 @@ public class ProducerServiceImpl implements ProducerService {
         Path path = Paths.get(folder + file.getOriginalFilename());
         Files.write(path, bytes);
         return "/img/uploaded/producer_picture/" + file.getOriginalFilename();
+    }
+
+    @Override
+    public Producer findByLogin(String login) {
+        return repository.findByLogin(login);
     }
 
 

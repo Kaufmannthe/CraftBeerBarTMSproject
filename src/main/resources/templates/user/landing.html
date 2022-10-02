@@ -53,8 +53,11 @@
 
                 </li>
 
-                <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
+                <li class="nav-item"><a class="nav-link" sec:authorize="hasAnyAuthority('USER', 'ADMIN')"
                                         th:href="@{/profile}">Profile</a></li>
+
+                <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('MODERATOR')"
+                                        th:href="@{/moderator/profile}">Profile</a></li>
 
                 <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
                 </li>
