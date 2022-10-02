@@ -35,8 +35,10 @@ public class ModeratorController {
     }
 
     @GetMapping("/product_registration")
-    public ModelAndView productRegistrationPage(@ModelAttribute("product") Product product) {
+    public ModelAndView productRegistrationPage(@ModelAttribute("product") Product product,
+                                                Authentication authentication) {
         ModelAndView view = new ModelAndView();
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
         view.addObject("listOfProducts", Arrays.asList(ProductType.values()));
         view.addObject("listOfProducers", producerService.findAll());
         view.setViewName("moderator/productRegistration");

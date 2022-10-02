@@ -34,14 +34,14 @@ public class ShopServiceImpl implements ShopService {
         if (productService.findAll().size() >= 4) {
             while (set.size() < 4) {
                 long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId).getDataCreated() != null) {
+                if (productService.findById(randomId) != null) {
                     set.add(randomId);
                 }
             }
         } else {
             while (set.size() < productService.findAll().size()) {
                 long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId).getDataCreated() != null) {
+                if (productService.findById(randomId)!= null) {
                     set.add(randomId);
                 }
             }

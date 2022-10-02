@@ -58,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product add(Product product) {
-        product.setDataCreated(LocalDate.now());
         repository.save(product);
         repository.flush();
         return product;

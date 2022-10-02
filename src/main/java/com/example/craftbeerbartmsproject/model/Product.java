@@ -3,11 +3,11 @@ package com.example.craftbeerbartmsproject.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -30,12 +30,16 @@ public class Product {
     @Column(name = "type")
     private ProductType type;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCreated;
+    @CreationTimestamp()
+    @Temporal(TemporalType.DATE)
+    private Date dataCreated;
+
     private String picture;
+
     private double rating;
 
     public Product(long id, int price, Producer producer, String name, double weight, double strength, double density,
-                   ProductType type, LocalDate dataCreated) {
+                   ProductType type, Date dataCreated) {
         this.id = id;
         this.price = price;
         this.producer = producer;
