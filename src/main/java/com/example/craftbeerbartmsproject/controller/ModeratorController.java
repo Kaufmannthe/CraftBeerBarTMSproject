@@ -51,7 +51,7 @@ public class ModeratorController {
         ModelAndView view = new ModelAndView();
         product.setPicture(userService.saveImage(file));
         productService.add(product);
-        view.setViewName("redirect:/shop/product/" + product.getId());
+        view.setViewName("/moderator/all_products");
         return view;
     }
 
