@@ -1,9 +1,7 @@
 package com.example.craftbeerbartmsproject.service;
 
-import com.example.craftbeerbartmsproject.model.Cart;
-import com.example.craftbeerbartmsproject.model.Product;
-import com.example.craftbeerbartmsproject.model.ProductType;
-import com.example.craftbeerbartmsproject.model.User;
+import com.example.craftbeerbartmsproject.model.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,4 +26,6 @@ public interface ProductService {
     String saveImage(MultipartFile file) throws IOException;
 
     List<Product> findProductsByCarts(List<Cart> carts);
+
+    List<Product> findProductsByProducer(Authentication authentication);
 }

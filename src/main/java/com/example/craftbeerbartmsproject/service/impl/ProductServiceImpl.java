@@ -1,13 +1,13 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
-import com.example.craftbeerbartmsproject.model.Cart;
-import com.example.craftbeerbartmsproject.model.Product;
-import com.example.craftbeerbartmsproject.model.ProductType;
-import com.example.craftbeerbartmsproject.model.User;
+import com.example.craftbeerbartmsproject.model.*;
+import com.example.craftbeerbartmsproject.repository.ProducerRepository;
 import com.example.craftbeerbartmsproject.repository.ProductRepository;
 import com.example.craftbeerbartmsproject.service.CartService;
+import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,48 +24,51 @@ import java.util.List;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
+    private final ProducerRepository producerRepository;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository repository) {
-        this.repository = repository;
+    public ProductServiceImpl(ProductRepository repository, ProducerRepository producerRepository) {
+        this.productRepository = repository;
+        this.producerRepository = producerRepository;
     }
+
 
     @Override
     public List<Product> findAll() {
-        return repository.findAll();
+        return productRepository.findAll();
     }
 
     @Override
     public List<Product> findAllByType(ProductType type) {
-        return repository.findAllByType(type);
+        return productRepository.findAllByType(type);
     }
 
     @Override
     public Product findById(long id) {
-        return repository.findById(id);
+        return productRepository.findById(id);
     }
 
     @Override
     public Product findByName(String name) {
-        return repository.findByName(name);
+        return productRepository.findByName(name);
     }
 
     @Override
     public Product update(Product product) {
-        return repository.save(product);
+        return productRepository.save(product);
     }
 
     @Override
     public Product add(Product product) {
-        repository.save(product);
-        repository.flush();
+        productRepository.save(product);
+        productRepository.flush();
         return product;
     }
 
     @Override
     public void delete(Product product) {
-        repository.delete(product);
+        productRepository.delete(product);
     }
 
     @Override
@@ -86,4 +89,18 @@ public class ProductServiceImpl implements ProductService {
         }
         return productList;
     }
+
+    @Override
+    public List<Product> findProductsByProducer(Authentication authentication) {
+        List<Product> productList = new ArrayList<>();
+
+        for (Product product : findAll()) {
+            if (product.getProducer() == producerRepository.findByLogin(authentication.getName())) {
+                productList.add(product);
+
+            }
+        }
+        return productList;
+    }
+
 }

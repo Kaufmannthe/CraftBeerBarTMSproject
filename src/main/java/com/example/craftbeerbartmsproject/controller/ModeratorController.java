@@ -69,6 +69,13 @@ public class ModeratorController {
         view.setViewName("moderator/termsOfService");
         return view;
     }
+    @GetMapping("/all_products")
+    public ModelAndView allProducts(Authentication authentication){
+        ModelAndView view = new ModelAndView();
+        view.addObject("products", productService.findProductsByProducer(authentication));
+        view.setViewName("/moderator/all_products");
+        return view;
+    }
 
 
 }

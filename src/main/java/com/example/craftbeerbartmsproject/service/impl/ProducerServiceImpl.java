@@ -1,6 +1,7 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
 import com.example.craftbeerbartmsproject.model.Producer;
+import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.repository.ProducerRepository;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,5 @@ public class ProducerServiceImpl implements ProducerService {
     public Producer findByLogin(String login) {
         return repository.findByLogin(login);
     }
-
 
 }
