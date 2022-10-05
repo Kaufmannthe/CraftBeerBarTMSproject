@@ -27,15 +27,17 @@ public class UserController {
     private final CartService cartService;
     private final RegistrationService registrationService;
     private final ShopService shopService;
+    private final ProducerService producerService;
 
-    public UserController(UserService userService, ProductService productService,
-                          CartService cartService, RegistrationService registrationService,
-                          ShopService shopService) {
+    @Autowired
+    public UserController(UserService userService, ProductService productService, CartService cartService,
+                          RegistrationService registrationService, ShopService shopService, ProducerService producerService) {
         this.userService = userService;
         this.productService = productService;
         this.cartService = cartService;
         this.registrationService = registrationService;
         this.shopService = shopService;
+        this.producerService = producerService;
     }
 
     @GetMapping(value = "/")
@@ -107,6 +109,7 @@ public class UserController {
         view.setViewName("redirect:/profile");
         return view;
     }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/profile/edit_password")
     public ModelAndView passwordEditPage() {
@@ -133,10 +136,10 @@ public class UserController {
     }
 
     @GetMapping("/shop/product/{id}")
-    public ModelAndView productPage(@PathVariable(name = "id") Product product) {
+    public ModelAndView productPage(@PathVariable(name = "id") Product product, Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        view.addObject("min", shopService.minimalIndex());
-        view.addObject("max", shopService.maximumIndex());
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
+        view.addObject("products", productService.findAll());
         view.addObject("product", product);
         view.setViewName("user/product");
         return view;

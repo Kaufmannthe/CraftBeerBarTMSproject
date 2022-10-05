@@ -41,7 +41,7 @@ public class ShopServiceImpl implements ShopService {
         } else {
             while (set.size() < productService.findAll().size()) {
                 long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId)!= null) {
+                if (productService.findById(randomId) != null) {
                     set.add(randomId);
                 }
             }
@@ -54,20 +54,20 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public long minimalIndex() {
-        return (int) productService.findAll().stream().findFirst().get().getId();
-    }
-
-    @Override
-    public long maximumIndex() {
-        return productService.findAll().get(productService.findAll().size() - 1).getId();
+    public List<Product> findProducts(List<Product> productList) {
+        List<Product> products = new ArrayList<>();
+        for (Product product : productList) {
+            if (product.getName() != null) {
+                products.add(product);
+            }
+        }
+        return products;
     }
 
     @Override
     public List<Product> sortProductsByName(String name) {
         List<Product> productList = new ArrayList<>();
         List<Product> allProducts = productService.findAll();
-
         for (Product p : allProducts) {
             if (p.getType().name().toLowerCase().equals(name)) {
                 productList.add(p);

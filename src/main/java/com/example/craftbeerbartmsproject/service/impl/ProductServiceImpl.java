@@ -83,7 +83,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findProductsByCarts(List<Cart> carts) {
         List<Product> productList = new ArrayList<>();
-
         for (Cart i : carts) {
             productList.add(i.getProduct());
         }
@@ -93,11 +92,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findProductsByProducer(Authentication authentication) {
         List<Product> productList = new ArrayList<>();
-
         for (Product product : findAll()) {
             if (product.getProducer() == producerRepository.findByLogin(authentication.getName())) {
                 productList.add(product);
-
             }
         }
         return productList;

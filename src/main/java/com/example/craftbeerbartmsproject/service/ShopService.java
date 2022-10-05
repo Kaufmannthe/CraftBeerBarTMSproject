@@ -8,9 +8,7 @@ public interface ShopService {
 
     List<Product> randomUniqueProductsList();
 
-    long minimalIndex();
-
-    long maximumIndex();
+    List<Product> findProducts(List<Product> productList);
 
     List<Product> sortProductsByName(String name);
 }

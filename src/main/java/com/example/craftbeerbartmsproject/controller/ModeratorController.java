@@ -1,10 +1,10 @@
 package com.example.craftbeerbartmsproject.controller;
 
-import com.example.craftbeerbartmsproject.model.Producer;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
+import com.example.craftbeerbartmsproject.service.ShopService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/moderator")
@@ -26,12 +24,15 @@ public class ModeratorController {
     private final ProductService productService;
     private final ProducerService producerService;
     private final UserService userService;
+    private final ShopService shopService;
 
     @Autowired
-    public ModeratorController(ProductService productService, ProducerService producerService, UserService userService) {
+    public ModeratorController(ProductService productService, ProducerService producerService,
+                               UserService userService, ShopService shopService) {
         this.productService = productService;
         this.producerService = producerService;
         this.userService = userService;
+        this.shopService = shopService;
     }
 
     @GetMapping("/product_registration")
@@ -69,11 +70,22 @@ public class ModeratorController {
         view.setViewName("moderator/termsOfService");
         return view;
     }
+
     @GetMapping("/all_products")
-    public ModelAndView allProducts(Authentication authentication){
+    public ModelAndView allProducts(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("products", productService.findProductsByProducer(authentication));
         view.setViewName("/moderator/all_products");
+        return view;
+    }
+
+    @GetMapping("/product/{id}")
+    public ModelAndView productPage(@PathVariable(name = "id") Product product, Authentication authentication) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
+        view.addObject("product", product);
+        view.addObject("products",productService.findProductsByProducer(authentication));
+        view.setViewName("moderator/product");
         return view;
     }
 
