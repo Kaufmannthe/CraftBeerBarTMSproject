@@ -1,7 +1,6 @@
 package com.example.craftbeerbartmsproject.service;
 
 import com.example.craftbeerbartmsproject.model.Producer;
-import com.example.craftbeerbartmsproject.model.Product;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

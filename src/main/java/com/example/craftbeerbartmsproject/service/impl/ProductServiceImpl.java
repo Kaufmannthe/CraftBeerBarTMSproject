@@ -3,8 +3,6 @@ package com.example.craftbeerbartmsproject.service.impl;
 import com.example.craftbeerbartmsproject.model.*;
 import com.example.craftbeerbartmsproject.repository.ProducerRepository;
 import com.example.craftbeerbartmsproject.repository.ProductRepository;
-import com.example.craftbeerbartmsproject.service.CartService;
-import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

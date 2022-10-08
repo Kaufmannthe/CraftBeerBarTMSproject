@@ -1,6 +1,5 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
-import com.example.craftbeerbartmsproject.model.Roles;
 import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.repository.UserRepository;
 import com.example.craftbeerbartmsproject.service.UserService;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -34,12 +32,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<User> findAll() {
         return userRepository.findAll();
-    }
-
-    @Override
-    @Transactional
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
     }
 
     @Override
@@ -65,12 +57,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional
-    public User findUserByLoginAndPassword(String login, String password) {
-        return userRepository.findUserByLoginAndPassword(login, password);
     }
 
     @Override

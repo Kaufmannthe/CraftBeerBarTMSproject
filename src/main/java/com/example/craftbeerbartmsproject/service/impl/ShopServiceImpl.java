@@ -27,7 +27,8 @@ public class ShopServiceImpl implements ShopService {
         List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
         int productCount = productService.findAll().size();
 
-        long originNumber = (int) productService.findAll().stream().findFirst().get().getId();
+        long originNumber = (int) Objects.requireNonNull(
+                productService.findAll().stream().findFirst().orElse(null)).getId();
         long boundNumber = listOfProducts.get(productCount - 1).getId();
 
 

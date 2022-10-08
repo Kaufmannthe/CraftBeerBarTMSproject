@@ -7,22 +7,21 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "orders")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+@NoArgsConstructor
+public class Rating {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
-    private Producer producerId;
+    private int rating;
 
     @OneToOne
-    private User userId;
+    private Product product;
 
-    private int amount;
+    @OneToOne
+    private User user;
 
 }

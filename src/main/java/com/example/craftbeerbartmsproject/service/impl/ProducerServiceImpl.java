@@ -1,7 +1,6 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
 import com.example.craftbeerbartmsproject.model.Producer;
-import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.repository.ProducerRepository;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
