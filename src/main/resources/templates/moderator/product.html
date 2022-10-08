@@ -62,22 +62,20 @@
                                    ${products.get(products.indexOf(product) - 1).getId()})}"
                                    data-slide="prev"><i class="fa fa-arrow-left"></i></a>
                             </th:block>
-                            <th:block th:if="${products.indexOf(product) != products.indexOf(products.get(products.size() - 1))}">
+                            <th:block
+                                    th:if="${products.indexOf(product) != products.indexOf(products.get(products.size() - 1))}">
                                 <a class="carousel-control-next"
                                    th:href="@{/moderator/product/{id}(id =
                                        ${products.get(products.indexOf(product) + 1).getId()})}"
                                    data-slide="next"><i class="fa fa-arrow-right"></i></a>
                             </th:block>
-
-                            <form th:action="@{/cart}" method="post" id="productForm">
+                            <form sec:authorize="hasAuthority('MODERATOR')" th:action="@{/#}" method="post"
+                                  id="productForm">
                                 <div class="col text-right align-self-center">
-                                    <input th:value="${product.getId()}" name="product" type="hidden">
-                                    <button sec:authorize="hasAuthority('USER')" class="btn">Add to Cart</button>
                                     <th:block th:if="${product.producer == producer}">
-                                        <button sec:authorize="hasAuthority('MODERATOR')" class="btn">Delete
+                                        <button class="btn">Delete
                                         </button>
                                     </th:block>
-                                    <button sec:authorize="hasAuthority('ADMIN')" class="btn">Delete</button>
                                 </div>
                             </form>
                         </div>

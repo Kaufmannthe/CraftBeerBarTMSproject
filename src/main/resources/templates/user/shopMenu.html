@@ -28,10 +28,10 @@
                                         th:href="@{/cart}">Cart</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page"
                                         sec:authorize="hasAuthority('MODERATOR')"
-                                        th:href="@{/moderator/product_registration}">Create</a></li>
+                                        th:href="@{/shop/product_registration}">Create</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page"
                                         sec:authorize="hasAuthority('MODERATOR')"
-                                        th:href="@{/moderator/all_products}">My Products</a></li>
+                                        th:href="@{/products/all_products}">My Products</a></li>
                 <li class="nav-item dropdown">
                     <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
