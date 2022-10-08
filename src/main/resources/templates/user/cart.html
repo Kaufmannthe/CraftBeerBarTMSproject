@@ -91,23 +91,33 @@
                             </div>
                             <th:block th:text="${product.getPrice()}"/>
                             $
-                            <br>
-                            <div class="counter">
-                                <span class="down" onClick='decreaseCount(event, this)'>-</span>
-                                <input type="text" value="1">
-                                <span class="up" onClick='increaseCount(event, this)'>+</span>
-                            </div>
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+
+                            <form th:action="@{/order}" method="post" id="OrderForm">
+                                <div class="counter">
+                                    <span class="down" onClick='decreaseCount(event, this)'>-</span>
+                                    <input type="text" th:value="${order.setAmount(1)}" th:field="*{order.amount}">
+                                    <span class="up" onClick='increaseCount(event, this)'>+</span>
+                                </div>
+                                <br>
+                                <input hidden th:field="*{order.producer}" th:value="${order.setProducer(product.producer)}">
+                                <input hidden th:field="*{order.product}" th:value="${order.setProduct(product)}">
+                                <button style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit">Order</button>
+
+                            </form>
+                        </div>
+                        <hr>
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                                     th:href="@{/cart/{id}(id =
                                                      ${listOfCarts.get(listOfProducts.indexOf(product)).getId()})}">Delete</a>
 
                         </div>
-                    </div>
-                    <div>
+                        <div>
+                        </div>
                     </div>
                 </div>
             </div>

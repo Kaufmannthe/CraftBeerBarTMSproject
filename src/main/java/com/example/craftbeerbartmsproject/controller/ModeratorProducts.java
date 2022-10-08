@@ -4,6 +4,7 @@ import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/products")
+@PreAuthorize("hasAuthority('MODERATOR')")
 public class ModeratorProducts {
     private final ProductService productService;
     private final ProducerService producerService;

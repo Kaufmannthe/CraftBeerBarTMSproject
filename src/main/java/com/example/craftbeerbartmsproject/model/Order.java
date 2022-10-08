@@ -18,11 +18,19 @@ public class Order {
     private long id;
 
     @OneToOne
-    private Producer producerId;
+    private Producer producer;
 
     @OneToOne
-    private User userId;
+    private Product product;
+
+    @OneToOne
+    private User user;
 
     private int amount;
 
+    public Order(Producer producer, User user, int amount) {
+        this.producer = producer;
+        this.user = user;
+        this.amount = amount;
+    }
 }

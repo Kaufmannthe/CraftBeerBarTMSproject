@@ -1,6 +1,7 @@
 package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.model.Cart;
+import com.example.craftbeerbartmsproject.model.Order;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.service.CartService;
 import com.example.craftbeerbartmsproject.service.ProductService;
@@ -11,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -29,7 +32,7 @@ public class CartController {
     }
 
     @GetMapping
-    public ModelAndView cart(Authentication authentication) {
+    public ModelAndView cart(Authentication authentication, @ModelAttribute ("order") Order order) {
         ModelAndView view = new ModelAndView();
         view.addObject("listOfProducts", productService.findProductsByCarts
                 (cartService.findCartsByUsername(userService.getAuthUser(authentication))));

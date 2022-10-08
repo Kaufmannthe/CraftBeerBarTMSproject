@@ -2,6 +2,7 @@ package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/moderator")
+@PreAuthorize("hasAnyAuthority('MODERATOR', 'ADMIN')")
 public class ModeratorController {
     private final ProducerService producerService;
 

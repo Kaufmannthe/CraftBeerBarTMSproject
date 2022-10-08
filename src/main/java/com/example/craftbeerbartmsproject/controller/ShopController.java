@@ -1,6 +1,7 @@
 package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.model.Product;
+import com.example.craftbeerbartmsproject.model.ProductType;
 import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.ProductService;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/shop")
@@ -66,6 +68,18 @@ public class ShopController {
         ModelAndView view = new ModelAndView();
         view.addObject("productList", shopService.sortProductsByName(name));
         view.setViewName("user/productFilter");
+        return view;
+    }
+
+    @GetMapping("/product_registration")
+    @PreAuthorize("hasAnyAuthority('MODERATOR', 'ADMIN')")
+    public ModelAndView productRegistrationPage(@ModelAttribute("product") Product product,
+                                                Authentication authentication) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
+        view.addObject("listOfProducts", Arrays.asList(ProductType.values()));
+        view.addObject("listOfProducers", producerService.findAll());
+        view.setViewName("moderator/productRegistration");
         return view;
     }
 
