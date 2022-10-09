@@ -25,8 +25,15 @@ public class CartServiceImpl implements CartService {
     }
 
     public void add(Product product, User user) {
-        Cart cart = new Cart(user.getId(), product);
-        cartRepository.save(cart);
+        List<Cart> cartList = findCartsByUsername(user);
+        for (Cart cart : cartList) {
+            if (cart.getProduct() != product) {
+                Cart newCart = new Cart(user.getId(), product);
+                cartRepository.save(newCart);
+            }else {
+                delete(cart);
+            }
+        }
     }
 
     public List<Cart> all(long userId) {
@@ -43,7 +50,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void findCartByUsernameAndProductId(Authentication authentication, long product_id) {
+    public void deleteCartByUsernameAndProductId(Authentication authentication, long product_id) {
         List<Cart> cartList = findCartsByUsername(userService.getAuthUser(authentication));
         for (Cart cart : cartList) {
             if (cart.getProduct().getId() == product_id) {

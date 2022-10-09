@@ -1,9 +1,6 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
-import com.example.craftbeerbartmsproject.model.Cart;
-import com.example.craftbeerbartmsproject.model.Order;
-import com.example.craftbeerbartmsproject.model.Producer;
-import com.example.craftbeerbartmsproject.model.User;
+import com.example.craftbeerbartmsproject.model.*;
 import com.example.craftbeerbartmsproject.repository.OrderRepository;
 import com.example.craftbeerbartmsproject.service.CartService;
 import com.example.craftbeerbartmsproject.service.OrderService;
@@ -20,35 +17,27 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
-    private final CartService cartService;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, UserService userService, CartService cartService) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserService userService) {
         this.orderRepository = orderRepository;
         this.userService = userService;
-        this.cartService = cartService;
     }
 
     @Override
-    public List<Order> findAllByUserId(User userId) {
-        return orderRepository.findAllByUserId(userId);
+    public List<Order> findAllByUser(User userId) {
+        return orderRepository.findAllByUser(userId);
     }
 
     @Override
     public List<Order> findAllByProducer(Producer producer) {
-        List<Order> orderList = orderRepository.findAll();
-        List<Order> producerOrders = new ArrayList<>();
-        for (Order order : orderList) {
-            if (order.getProducer() == producer) {
-                producerOrders.add(order);
-            }
-        }
-        return producerOrders;
+        return orderRepository.findAllByProducer(producer);
     }
 
     @Override
     public void add(Order order, Authentication authentication) {
         order.setUser(userService.getAuthUser(authentication));
+        order.setOrderStatus(OrderStatus.NEW);
         orderRepository.save(order);
     }
 
@@ -56,6 +45,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void delete(Order order) {
         orderRepository.delete(order);
+    }
+
+    @Override
+    public void statusUpdate(long orderId, OrderStatus orderStatus) {
+        Order order = orderRepository.findById(orderId);
+        order.setOrderStatus(orderStatus);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderStatus> getStatuses() {
+        return List.of(OrderStatus.values());
     }
 
 }

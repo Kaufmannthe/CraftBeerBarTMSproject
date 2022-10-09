@@ -17,6 +17,6 @@ public interface CartService {
 
     List<Cart> findCartsByUsername(User authUser);
 
-    void findCartByUsernameAndProductId(Authentication authentication, long product_id);
+    void deleteCartByUsernameAndProductId(Authentication authentication, long product_id);
 
 }

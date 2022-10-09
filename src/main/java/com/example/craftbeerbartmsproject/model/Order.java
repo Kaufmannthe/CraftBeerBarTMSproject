@@ -28,6 +28,9 @@ public class Order {
 
     private int amount;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
     public Order(Producer producer, User user, int amount) {
         this.producer = producer;
         this.user = user;
