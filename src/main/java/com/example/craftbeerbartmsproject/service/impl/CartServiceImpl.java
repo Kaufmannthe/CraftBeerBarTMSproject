@@ -11,7 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -26,13 +28,12 @@ public class CartServiceImpl implements CartService {
 
     public void add(Product product, User user) {
         List<Cart> cartList = findCartsByUsername(user);
+        List<Product> productList = new ArrayList<>();
         for (Cart cart : cartList) {
-            if (cart.getProduct() != product) {
-                Cart newCart = new Cart(user.getId(), product);
-                cartRepository.save(newCart);
-            }else {
-                delete(cart);
-            }
+            productList.add(cart.getProduct());
+        }
+        if (!productList.contains(product)) {
+            cartRepository.save(new Cart(user.getId(), product));
         }
     }
 

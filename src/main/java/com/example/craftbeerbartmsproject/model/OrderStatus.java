@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum OrderStatus {
 
     NEW("Processing"),
-    PRODUCER_CONFIRM("Order has been confirmed and is being processed"),
+    PRODUCER_CONFIRM("Order is ready"),
     COURIER_DELIVERING("The order is delivered by "),
     DELIVERED("Delivered"),
     USER_RECEIVED("Received and paid"),
