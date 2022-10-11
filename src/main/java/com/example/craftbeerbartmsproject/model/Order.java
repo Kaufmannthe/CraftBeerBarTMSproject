@@ -31,6 +31,13 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @OneToOne
+    private Courier courier;
+
+    private boolean receivedByUser;
+
+    private boolean deliveredAndPaidByUser;
+
     public Order(Producer producer, User user, int amount) {
         this.producer = producer;
         this.user = user;
