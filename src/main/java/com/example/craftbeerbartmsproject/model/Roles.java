@@ -1,8 +1,17 @@
 package com.example.craftbeerbartmsproject.model;
 
-public enum Roles {
-    USER("User"), MODERATOR("Moderator"), ADMIN("Administrator");
+import lombok.Getter;
 
-    Roles(String text) {
+@Getter
+public enum Roles {
+    USER("User"),
+    MODERATOR("Moderator"),
+    ADMIN("Administrator"),
+    COURIER("Courier");
+
+    private final String name;
+
+    Roles(String name) {
+        this.name = name;
     }
 }

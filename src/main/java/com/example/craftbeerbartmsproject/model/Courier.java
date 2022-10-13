@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,11 +22,23 @@ public class Courier {
 
     private String lastName;
 
-    @OneToOne
+    private String login;
+
+    private String password;
+
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private Producer producer;
 
     private String phoneNumber;
 
-    @OneToMany
-    private List<Order> orderList;
+    @OneToOne
+    private Order orders;
+
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "courier_role", joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    @Size(max = 1)
+    private Set<Roles> role;
+
 }

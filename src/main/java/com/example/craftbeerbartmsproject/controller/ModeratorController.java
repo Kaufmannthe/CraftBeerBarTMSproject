@@ -1,5 +1,6 @@
 package com.example.craftbeerbartmsproject.controller;
 
+import com.example.craftbeerbartmsproject.service.CourierService;
 import com.example.craftbeerbartmsproject.service.OrderService;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,13 @@ public class ModeratorController {
     private final ProducerService producerService;
     private final OrderService orderService;
 
+    private final CourierService courierService;
+
     @Autowired
-    public ModeratorController(ProducerService producerService, OrderService orderService) {
+    public ModeratorController(ProducerService producerService, OrderService orderService, CourierService courierService) {
         this.producerService = producerService;
         this.orderService = orderService;
+        this.courierService = courierService;
     }
 
     @GetMapping("/profile")
@@ -37,6 +41,15 @@ public class ModeratorController {
                 (producerService.findByLogin(authentication.getName())));
         view.addObject("status", orderService.getStatuses());
         view.setViewName("moderator/orders");
+        return view;
+    }
+    @GetMapping("/couriers")
+    @PreAuthorize("hasAnyAuthority('MODERATOR')")
+    public ModelAndView couriers(Authentication authentication){
+        ModelAndView view = new ModelAndView();
+        view.addObject("couriers",
+                courierService.findByProducerId(producerService.findByLogin(authentication.getName()).getId()));
+        view.setViewName("moderator/couriers");
         return view;
     }
 

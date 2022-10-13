@@ -1,0 +1,61 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Craft Shop</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
+    <!-- Bootstrap icons-->
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css}" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/shopStyles.css}" rel="stylesheet"/>
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand">Craft Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        sec:authorize="hasAuthority('MODERATOR')"
+                                        th:href="@{/moderator/courierRegistration}">Create</a></li>
+                <li class="nav-item dropdown">
+                </li>
+            </ul>
+</nav>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5" th:each="courier : ${couriers}">
+                <div class="card h-100">
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder"
+                                th:text="${courier.getFirstName()} + ' ' + ${courier.getLastName()}"></h5>
+                            <!-- Product reviews-->
+                            <th:block th:text="${courier.phoneNumber}"/>
+                        </div>
+                    </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto">Delete Courier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

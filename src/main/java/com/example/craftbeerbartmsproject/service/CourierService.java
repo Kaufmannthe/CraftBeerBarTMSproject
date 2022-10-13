@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface CourierService {
 
-    Courier findByProducerId(long id);
+    List<Courier> findByProducerId(long id);
 
     List<Order> findOrdersByCourierId(long id, Producer producer);
 
     void changeStatusToDelivered(Order order);
 
     void isPaid(Order order,boolean status);
+
+    Courier findCourierByLogin(String login);
 }

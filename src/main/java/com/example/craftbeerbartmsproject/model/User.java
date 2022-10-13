@@ -55,7 +55,7 @@ public class User {
     @Size(max = 3)
     private Set<Roles> role;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_list")
     private List<Contacts> contactsList;
 

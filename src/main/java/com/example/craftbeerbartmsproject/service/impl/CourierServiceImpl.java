@@ -32,7 +32,7 @@ public class CourierServiceImpl implements CourierService {
     }
 
     @Override
-    public Courier findByProducerId(long id) {
+    public List<Courier> findByProducerId(long id) {
         return courierRepository.findByProducerId(id);
     }
 
@@ -55,5 +55,10 @@ public class CourierServiceImpl implements CourierService {
     @Override
     public void isPaid(Order order, boolean status) {
         orderRepository.findById(order.getId()).setDeliveredAndPaidByUser(status);
+    }
+
+    @Override
+    public Courier findCourierByLogin(String login) {
+        return courierRepository.findCourierByLogin(login);
     }
 }
