@@ -25,9 +25,10 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public ModelAndView registerPage(@ModelAttribute("user") User user) {
+    public ModelAndView registerPage() {
         ModelAndView view = new ModelAndView();
         view.addObject("roleList", registrationService.rolesForAdminsUserRegistration());
+        view.addObject("user", new User());
         view.setViewName("user/registration");
         return view;
     }

@@ -9,6 +9,7 @@ import com.example.craftbeerbartmsproject.repository.OrderRepository;
 import com.example.craftbeerbartmsproject.service.CourierService;
 import com.example.craftbeerbartmsproject.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,12 +24,15 @@ public class CourierServiceImpl implements CourierService {
 
     private final OrderRepository orderRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public CourierServiceImpl(CourierRepository courierRepository, OrderService orderService,
-                              OrderRepository orderRepository) {
+                              OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
         this.courierRepository = courierRepository;
         this.orderService = orderService;
         this.orderRepository = orderRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -45,6 +49,12 @@ public class CourierServiceImpl implements CourierService {
             }
         }
         return orderList;
+    }
+
+    @Override
+    public Courier add(Courier courier) {
+        courier.setPassword(passwordEncoder.encode(courier.getPassword()));
+        return courierRepository.save(courier);
     }
 
     @Override

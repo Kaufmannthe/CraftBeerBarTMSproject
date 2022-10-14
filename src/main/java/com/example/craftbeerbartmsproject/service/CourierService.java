@@ -12,6 +12,8 @@ public interface CourierService {
 
     List<Order> findOrdersByCourierId(long id, Producer producer);
 
+    Courier add(Courier courier);
+
     void changeStatusToDelivered(Order order);
 
     void isPaid(Order order,boolean status);
