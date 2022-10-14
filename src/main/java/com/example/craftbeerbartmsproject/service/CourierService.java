@@ -3,6 +3,7 @@ package com.example.craftbeerbartmsproject.service;
 import com.example.craftbeerbartmsproject.model.Courier;
 import com.example.craftbeerbartmsproject.model.Order;
 import com.example.craftbeerbartmsproject.model.Producer;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface CourierService {
     void isPaid(Order order,boolean status);
 
     Courier findCourierByLogin(String login);
+
+    void takeInDelivery(Order order, Authentication authentication);
 }

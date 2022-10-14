@@ -109,14 +109,23 @@
                             <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
                                     th:text="${order.amount} * ${order.product.getPrice()} + '$' "></button>
                             <hr>
-                            <form th:action="@{/order/ready/{id} (id = ${order.getId()})}" method="post">
-                                <th:block th:if="${order.getOrderStatus() == status.get(0)}">
+                            <form th:action="@{/order/delivering/{id} (id = ${order.getId()})}" method="post">
+                                <th:block th:if="${order.getOrderStatus().name() == 'PRODUCER_CONFIRM'}">
                                     <button th:value="${order.getId()}" style="width: 100%"
                                             class="btn btn-outline-dark mt-auto" type="submit"
-                                            th:text="Ready"></button>
+                                            th:text="${'Take in delivery'}"></button>
                                 </th:block>
                             </form>
-                            <th:block th:if="${order.getOrderStatus() != status.get(0)}">
+                            <form th:action="@{/order/delivered/{id} (id = ${order.getId()})}" method="post">
+                                <th:block th:if="${order.getOrderStatus().name() == 'COURIER_DELIVERING'
+                                && order.getCourier() == courier}">
+                                    <button th:value="${order.getId()}" style="width: 100%"
+                                            class="btn btn-outline-dark mt-auto" type="submit"
+                                            th:text="${'Order delivered'}"></button>
+                                </th:block>
+                            </form>
+                            <th:block th:if="${order.getOrderStatus().name() != 'PRODUCER_CONFIRM' &&
+                            order.getOrderStatus().name() != 'COURIER_DELIVERING'}">
                                 <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
                                         th:text="${order.getOrderStatus().toString()}"></button>
                             </th:block>

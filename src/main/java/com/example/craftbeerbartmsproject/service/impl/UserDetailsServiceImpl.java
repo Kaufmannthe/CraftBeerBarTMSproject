@@ -29,25 +29,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (userRepository.findByLogin(username) == null
-                && userRepository.findByEmail(username) == null) {
+        if (producerRepository.findByLogin(username) != null) {
             Producer producer = producerRepository.findByLogin(username);
             return org.springframework.security.core.userdetails.User
                     .withUsername(producer.getLogin())
                     .password(producer.getPassword())
                     .authorities(producer.getRole().stream().map(Enum::name).toArray(String[]::new)).build();
 
-        } else if (userRepository.findByLogin(username) == null
-                && userRepository.findByEmail(username) != null) {
+        }
+        if (userRepository.findByEmail(username) != null) {
             User user = userRepository.findByEmail(username);
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getLogin())
                     .password(user.getPassword())
                     .authorities(user.getRole().stream().map(Enum::name).toArray(String[]::new)).build();
 
-        } else if (userRepository.findByLogin(username) == null
-                && userRepository.findByEmail(username) == null
-                && producerRepository.findByLogin(username) == null) {
+        }
+        if (courierRepository.findCourierByLogin(username) != null) {
             Courier courier = courierRepository.findCourierByLogin(username);
             return org.springframework.security.core.userdetails.User
                     .withUsername(courier.getLogin())

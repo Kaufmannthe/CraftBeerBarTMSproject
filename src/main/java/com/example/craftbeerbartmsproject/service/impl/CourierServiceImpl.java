@@ -9,6 +9,7 @@ import com.example.craftbeerbartmsproject.repository.OrderRepository;
 import com.example.craftbeerbartmsproject.service.CourierService;
 import com.example.craftbeerbartmsproject.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,4 +72,13 @@ public class CourierServiceImpl implements CourierService {
     public Courier findCourierByLogin(String login) {
         return courierRepository.findCourierByLogin(login);
     }
+
+    @Override
+    public void takeInDelivery(Order order, Authentication authentication) {
+        order.setCourier(courierRepository.findCourierByLogin(authentication.getName()));
+        order.setOrderStatus(OrderStatus.COURIER_DELIVERING);
+        orderRepository.save(order);
+    }
+
+
 }

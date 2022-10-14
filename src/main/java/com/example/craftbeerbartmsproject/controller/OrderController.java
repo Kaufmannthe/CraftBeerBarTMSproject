@@ -3,10 +3,8 @@ package com.example.craftbeerbartmsproject.controller;
 import com.example.craftbeerbartmsproject.model.Cart;
 import com.example.craftbeerbartmsproject.model.Order;
 import com.example.craftbeerbartmsproject.model.OrderStatus;
-import com.example.craftbeerbartmsproject.service.CartService;
-import com.example.craftbeerbartmsproject.service.OrderService;
-import com.example.craftbeerbartmsproject.service.ProducerService;
-import com.example.craftbeerbartmsproject.service.UserService;
+import com.example.craftbeerbartmsproject.repository.OrderRepository;
+import com.example.craftbeerbartmsproject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -17,23 +15,26 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/order")
-@PreAuthorize("hasAuthority('USER')")
 public class OrderController {
 
     private final OrderService orderService;
     private final CartService cartService;
     private final UserService userService;
-    private final ProducerService producerService;
+    private final OrderRepository orderRepository;
+    private final CourierService courierService;
 
     @Autowired
-    public OrderController(OrderService orderService, CartService cartService, UserService userService, ProducerService producerService) {
+    public OrderController(OrderService orderService, CartService cartService,
+                           UserService userService, OrderRepository orderRepository, CourierService courierService) {
         this.orderService = orderService;
         this.cartService = cartService;
         this.userService = userService;
-        this.producerService = producerService;
+        this.orderRepository = orderRepository;
+        this.courierService = courierService;
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('USER')")
     public ModelAndView newOrder(@ModelAttribute("order") Order order, @ModelAttribute("cart") Cart cart,
                                  Authentication authentication) {
         ModelAndView view = new ModelAndView();
@@ -44,6 +45,7 @@ public class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('USER')")
     public ModelAndView userOrders(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("orders", orderService.findAllByUser(userService.getAuthUser(authentication)));
@@ -53,11 +55,37 @@ public class OrderController {
 
     @PostMapping("/ready/{id}")
     @PreAuthorize("hasAuthority('MODERATOR')")
-    public ModelAndView statusReady(@PathVariable ("id") Order order) {
+    public ModelAndView statusReady(@PathVariable("id") Order order) {
         ModelAndView view = new ModelAndView();
         orderService.statusUpdate(order.getId(), OrderStatus.PRODUCER_CONFIRM);
         view.setViewName("redirect:/moderator/orders");
         return view;
     }
 
+    @PostMapping("/delivering/{id}")
+    @PreAuthorize("hasAuthority('COURIER')")
+    public ModelAndView changeStatusToDelivering(@PathVariable("id") Order order, Authentication authentication) {
+        ModelAndView view = new ModelAndView();
+        courierService.takeInDelivery(order, authentication);
+        view.setViewName("redirect:/courier/orders");
+        return view;
+    }
+
+    @PostMapping("/delivered/{id}")
+    @PreAuthorize("hasAuthority('COURIER')")
+    public ModelAndView changeStatusToDelivered(@PathVariable("id") Order order) {
+        ModelAndView view = new ModelAndView();
+        orderService.statusUpdate(order.getId(), OrderStatus.DELIVERED);
+        view.setViewName("redirect:/courier/orders");
+        return view;
+    }
+
+    @PostMapping("/deliveredAndPaid/{id}")
+    @PreAuthorize("hasAuthority('COURIER')")
+    public ModelAndView payConfirm(@PathVariable("id") Order order, @RequestParam(name = "confirm") boolean confirm) {
+        ModelAndView view = new ModelAndView();
+        orderRepository.findById(order.getId()).setDeliveredAndPaidByUser(confirm);
+        view.setViewName("redirect:/courier/orders");
+        return view;
+    }
 }
