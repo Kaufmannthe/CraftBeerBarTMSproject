@@ -72,19 +72,21 @@ public class OrderController {
     }
 
     @PostMapping("/delivered/{id}")
-    @PreAuthorize("hasAuthority('COURIER')")
+    @PreAuthorize("hasAuthority('USER')")
     public ModelAndView changeStatusToDelivered(@PathVariable("id") Order order) {
         ModelAndView view = new ModelAndView();
-        orderService.statusUpdate(order.getId(), OrderStatus.DELIVERED);
-        view.setViewName("redirect:/courier/orders");
+        orderService.deliveredCheck(order);
+        orderService.problemCheck(order);
+        view.setViewName("redirect:/order");
         return view;
     }
 
     @PostMapping("/deliveredAndPaid/{id}")
     @PreAuthorize("hasAuthority('COURIER')")
-    public ModelAndView payConfirm(@PathVariable("id") Order order, @RequestParam(name = "confirm") boolean confirm) {
+    public ModelAndView payConfirm(@PathVariable("id") Order order) {
         ModelAndView view = new ModelAndView();
-        orderRepository.findById(order.getId()).setDeliveredAndPaidByUser(confirm);
+        orderService.deliveredAndPaidByUserCheck(order);
+        orderService.problemCheck(order);
         view.setViewName("redirect:/courier/orders");
         return view;
     }

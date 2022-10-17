@@ -59,4 +59,29 @@ public class OrderServiceImpl implements OrderService {
         return List.of(OrderStatus.values());
     }
 
+    public void problemCheck(Order order) {
+        Order orderCheck = orderRepository.findById(order.getId());
+        if (orderCheck.isDeliveredAndPaidByUser() && orderCheck.isReceivedByUser()) {
+            orderCheck.setOrderStatus(OrderStatus.DELIVERED);
+            orderRepository.save(orderCheck);
+        } else {
+            orderCheck.setOrderStatus(OrderStatus.PROBLEMS);
+            orderRepository.save(orderCheck);
+        }
+    }
+
+    @Override
+    public void deliveredAndPaidByUserCheck(Order order) {
+        Order orderCheck = orderRepository.findById(order.getId());
+        orderCheck.setDeliveredAndPaidByUser(true);
+        orderRepository.save(orderCheck);
+    }
+
+    @Override
+    public void deliveredCheck(Order order) {
+        Order orderCheck = orderRepository.findById(order.getId());
+        orderCheck.setReceivedByUser(true);
+        orderRepository.save(orderCheck);
+    }
+
 }

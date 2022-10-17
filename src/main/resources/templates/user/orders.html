@@ -77,44 +77,32 @@
                          th:src="${order.product.getPicture()}"
                          alt="..."/>
                     <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder" th:text="${order.product.getName()}"></h5>
-                            <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder" th:text="${order.product.getName()}"></h5>
+                                <!-- Product reviews-->
+                                <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
+                                        th:text="'Amount: ' +${order.amount} + ' | Price: ' + ${order.product.getPrice()} + '$'"></button>
+                                <hr>
+                                <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
+                                        th:text="${order.amount} * ${order.product.getPrice()} + '$' "></button>
+                                <hr>
+                                <th:block th:if="${order.getOrderStatus().name() != 'PROBLEMS'}">
+                                    <button disabled style="" class="btn btn-outline-dark mt-auto" type="submit"
+                                            th:text="${order.getOrderStatus().toString()}"></button>
+                                </th:block>
+                                <form th:action="@{/order/delivered/{id} (id = ${order.getId()})}" method="post">
+                                    <th:block th:if="${order.getOrderStatus().name() == 'PROBLEMS'}">
+                                        <button style="" class="btn btn-outline-dark mt-auto" type="submit"
+                                                th:text="${'Order received'}"></button>
+                                    </th:block>
+                                </form>
                             </div>
-                            <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
-                                    th:text="'Amount: ' +${order.amount} + ' | Price: ' + ${order.product.getPrice()} + '$'"></button>
-                            <hr>
-                            <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
-                                    th:text="${order.amount} * ${order.product.getPrice()} + '$' "></button>
-                            <hr>
-                            <button disabled style="" class="btn btn-outline-dark mt-auto" type="submit"
-                                    th:text="${order.getOrderStatus().toString()}"></button>
                         </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-
-                            <!--              <form th:action="@{/order}" method="post" id="OrderForm">
-                                            <div class="counter">
-                                              <span class="down" onClick='decreaseCount(event, this)'>-</span>
-                                              <input type="text" th:value="${order.setAmount(1)}" th:field="*{order.amount}">
-                                              <span class="up" onClick='increaseCount(event, this)'>+</span>
-                                            </div>
-
-                                          </form>-->
+                        <!-- Product actions-->
+                        <div>
                         </div>
-                    </div>
-                    <div>
-                    </div>
                 </div>
             </div>
         </div>

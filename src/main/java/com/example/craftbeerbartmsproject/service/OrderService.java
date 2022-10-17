@@ -21,4 +21,10 @@ public interface OrderService {
     void statusUpdate(long orderId, OrderStatus orderStatus);
 
     List<OrderStatus> getStatuses();
+
+    void problemCheck(Order order);
+
+    void deliveredAndPaidByUserCheck (Order order);
+
+    void deliveredCheck (Order order);
 }
