@@ -42,6 +42,8 @@ public class ModeratorController {
         view.addObject("orders", orderService.findAllByProducer
                 (producerService.findByLogin(authentication.getName())));
         view.addObject("status", orderService.getStatuses());
+        view.addObject("newOrders", orderService.valueOfNewOrders(authentication));
+        view.addObject("problemsOrders", orderService.valueOfProblemOrders(authentication));
         view.setViewName("moderator/orders");
         return view;
     }
@@ -71,11 +73,15 @@ public class ModeratorController {
         view.setViewName("redirect:/moderator/couriers");
         return view;
     }
+
     @GetMapping("/orders/{sort}")
     @PreAuthorize("hasAuthority('MODERATOR')")
-    public ModelAndView statusFiltering(@PathVariable(name = "sort") String name) {
+    public ModelAndView statusFiltering(@PathVariable(name = "sort") String name, Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("orders", orderService.sortOrdersByStatus(name));
+        view.addObject("newOrders", orderService.valueOfNewOrders(authentication));
+        view.addObject("problemsOrders", orderService.valueOfProblemOrders(authentication));
         view.setViewName("/moderator/orderFilter");
         return view;
-    }}
+    }
+}

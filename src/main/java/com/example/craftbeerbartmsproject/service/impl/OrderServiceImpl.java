@@ -3,6 +3,7 @@ package com.example.craftbeerbartmsproject.service.impl;
 import com.example.craftbeerbartmsproject.model.*;
 import com.example.craftbeerbartmsproject.repository.OrderRepository;
 import com.example.craftbeerbartmsproject.service.OrderService;
+import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,11 +17,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final UserService userService;
+    private final ProducerService producerService;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, UserService userService) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserService userService, ProducerService producerService) {
         this.orderRepository = orderRepository;
         this.userService = userService;
+        this.producerService = producerService;
     }
 
     @Override
@@ -95,6 +98,28 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return orderList;
+    }
+
+    @Override
+    public int valueOfNewOrders(Authentication authentication) {
+        List<Order> list = new ArrayList<>();
+        for (Order o : orderRepository.findAllByProducer(producerService.findByLogin(authentication.getName()))) {
+            if (o.getOrderStatus() == OrderStatus.NEW) {
+                list.add(o);
+            }
+        }
+        return list.size();
+    }
+
+    @Override
+    public int valueOfProblemOrders(Authentication authentication) {
+        List<Order> list = new ArrayList<>();
+        for (Order o : orderRepository.findAllByProducer(producerService.findByLogin(authentication.getName()))) {
+            if (o.getOrderStatus() == OrderStatus.PROBLEMS) {
+                list.add(o);
+            }
+        }
+        return list.size();
     }
 
 

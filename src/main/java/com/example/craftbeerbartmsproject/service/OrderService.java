@@ -29,4 +29,8 @@ public interface OrderService {
     void deliveredCheck (Order order);
 
     List<Order> sortOrdersByStatus(String name);
+
+    int valueOfNewOrders(Authentication authentication);
+
+    int valueOfProblemOrders(Authentication authentication);
 }

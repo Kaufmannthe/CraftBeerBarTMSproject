@@ -54,28 +54,40 @@
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item"
+                     th:href="@{/moderator/orders/{sort}(sort = 'problems')}"
+                     th:text="${'Problems ' + problemsOrders}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('producer_confirm')}">
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'new')}"
+                     th:text="${'New ' + newOrders} ">New</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item"
+                     th:href="@{/moderator/orders/{sort}(sort = 'problems')}"
+                     th:text="${'Problems ' + problemsOrders}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('courier_delivering')}">
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'new')}"
+                     th:text="${'New ' + newOrders} ">New</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item"
+                     th:href="@{/moderator/orders/{sort}(sort = 'problems')}"
+                     th:text="${'Problems ' + problemsOrders}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('delivered')}">
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'new')}"
+                     th:text="${'New ' + newOrders} ">New</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item"
+                     th:href="@{/moderator/orders/{sort}(sort = 'problems')}"
+                     th:text="${'Problems ' + problemsOrders}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('problems')}">
-              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'new')}"
+                     th:text="${'New ' + newOrders} ">New</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
               <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
