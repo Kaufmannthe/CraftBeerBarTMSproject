@@ -86,4 +86,16 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
+    @Override
+    public List<Order> sortOrdersByStatus(String name) {
+        List<Order> orderList = new ArrayList<>();
+        for (Order o : orderRepository.findAll()) {
+            if (o.getOrderStatus().name().toLowerCase().equals(name)) {
+                orderList.add(o);
+            }
+        }
+        return orderList;
+    }
+
+
 }

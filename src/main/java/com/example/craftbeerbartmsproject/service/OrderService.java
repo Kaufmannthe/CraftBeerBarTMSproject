@@ -27,4 +27,6 @@ public interface OrderService {
     void deliveredAndPaidByUserCheck (Order order);
 
     void deliveredCheck (Order order);
+
+    List<Order> sortOrdersByStatus(String name);
 }

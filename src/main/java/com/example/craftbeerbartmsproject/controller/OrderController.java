@@ -90,4 +90,13 @@ public class OrderController {
         view.setViewName("redirect:/courier/orders");
         return view;
     }
+
+    @GetMapping("/{sort}")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public ModelAndView statusFiltering(@PathVariable(name = "sort") String name) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("orders", orderService.sortOrdersByStatus(name));
+        view.setViewName("/moderator/orderFilter");
+        return view;
+    }
 }

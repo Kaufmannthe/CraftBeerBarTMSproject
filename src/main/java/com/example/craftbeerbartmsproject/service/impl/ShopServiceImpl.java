@@ -24,13 +24,9 @@ public class ShopServiceImpl implements ShopService {
         List<Product> resultList = new ArrayList<>();
         Set<Long> set = new LinkedHashSet<>();
 
-        List<Product> listOfProducts = productService.findAll();    //list and int to find boundNumber
-        int productCount = productService.findAll().size();
-
         long originNumber = (int) Objects.requireNonNull(
                 productService.findAll().stream().findFirst().orElse(null)).getId();
-        long boundNumber = listOfProducts.get(productCount - 1).getId();
-
+        long boundNumber = productService.findAll().get(productService.findAll().size() - 1).getId();
 
         if (productService.findAll().size() >= 4) {
             while (set.size() < 4) {
@@ -47,7 +43,6 @@ public class ShopServiceImpl implements ShopService {
                 }
             }
         }
-
         for (long i : set) {
             resultList.add(productService.findById(i));
         }
@@ -68,14 +63,11 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Product> sortProductsByName(String name) {
         List<Product> productList = new ArrayList<>();
-        List<Product> allProducts = productService.findAll();
-        for (Product p : allProducts) {
+        for (Product p : productService.findAll()) {
             if (p.getType().name().toLowerCase().equals(name)) {
                 productList.add(p);
             }
         }
         return productList;
     }
-
-
 }

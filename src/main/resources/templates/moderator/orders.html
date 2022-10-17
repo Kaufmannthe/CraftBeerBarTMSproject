@@ -46,15 +46,15 @@
                     <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown2" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Status</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/order/moderator}">All orders</a></li>
+                        <li><a class="dropdown-item" th:href="@{/moderator/orders}">All orders</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="">New</a></li>
-                        <li><a class="dropdown-item" href="">Order is ready</a></li>
-                        <li><a class="dropdown-item" href="">Delivering</a></li>
-                        <li><a class="dropdown-item" href="">Delivered</a></li>
-                        <li><a class="dropdown-item" href="">Problems</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'new')}">New</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'delivered')}">Delivered</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'problems')}">Problems</a></li>
                     </ul>
                 </li>
 
