@@ -71,4 +71,11 @@ public class ModeratorController {
         view.setViewName("redirect:/moderator/couriers");
         return view;
     }
-}
+    @GetMapping("/orders/{sort}")
+    @PreAuthorize("hasAuthority('MODERATOR')")
+    public ModelAndView statusFiltering(@PathVariable(name = "sort") String name) {
+        ModelAndView view = new ModelAndView();
+        view.addObject("orders", orderService.sortOrdersByStatus(name));
+        view.setViewName("/moderator/orderFilter");
+        return view;
+    }}

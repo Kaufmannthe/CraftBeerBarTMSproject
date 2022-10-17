@@ -71,6 +71,7 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div class="col mb-5" th:each="order : ${orders}">
+                <th:block th:if="${order.getOrderStatus().name() != 'DELIVERED'}">
                 <div class="card h-100">
                     <!-- Product image-->
                     <img width="256" height="256" class="card-img-top"
@@ -88,10 +89,22 @@
                                 <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
                                         th:text="${order.amount} * ${order.product.getPrice()} + '$' "></button>
                                 <hr>
-                                <th:block th:if="${order.getOrderStatus().name() != 'PROBLEMS'}">
+                                <th:block th:if="${order.getOrderStatus().name() != 'PROBLEMS'
+                                && order.getOrderStatus().name() != 'COURIER_DELIVERING'}">
                                     <button disabled style="" class="btn btn-outline-dark mt-auto" type="submit"
                                             th:text="${order.getOrderStatus().toString()}"></button>
                                 </th:block>
+
+                                <th:block th:if="${order.getOrderStatus().name() == 'COURIER_DELIVERING'}">
+                                    <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
+                                            th:text="${order.getOrderStatus().toString() + ' '+ order.getCourier().getFirstName()}">
+                                    </button>
+                                    <hr>
+                                    <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
+                                            th:text="${'Phone: ' + order.getCourier().getPhoneNumber()}">
+                                    </button>
+                                </th:block>
+
                                 <form th:action="@{/order/delivered/{id} (id = ${order.getId()})}" method="post">
                                     <th:block th:if="${order.getOrderStatus().name() == 'PROBLEMS'}">
                                         <button style="" class="btn btn-outline-dark mt-auto" type="submit"

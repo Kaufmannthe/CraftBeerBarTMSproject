@@ -51,34 +51,34 @@
               <hr class="dropdown-divider"/>
             </li>
             <th:block th:if="${sort.equals('new')}">
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'delivered')}">Delivered</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('producer_confirm')}">
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'new')}">New</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'delivered')}">Delivered</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('courier_delivering')}">
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'new')}">New</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'delivered')}">Delivered</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('delivered')}">
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'new')}">New</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'problems')}">Problems</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'problems')}">Problems</a></li>
             </th:block>
             <th:block th:if="${sort.equals('problems')}">
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'new')}">New</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
-              <li><a class="dropdown-item" th:href="@{/order/{sort}(sort = 'delivered')}">Delivered</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort= 'new')}">New</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'producer_confirm')}">Order is ready</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'courier_delivering')}">Delivering</a></li>
+              <li><a class="dropdown-item" th:href="@{/moderator/orders/{sort}(sort = 'delivered')}">Delivered</a></li>
             </th:block>
           </ul>
         </li>
@@ -104,7 +104,6 @@
 <header class="bg-dark py-5">
   <div class="text-center text-white">
     <h1 class="display-4 fw-bolder">Orders</h1>
-    <p th:if="${orders.isEmpty()}">You have no orders</p>
   </div>
 </header>
 <section class="py-5">
@@ -141,9 +140,19 @@
                           th:text="Ready"></button>
                 </th:block>
               </form>
-              <th:block th:if="${order.getOrderStatus().name() != 'NEW'}">
+              <th:block th:if="${order.getOrderStatus().name() != 'NEW'
+                             && order.getOrderStatus().name() != 'COURIER_DELIVERING'}">
                 <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
                         th:text="${order.getOrderStatus().toString()}"></button>
+              </th:block>
+              <th:block th:if="${order.getOrderStatus().name() == 'COURIER_DELIVERING'}">
+                <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
+                        th:text="${order.getOrderStatus().toString() + ' '+ order.getCourier().getFirstName()}">
+                </button>
+                <hr>
+                <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto" type="submit"
+                        th:text="${'Phone: ' + order.getCourier().getPhoneNumber()}">
+                </button>
               </th:block>
             </div>
           </div>

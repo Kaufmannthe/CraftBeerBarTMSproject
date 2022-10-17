@@ -30,7 +30,7 @@
                                         sec:authorize="hasAuthority('MODERATOR')"
                                         th:href="@{/shop/product_registration}">Create</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('MODERATOR')"
-                                        th:href="@{/moderator/orders}">Orders</a></li>
+                                        th:href="@{/moderator/orders/{sort}(sort = 'new')}">Orders</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('USER')"
                                         th:href="@{/order}">My Orders</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page"
