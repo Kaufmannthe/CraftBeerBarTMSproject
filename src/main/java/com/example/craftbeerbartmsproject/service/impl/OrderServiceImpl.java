@@ -2,7 +2,6 @@ package com.example.craftbeerbartmsproject.service.impl;
 
 import com.example.craftbeerbartmsproject.model.*;
 import com.example.craftbeerbartmsproject.repository.OrderRepository;
-import com.example.craftbeerbartmsproject.service.CartService;
 import com.example.craftbeerbartmsproject.service.OrderService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByUser(User userId) {
-        return orderRepository.findAllByUser(userId);
+        List<Order> userOrders = new ArrayList<>();
+        for (Order order : orderRepository.findAllByUser(userId)) {
+            if (order.getOrderStatus() != OrderStatus.DELIVERED) {
+                userOrders.add(order);
+            }
+        }
+        return userOrders;
     }
 
     @Override
@@ -60,28 +65,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void problemCheck(Order order) {
-        Order orderCheck = orderRepository.findById(order.getId());
-        if (orderCheck.isDeliveredAndPaidByUser() && orderCheck.isReceivedByUser()) {
-            orderCheck.setOrderStatus(OrderStatus.DELIVERED);
-            orderRepository.save(orderCheck);
+        if (order.isDeliveredAndPaidByUser() && order.isReceivedByUser()) {
+            order.setOrderStatus(OrderStatus.DELIVERED);
+            orderRepository.save(order);
         } else {
-            orderCheck.setOrderStatus(OrderStatus.PROBLEMS);
-            orderRepository.save(orderCheck);
+            order.setOrderStatus(OrderStatus.PROBLEMS);
+            orderRepository.save(order);
         }
     }
 
     @Override
     public void deliveredAndPaidByUserCheck(Order order) {
-        Order orderCheck = orderRepository.findById(order.getId());
-        orderCheck.setDeliveredAndPaidByUser(true);
-        orderRepository.save(orderCheck);
+        order.setDeliveredAndPaidByUser(true);
+        orderRepository.save(order);
     }
 
     @Override
     public void deliveredCheck(Order order) {
-        Order orderCheck = orderRepository.findById(order.getId());
-        orderCheck.setReceivedByUser(true);
-        orderRepository.save(orderCheck);
+        order.setReceivedByUser(true);
+        orderRepository.save(order);
     }
 
 }
