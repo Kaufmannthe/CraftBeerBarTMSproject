@@ -1,9 +1,6 @@
 package com.example.craftbeerbartmsproject.service;
 
-import com.example.craftbeerbartmsproject.model.Order;
-import com.example.craftbeerbartmsproject.model.OrderStatus;
-import com.example.craftbeerbartmsproject.model.Producer;
-import com.example.craftbeerbartmsproject.model.User;
+import com.example.craftbeerbartmsproject.model.*;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -33,4 +30,6 @@ public interface OrderService {
     int valueOfNewOrders(Authentication authentication);
 
     int valueOfProblemOrders(Authentication authentication);
+
+    public List<Order> ordersForCourier(Courier courier);
 }

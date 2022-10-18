@@ -23,28 +23,29 @@ public class ShopServiceImpl implements ShopService {
         Random random = new Random();
         List<Product> resultList = new ArrayList<>();
         Set<Long> set = new LinkedHashSet<>();
+        if (!productService.findAll().isEmpty()) {
+            long originNumber = (int) Objects.requireNonNull(
+                    productService.findAll().stream().findFirst().orElse(null)).getId();
+            long boundNumber = productService.findAll().get(productService.findAll().size() - 1).getId();
 
-        long originNumber = (int) Objects.requireNonNull(
-                productService.findAll().stream().findFirst().orElse(null)).getId();
-        long boundNumber = productService.findAll().get(productService.findAll().size() - 1).getId();
-
-        if (productService.findAll().size() >= 4) {
-            while (set.size() < 4) {
-                long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId) != null) {
-                    set.add(randomId);
+            if (productService.findAll().size() >= 4) {
+                while (set.size() < 4) {
+                    long randomId = random.nextLong(originNumber, boundNumber + 1);
+                    if (productService.findById(randomId) != null) {
+                        set.add(randomId);
+                    }
+                }
+            } else {
+                while (set.size() < productService.findAll().size()) {
+                    long randomId = random.nextLong(originNumber, boundNumber + 1);
+                    if (productService.findById(randomId) != null) {
+                        set.add(randomId);
+                    }
                 }
             }
-        } else {
-            while (set.size() < productService.findAll().size()) {
-                long randomId = random.nextLong(originNumber, boundNumber + 1);
-                if (productService.findById(randomId) != null) {
-                    set.add(randomId);
-                }
+            for (long i : set) {
+                resultList.add(productService.findById(i));
             }
-        }
-        for (long i : set) {
-            resultList.add(productService.findById(i));
         }
         return resultList;
     }

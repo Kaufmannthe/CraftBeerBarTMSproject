@@ -35,7 +35,7 @@ public class CourierController {
     public ModelAndView allOrders(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("orders",
-                orderService.findAllByProducer(courierService.findCourierByLogin(authentication.getName()).getProducer()));
+                orderService.ordersForCourier(courierService.findCourierByLogin(authentication.getName())));
         view.addObject("courier", courierService.findCourierByLogin(authentication.getName()));
         view.setViewName("/courier/orders");
         return view;

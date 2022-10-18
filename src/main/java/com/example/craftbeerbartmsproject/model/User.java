@@ -49,15 +49,11 @@ public class User {
     private Date dataCreated;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "user_role")
     @Size(max = 3)
     private Set<Roles> role;
-
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "contact_list")
-    private List<Contacts> contactsList;
 
 /*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Cart cart;*/
@@ -66,8 +62,7 @@ public class User {
 
 
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive, int age,
-                String address, String gender, String phoneNumber, String email, Date dataCreated, Set<Roles> role,
-                List<Contacts> contactsList) {
+                String address, String gender, String phoneNumber, String email, Date dataCreated, Set<Roles> role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -81,7 +76,5 @@ public class User {
         this.email = email;
         this.dataCreated = dataCreated;
         this.role = role;
-        this.contactsList = contactsList;
-
     }
 }

@@ -75,7 +75,6 @@ public class ModeratorController {
     }
 
     @GetMapping("/orders/{sort}")
-    @PreAuthorize("hasAuthority('MODERATOR')")
     public ModelAndView statusFiltering(@PathVariable(name = "sort") String name, Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("orders", orderService.sortOrdersByStatus(name));

@@ -81,8 +81,7 @@ public class UserServiceImpl implements UserService {
             return new User(
                     authUser.getId(), user.getFirstName(), user.getLastName(), authUser.getLogin(), authUser.getPassword(),
                     user.isActive(), authUser.getAge(), user.getAddress(), authUser.getGender(), authUser.getPhoneNumber(),
-                    user.getEmail(), authUser.getDataCreated(), authUser.getRole(), authUser.getContactsList(),
-                    authUser.getPicture());
+                    user.getEmail(), authUser.getDataCreated(), authUser.getRole(), authUser.getPicture());
         } else {
             authUser.setPicture(user.getPicture());
             return update(authUser);

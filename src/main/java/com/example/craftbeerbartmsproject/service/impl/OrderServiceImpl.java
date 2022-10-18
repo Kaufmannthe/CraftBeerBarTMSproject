@@ -2,6 +2,7 @@ package com.example.craftbeerbartmsproject.service.impl;
 
 import com.example.craftbeerbartmsproject.model.*;
 import com.example.craftbeerbartmsproject.repository.OrderRepository;
+import com.example.craftbeerbartmsproject.service.CourierService;
 import com.example.craftbeerbartmsproject.service.OrderService;
 import com.example.craftbeerbartmsproject.service.ProducerService;
 import com.example.craftbeerbartmsproject.service.UserService;
@@ -20,7 +21,8 @@ public class OrderServiceImpl implements OrderService {
     private final ProducerService producerService;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, UserService userService, ProducerService producerService) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserService userService,
+                            ProducerService producerService) {
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.producerService = producerService;
@@ -122,5 +124,14 @@ public class OrderServiceImpl implements OrderService {
         return list.size();
     }
 
+    public List<Order> ordersForCourier(Courier courier){
+        List<Order> courierOrder = new ArrayList<>();
+        for (Order order : findAllByProducer(courier.getProducer())){
+            if (order.getCourier() == courier || order.getOrderStatus().name().equals("NEW")){
+                courierOrder.add(order);
+            }
+        }
+        return courierOrder;
+    }
 
 }

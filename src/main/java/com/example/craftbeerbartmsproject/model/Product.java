@@ -39,6 +39,7 @@ public class Product {
 
     private double rating;
 
+
     public Product(long id, int price, Producer producer, String name, double weight, double strength, double density,
                    ProductType type, Date dataCreated) {
         this.id = id;
