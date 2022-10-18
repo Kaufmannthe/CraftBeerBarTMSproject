@@ -20,13 +20,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Producer producer;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Product product;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private User user;
 
     private int amount;

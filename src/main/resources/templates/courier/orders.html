@@ -116,7 +116,7 @@
                                             th:text="${'Take in delivery'}"></button>
                                 </th:block>
                             </form>
-                            <form th:action="@{/order/delivered/{id} (id = ${order.getId()})}" method="post">
+                            <form th:action="@{/order/deliveredAndPaid/{id} (id = ${order.getId()})}" method="post">
                                 <th:block th:if="${order.getOrderStatus().name() == 'COURIER_DELIVERING'
                                 && order.getCourier() == courier}" th:value="${order.getId()}">
                                     <button th:value="${true}"

@@ -127,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> ordersForCourier(Courier courier){
         List<Order> courierOrder = new ArrayList<>();
         for (Order order : findAllByProducer(courier.getProducer())){
-            if (order.getCourier() == courier || order.getOrderStatus().name().equals("NEW")){
+            if (order.getCourier() == courier || order.getOrderStatus().name().equals("PRODUCER_CONFIRM")){
                 courierOrder.add(order);
             }
         }
