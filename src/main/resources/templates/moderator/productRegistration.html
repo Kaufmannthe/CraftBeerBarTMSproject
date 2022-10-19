@@ -56,7 +56,8 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input name="name" type="text" id="productName"
+                                    <input onchange="this.value = this.value.replace(/\W+|\d/g, '')" name="name"
+                                           type="text" id="productName"
                                            class="form-control form-control-lg" required/>
                                     <label class="form-label" for="productName">Product Name</label>
                                 </div>
@@ -74,23 +75,27 @@
                                            th:name="producer" hidden>
                                 </div>
                                 <div style="width: 80px; text-align: center; float: left;" class="form-outline mb-4">
-                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text" id="paramsAlc"
+                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
+                                           id="paramsAlc"
                                            class="form-control form-control-lg" name="strength" required/>
                                     <label class="form-label" for="paramsAlc">Alc%</label>
 
                                 </div>
                                 <div style="width: 80px; text-align: center; float: left; margin-left: 5px">
-                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text" id="paramsIBU"
+                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
+                                           id="paramsIBU"
                                            class="form-control form-control-lg" name="density" required/>
                                     <label class="form-label" for="paramsIBU">IBU</label>
                                 </div>
                                 <div style="width: 80px; text-align: center; float: left; margin-left: 5px">
-                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text" id="paramsWeight"
+                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
+                                           id="paramsWeight"
                                            class="form-control form-control-lg" name="weight" required/>
                                     <label class="form-label" for="paramsWeight">Weight</label>
                                 </div>
                                 <div style="width: 80px; text-align: center; float: left; margin-left: 5px">
-                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text" id="paramsPrice"
+                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
+                                           id="paramsPrice"
                                            class="form-control form-control-lg" name="price" required/>
                                     <label class="form-label" for="paramsPrice">Price</label>
                                 </div>
@@ -121,6 +126,5 @@
 </section>
 <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" src="/js/uploadProgress.js"></script>
-<script type="text/javascript" src="/js/commaReplacer.js"></script>
 </body>
 </html>

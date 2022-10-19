@@ -30,13 +30,16 @@
                         <form th:action="@{/moderator/new_courier}" class="sa-innate-form"
                               method="post">
                             <label>First Name</label>
-                            <input type="text" name="firstName" id="firstName" required>
+                            <input onchange="this.value = this.value.replace(/\W+|\d/g, '')" type="text"
+                                   name="firstName" id="firstName" required>
                             <label>Last Name</label>
-                            <input type="text" name="lastName" id="name" required>
+                            <input onchange="this.value = this.value.replace(/\W+|\d/g, '')" type="text" name="lastName"
+                                   id="name" required>
                             <label>Login</label>
                             <input type="text" name="login" id="login" required>
                             <label>Phone Number</label>
-                            <input type="text" name="phoneNumber" id="phone_number" required>
+                            <input onchange="this.value = this.value.replace(/\D+/g, '')" value="375" type="text"
+                                   name="phoneNumber" id="phone_number" required>
                             <input th:field="*{courier.role}" th:value="${courier.setRole('COURIER')}"
                                    th:name="role"
                                    type="hidden">

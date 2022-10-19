@@ -63,7 +63,8 @@
                                     <h6 class="mb-0">First Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.firstName}" id="firstName" name="firstName" required>
+                                    <input onchange="this.value = this.value.replace(/\W+|\d/g, '')"
+                                           th:field="*{user.firstName}" id="firstName" name="firstName" required>
                                 </div>
                             </div>
                             <hr>
@@ -72,7 +73,8 @@
                                     <h6 class="mb-0">Last Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.lastName}" id="lastName" name="lastName" required>
+                                    <input onchange="this.value = this.value.replace(/\W+|\d/g, '')"
+                                           th:field="*{user.lastName}" id="lastName" name="lastName" required>
                                 </div>
                             </div>
                             <hr>
@@ -81,7 +83,8 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.email}" id="email" name="email" required>
+                                    <input pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" th:field="*{user.email}" id="email"
+                                           name="email" required>
                                 </div>
                             </div>
                             <hr>
@@ -90,7 +93,8 @@
                                     <h6 class="mb-0">Mobile</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.phoneNumber}" id="phoneNumber" name="phoneNumber" required>
+                                    <input onchange="this.value = this.value.replace(/\D+/g, '')"
+                                           th:field="*{user.phoneNumber}" id="phoneNumber" name="phoneNumber" required>
                                 </div>
                             </div>
                             <hr>
@@ -108,7 +112,8 @@
                                     <h6 class="mb-0">Age</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input th:field="*{user.age}" id="age" name="address" required>
+                                    <input onchange="this.value = this.value.replace(/\D+/g, '')" th:field="*{user.age}"
+                                           id="age" name="address" required>
                                 </div>
                             </div>
                         </div>
