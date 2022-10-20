@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -27,15 +27,47 @@
                 <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/moderator/product_registration}">Create</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li>
-                            <hr class="dropdown-divider"/>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('USER')"
+                                                th:href="@{/cart}">Cart</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                sec:authorize="hasAuthority('MODERATOR')"
+                                                th:href="@{/shop/product_registration}">Create</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('MODERATOR')"
+                                                th:href="@{/moderator/orders/{sort}(sort = 'new')}">Orders</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('USER')"
+                                                th:href="@{/order}">My Orders</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                sec:authorize="hasAuthority('MODERATOR')"
+                                                th:href="@{/products/all_products}">My Products</a></li>
+                        <li class="nav-item dropdown">
+                            <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" th:href="@{/shop/product/all}">All Products</a></li>
+                                <li>
+                                    <hr class="dropdown-divider"/>
+                                </li>
+                                <li><a class="dropdown-item" href="">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="">New Arrivals</a></li>
+                            </ul>
+
                         </li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        <li class="nav-item dropdown">
+                            <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown_2" href="#"
+                               role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">Category</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'beer')}">Beer</a></li>
+                                <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'wine')}">Wine</a></li>
+                                <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'vodka')}">Vodka</a></li>
+                                <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'whiskey')}">Whiskey</a></li>
+                                <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'cognac')}">Cognac</a></li>
+                                <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'snacks')}">Snacks</a></li>
+                            </ul>
+
+                        </li>
                     </ul>
                 </li>
             </ul>

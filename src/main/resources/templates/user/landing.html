@@ -39,11 +39,12 @@
             </form>
 
             <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                <li class="nav-item"><a class="nav-link" href="">Social(!)</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/news}">News</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/shop}">Shop</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">News(!)</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about_us}">About Us</a></li>
                 <li class="nav-item dropdown">
-                    <a sec:authorize="hasAuthority('ADMIN')" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                    <a sec:authorize="hasAuthority('ADMIN')" class="nav-link dropdown-toggle" id="navbarDropdown"
+                       href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" th:href="@{/admin/producer_registration}">Create Producer</a></li>
@@ -86,7 +87,7 @@
             </div>
             <div class="col-lg-8 align-self-baseline">
                 <p class="text-white-75 mb-5">Perfection is priceless</p>
-                <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+                <a class="btn btn-primary btn-xl" th:href="@{/shop}">Find Out More</a>
             </div>
         </div>
     </div>

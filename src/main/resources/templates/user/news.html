@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/newsStyles}">
+    <link type="text/css" rel="stylesheet" th:href="@{/css/landingStyles.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand">Craft Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('USER')"
+                                        th:href="@{/cart}">Cart</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        sec:authorize="hasAnyAuthority('MODERATOR', 'ADMIN')"
+                                        th:href="@{/news/constructor}">Create news</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        sec:authorize="hasAuthority('MODERATOR')"
+                                        th:href="@{/moderator/orders/{sort}(sort = 'new')}">Orders</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('USER')"
+                                        th:href="@{/order}">My Orders</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        sec:authorize="hasAuthority('MODERATOR')"
+                                        th:href="@{/products/all_products}">My Products</a></li>
+                <li class="nav-item dropdown">
+                    <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/shop/product/all}">All Products</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="">Popular Items</a></li>
+                        <li><a class="dropdown-item" href="">New Arrivals</a></li>
+                    </ul>
+
+                </li>
+                <li class="nav-item dropdown">
+                    <a style="color: black" class="nav-link dropdown-toggle" id="navbarDropdown_2" href="#"
+                       role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">Category</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'beer')}">Beer</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'wine')}">Wine</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'vodka')}">Vodka</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'whiskey')}">Whiskey</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'cognac')}">Cognac</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/{sort}_list(sort = 'snacks')}">Snacks</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div th:each="n : ${news}" class="container mt-4 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <div class="feed p-2">
+                <div class="bg-white border mt-2">
+                    <div>
+                        <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                            <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle"
+                                                                                                th:src="${n.picture}"
+                                                                                                width="60">
+                                <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold"
+                                                                                     th:text="${n.role.getName()}"></span><span
+                                        class="text-black-50 time" th:text="${n.dataCreated + ' at ' + n.time}"></span>
+                                </div>
+                            </div>
+                            <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
+                        </div>
+                    </div>
+                    <div
+                            class="p-2 px-3"><span style="word-wrap: break-word" th:text="${n.text}"></span>
+                    </div>
+                    <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i
+                            class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

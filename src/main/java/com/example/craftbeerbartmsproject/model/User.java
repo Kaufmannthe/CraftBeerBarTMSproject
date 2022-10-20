@@ -55,9 +55,6 @@ public class User {
     @Size(max = 3)
     private Set<Roles> role;
 
-/*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Cart cart;*/
-
     private String picture;
 
 

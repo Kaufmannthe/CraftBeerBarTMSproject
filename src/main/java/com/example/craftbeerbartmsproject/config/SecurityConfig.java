@@ -45,7 +45,7 @@ public class SecurityConfig {
                 authorizeHttpRequests(
                         request -> request.antMatchers(
                                         "/", "/shop", "/registration",
-                                        "/shop/**", "/moderator/product_registration", "/security/**", "/cart").permitAll()
+                                        "/shop/*", "/about_us", "/news", "/news/*").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/login").permitAll())
                 .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"))
