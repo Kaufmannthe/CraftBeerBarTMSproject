@@ -1,6 +1,7 @@
 package com.example.craftbeerbartmsproject.controller;
 
 import com.example.craftbeerbartmsproject.model.User;
+import com.example.craftbeerbartmsproject.service.OrderService;
 import com.example.craftbeerbartmsproject.service.RegistrationService;
 import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,20 @@ public class UserProfileController {
 
     private final UserService userService;
     private final RegistrationService registrationService;
+    private final OrderService orderService;
 
     @Autowired
-    public UserProfileController(UserService userService, RegistrationService registrationService) {
+    public UserProfileController(UserService userService, RegistrationService registrationService, OrderService orderService) {
         this.userService = userService;
         this.registrationService = registrationService;
+        this.orderService = orderService;
     }
 
     @GetMapping
     public ModelAndView profileUser(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("userLogin", userService.getAuthUser(authentication));
+        view.addObject("orders", orderService.deliveredOrders(authentication));
         view.setViewName("user/profile");
         return view;
     }

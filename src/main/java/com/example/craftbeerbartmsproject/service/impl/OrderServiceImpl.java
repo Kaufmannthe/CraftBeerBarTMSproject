@@ -124,14 +124,25 @@ public class OrderServiceImpl implements OrderService {
         return list.size();
     }
 
-    public List<Order> ordersForCourier(Courier courier){
+    public List<Order> ordersForCourier(Courier courier) {
         List<Order> courierOrder = new ArrayList<>();
-        for (Order order : findAllByProducer(courier.getProducer())){
-            if (order.getCourier() == courier || order.getOrderStatus().name().equals("PRODUCER_CONFIRM")){
+        for (Order order : findAllByProducer(courier.getProducer())) {
+            if (order.getCourier() == courier || order.getOrderStatus().name().equals("PRODUCER_CONFIRM")) {
                 courierOrder.add(order);
             }
         }
         return courierOrder;
+    }
+
+    public List<Order> deliveredOrders(Authentication authentication) {
+        User user = userService.getAuthUser(authentication);
+        List<Order> deliveredList = new ArrayList<>();
+        for (Order o : orderRepository.findAll()) {
+            if (o.getUser().getId() == user.getId() && o.getOrderStatus() == OrderStatus.DELIVERED) {
+                deliveredList.add(o);
+            }
+        }
+        return deliveredList;
     }
 
 }

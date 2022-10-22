@@ -90,4 +90,12 @@ public class OrderController {
         view.setViewName("redirect:/courier/orders");
         return view;
     }
+    @GetMapping("/delivered_orders")
+    @PreAuthorize("hasAuthority('USER')")
+    public ModelAndView deliveredPage(Authentication authentication){
+        ModelAndView view = new ModelAndView();
+        view.addObject("orders", orderService.deliveredOrders(authentication));
+        view.setViewName("/user/deliveredOrders");
+        return view;
+    }
 }

@@ -32,4 +32,6 @@ public interface OrderService {
     int valueOfProblemOrders(Authentication authentication);
 
     public List<Order> ordersForCourier(Courier courier);
+
+    public List<Order> deliveredOrders(Authentication authentication);
 }

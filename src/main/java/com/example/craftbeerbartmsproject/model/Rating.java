@@ -18,10 +18,15 @@ public class Rating {
 
     private int rating;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private Product product;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
+    public Rating(int rating, Product productId, User user) {
+        this.rating = rating;
+        this.product = productId;
+        this.user = user;
+    }
 }

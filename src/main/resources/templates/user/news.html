@@ -95,7 +95,7 @@
                         <button type="submit" style="display: block;margin-left: auto;margin-right: 0;">Delete</button>
                     </form>
                 </th:block>
-                <th:block th:if="${producer.name} == ${n.creatorName}" sec:authorize="hasAuthority('MODERATOR')">
+                <th:block sec:authorize="hasAuthority('ADMIN')" th:if="${producer.name} == ${n.creatorName}">
                     <form class="sa-innate-form" method="post" th:action="@{/news/delete/{id}(id = ${n.getId()})}">
                         <button type="submit" style="display: block;margin-left: auto;margin-right: 0;">Delete</button>
                     </form>

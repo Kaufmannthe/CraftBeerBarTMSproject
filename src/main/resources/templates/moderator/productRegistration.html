@@ -56,10 +56,10 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input onchange="this.value = this.value.replace(/\W+|\d/g, '')" name="name"
+                                    <input maxlength="22" onchange="this.value = this.value.replace(/\W+|\d/g, '')" name="name"
                                            type="text" id="productName"
                                            class="form-control form-control-lg" required/>
-                                    <label class="form-label" for="productName">Product Name</label>
+                                    <label class="form-label"  for="productName">Product Name</label>
                                 </div>
                                 <div class="form-outline mb-4" sec:authorize="hasAuthority('ADMIN')">
                                     <label>Choose Producer:</label>

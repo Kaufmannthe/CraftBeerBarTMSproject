@@ -10,6 +10,11 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <link type="text/css" rel="stylesheet" th:href="@{/css/productStyles.css}">
+    <link href="/css/starsStyles.css" rel="stylesheet">
+    <link th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js}" rel="stylesheet">
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js}" rel="stylesheet">
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"
+          rel="stylesheet">
 </head>
 <body class>
 <div class="container">
@@ -27,30 +32,47 @@
                         <div class="col-md-6 info">
                             <div class="row title">
                                 <div class="col"><h2 th:text="${product.getName()}"></h2></div>
-                                <div class="col text-right"><a href="#"><i class="fa fa-heart-o"></i></a></div>
                             </div>
                             <div>
-                                IBU:
-                                <th:block th:text="${product.getDensity()}"/>
+                                <div><a><i class="fa fa-heart-o">
+                                    <th:block th:text="${product.getRating()}"></th:block>
+                                </i></a></div>
+                                <th:block th:text="'IBU: ' +${product.getDensity()}"/>
                                 <br>
-                                ABV:
-                                <th:block th:text="${product.getStrength()}"/>
-                                %
+                                <th:block th:text="'ABV: ' + ${product.getStrength()} + '%'"/>
                                 <br>
-                                Weight:
-                                <th:block th:text="${product.getWeight()}"/>
-                                litres.
+                                <th:block th:text="'Weight: ' + ${product.getWeight()} + ' litres.'"/>
+                                <br>
+                                <th:block th:text="'$' + ${product.getPrice()}"/>
                             </div>
-
-                            <span class="fa fa-star checked"></span> <span
-                                class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span
-                                class="fa fa-star checked"></span> <span class="fa fa-star-half-full"></span> <span
-                                id="reviews">1590 Reviews</span>
-                            <div class="row price"><label class="radio"> <input type="radio" name="size1" value="small"
-                                                                                checked> <span>
-                                <div
-                                        class="row"><big>$<b th:text="${product.getPrice()}"></b></big></div>
-                            </span> </label>
+                            <div class="container d-flex justify-content-center mt-200">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="stars">
+                                            <form method="post" th:action="@{/rating}"id="formId">
+                                                <input class="star star-5" id="star-5" type="radio" name="rating"
+                                                       value="5"/>
+                                                <label class="star star-5" for="star-5"></label>
+                                                <input class="star star-4" id="star-4" type="radio" name="rating"
+                                                       value="4"/>
+                                                <label class="star star-4" for="star-4"></label>
+                                                <input class="star star-3" id="star-3" type="radio" name="rating"
+                                                       value="3"/>
+                                                <label class="star star-3" for="star-3"></label>
+                                                <input class="star star-2" id="star-2" type="radio" name="rating"
+                                                       value="2"/>
+                                                <label class="star star-2" for="star-2"></label>
+                                                <input class="star star-1" id="star-1" type="radio" name="rating"
+                                                       value="1"/>
+                                                <label class="star star-1" for="star-1"></label>
+                                                <input hidden th:value="${product.id}" name="product"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container d-flex justify-content-center mt-200">
+                                <button onclick="document.getElementById('formId').submit()" type="submit" class="btn">Submit</button>
                             </div>
                         </div>
                     </div>
