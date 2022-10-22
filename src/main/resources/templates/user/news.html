@@ -6,6 +6,7 @@
     <link type="text/css" rel="stylesheet" th:href="@{/css/newsStyles}">
     <link type="text/css" rel="stylesheet" th:href="@{/css/landingStyles.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loginStyles.css}">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,8 +21,11 @@
                 <li class="nav-item"><a class="nav-link active" aria-current="page" sec:authorize="hasAuthority('USER')"
                                         th:href="@{/cart}">Cart</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page"
-                                        sec:authorize="hasAnyAuthority('MODERATOR', 'ADMIN')"
+                                        sec:authorize="hasAnyAuthority('MODERATOR')"
                                         th:href="@{/news/constructor}">Create news</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                        sec:authorize="hasAnyAuthority('ADMIN')"
+                                        th:href="@{/admin/news/constructor}">Create news</a></li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page"
                                         sec:authorize="hasAuthority('MODERATOR')"
                                         th:href="@{/moderator/orders/{sort}(sort = 'new')}">Orders</a></li>
@@ -72,7 +76,8 @@
                                                                                                 th:src="${n.picture}"
                                                                                                 width="60">
                                 <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold"
-                                                                                     th:text="${n.role.getName()}"></span><span
+                                                                                     th:text="${n.role.getName()
+                                                                                      + ': ' + n.creatorName} "></span><span
                                         class="text-black-50 time" th:text="${n.dataCreated + ' at ' + n.time}"></span>
                                 </div>
                             </div>
@@ -85,6 +90,16 @@
                     <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i
                             class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
                 </div>
+                <th:block sec:authorize="hasAuthority('ADMIN')">
+                    <form class="sa-innate-form" method="post" th:action="@{/news/delete/{id}(id = ${n.getId()})}">
+                        <button type="submit" style="display: block;margin-left: auto;margin-right: 0;">Delete</button>
+                    </form>
+                </th:block>
+                <th:block th:if="${producer.name} == ${n.creatorName}" sec:authorize="hasAuthority('MODERATOR')">
+                    <form class="sa-innate-form" method="post" th:action="@{/news/delete/{id}(id = ${n.getId()})}">
+                        <button type="submit" style="display: block;margin-left: auto;margin-right: 0;">Delete</button>
+                    </form>
+                </th:block>
             </div>
         </div>
     </div>

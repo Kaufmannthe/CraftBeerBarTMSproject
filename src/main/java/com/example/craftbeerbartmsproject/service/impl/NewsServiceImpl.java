@@ -43,17 +43,6 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Roles findCurrentUserRole(Authentication authentication) {
-        if (userService.getAuthUser(authentication) == null
-                || userService.getAuthUser(authentication).getRole().stream().findFirst().orElse(null) != Roles.USER) {
-            return producerService.findByName(authentication.getName()).getRole().stream().findFirst().orElse(null);
-        } else {
-            return userService.getAuthUser(authentication).getRole().stream().findFirst().orElse(null);
-        }
-    }
-
-
-    @Override
     public List<News> findAll() {
         return newsRepository.findAll();
     }

@@ -7,8 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,6 +21,8 @@ public class News {
 
     private String text;
 
+    private String creatorName;
+
     private String picture;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -36,6 +36,4 @@ public class News {
     private Date time;
 
     private Roles role;
-
-
 }

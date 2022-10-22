@@ -15,8 +15,6 @@ public interface NewsService {
 
     List<News> findAllByDataCreated(Date date);
 
-    Roles findCurrentUserRole(Authentication authentication);
-
     List<News> findAll();
 
     News add(News news, MultipartFile file) throws IOException;
@@ -25,5 +23,5 @@ public interface NewsService {
 
     News update(News news);
 
-    public String saveImage(MultipartFile file) throws IOException;
+    String saveImage(MultipartFile file) throws IOException;
 }

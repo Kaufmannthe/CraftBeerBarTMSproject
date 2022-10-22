@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>News Constructor</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" th:href="@{/img/shop/favicon.ico}"/>
+  <!-- Bootstrap icons-->
+  <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css}" rel="stylesheet"/>
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link th:href="@{/css/shopStyles.css}" rel="stylesheet"/>
+  <link th:href="@{/css/productRegistration.css}" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/landing/logo.png}"/>
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand">Craft Shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/news}">Back</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<section class="vh-100 bg-image">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Create news</h2>
+              <form th:action="@{/news/constructor}" method="post"
+                    enctype="multipart/form-data">
+                <input type="file" name="imageFile" id="file1" onchange="uploadFile()" required/>
+                <progress id="progressBar" value="0" max="100" style="width:250px;"></progress>
+                <h3 id="status"></h3>
+                <p id="loaded_n_total" class="result"></p>
+                <hr>
+                <div class="form-outline mb-4">
+                                    <textarea type="text" id="text" name="text" class="form-control form-control-lg"
+                                              autofocus maxlength="500"></textarea>
+                  <label class="form-label" for="text">Description</label>
+                </div>
+                <div class="form-outline mb-4" sec:authorize="hasAuthority('ADMIN')">
+                  <input th:field="*{news.role}" th:value="${news.setRole(admin.role)}"
+                         th:name="role" hidden>
+                </div>
+                <div class="form-outline mb-4" sec:authorize="hasAuthority('ADMIN')">
+                  <input th:field="*{news.creatorName}" th:value="${news.setCreatorName(admin.lastName)}"
+                         th:name="creatorName" hidden>
+                </div>
+                <div style="float: bottom" class="d-flex justify-content-center">
+                  <button style="width: 100%;" type="submit"
+                          class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                    Create
+                  </button>
+                </div>
+                <div style="float: right " class="form-check d-flex justify-content-center mb-5">
+                  <span id="message" style="color:red"></span><br><br>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" src="/js/uploadProgress.js"></script>
+</body>
+</html>

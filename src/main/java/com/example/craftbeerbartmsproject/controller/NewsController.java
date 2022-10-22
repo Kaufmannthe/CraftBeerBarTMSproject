@@ -30,9 +30,11 @@ public class NewsController {
     }
 
     @GetMapping
-    public ModelAndView newsPage() {
+    public ModelAndView newsPage(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("news", newsService.findAll());
+        view.addObject("user", userService.findByLogin(authentication.getName()));
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
         view.setViewName("/user/news");
         return view;
     }
@@ -42,7 +44,7 @@ public class NewsController {
     public ModelAndView createNewsPage(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("news", new News());
-        view.addObject("role", newsService.findCurrentUserRole(authentication));
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
         view.setViewName("/moderator/newsConstructor");
         return view;
     }
@@ -52,6 +54,15 @@ public class NewsController {
             throws IOException {
         ModelAndView view = new ModelAndView();
         newsService.add(news, file);
+        view.setViewName("redirect:/news");
+        return view;
+    }
+
+    @PostMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
+    public ModelAndView deleteNews(@PathVariable("id") News news) {
+        ModelAndView view = new ModelAndView();
+        newsService.delete(news);
         view.setViewName("redirect:/news");
         return view;
     }

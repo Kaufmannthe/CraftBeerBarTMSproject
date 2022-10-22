@@ -47,12 +47,16 @@
                                 <hr>
                                 <div class="form-outline mb-4">
                                     <textarea type="text" id="text" name="text" class="form-control form-control-lg"
-                                            autofocus maxlength="500"></textarea>
+                                              autofocus maxlength="500"></textarea>
                                     <label class="form-label" for="text">Description</label>
                                 </div>
-                                <div class="form-outline mb-4" sec:authorize="hasAnyAuthority('MODERATOR', 'ADMIN')">
-                                    <input th:field="*{news.role}" th:value="${news.setRole(role.name())}"
-                                           th:name="role" hidden>
+                                    <div class="form-outline mb-4" sec:authorize="hasAuthority('MODERATOR')">
+                                        <input th:field="*{news.role}" th:value="${news.setRole(producer.role)}"
+                                               th:name="role" hidden>
+                                    </div>
+                                <div class="form-outline mb-4" sec:authorize="hasAuthority('MODERATOR')">
+                                    <input th:field="*{news.creatorName}" th:value="${news.setCreatorName(producer.name)}"
+                                           th:name="creatorName" hidden>
                                 </div>
                                 <div style="float: bottom" class="d-flex justify-content-center">
                                     <button style="width: 100%;" type="submit"
