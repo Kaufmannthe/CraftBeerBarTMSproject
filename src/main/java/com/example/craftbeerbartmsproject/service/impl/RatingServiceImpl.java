@@ -51,6 +51,9 @@ public class RatingServiceImpl implements RatingService {
             rating += r.getRating();
         }
         avRating = rating / ratings.size();
+        if (ratings.isEmpty()){
+            return 0;
+        }
         return avRating;
     }
 

@@ -133,7 +133,7 @@
                             order.getOrderStatus().name() != 'COURIER_DELIVERING'}">
                                 <button disabled style="width: 100%" class="btn btn-outline-dark mt-auto"
                                         type="submit"
-                                        th:text="${order.getOrderStatus().toString()}"></button>
+                                        th:text="${order.getOrderStatus().getName()}"></button>
                             </th:block>
                         </div>
                     </div>

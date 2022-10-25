@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -27,13 +28,10 @@ public class Courier {
 
     private String password;
 
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     private Producer producer;
 
     private String phoneNumber;
-
-    @OneToOne
-    private Order orders;
 
     @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "courier_role", joinColumns = @JoinColumn(name = "id"))

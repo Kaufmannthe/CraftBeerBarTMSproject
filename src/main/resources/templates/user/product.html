@@ -35,7 +35,8 @@
                             </div>
                             <div>
                                 <div><a><i class="fa fa-heart-o">
-                                    <th:block th:text="${averageRating}"></th:block>
+                                    <th:block th:if="${averageRating != 0}" th:text="${averageRating}"></th:block>
+                                    <th:block th:if="${averageRating == 0}">0</th:block>
                                 </i></a></div>
                                 <th:block th:text="'IBU: ' +${product.getDensity()}"/>
                                 <br>

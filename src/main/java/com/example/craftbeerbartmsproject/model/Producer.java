@@ -27,9 +27,6 @@ public class Producer {
     private String address;
     private String email;
     private String phoneNumber;
-    private String specialization;
-    private String description;
-    private float rating;
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "signatory_id")
     private User signatory;
@@ -49,17 +46,13 @@ public class Producer {
 
 
     public Producer(long id, String login, String password, String name, String address, String phoneNumber,
-                    String specialization, String description, float rating, User signatory,
-                    Date dataCreated) {
+                    User signatory, Date dataCreated) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.specialization = specialization;
-        this.description = description;
-        this.rating = rating;
         this.signatory = signatory;
         this.dataCreated = dataCreated;
     }

@@ -92,7 +92,7 @@
                                 <th:block th:if="${order.getOrderStatus().name() != 'PROBLEMS'
                                 && order.getOrderStatus().name() != 'COURIER_DELIVERING'}">
                                     <button disabled style="" class="btn btn-outline-dark mt-auto" type="submit"
-                                            th:text="${order.getOrderStatus().toString()}"></button>
+                                            th:text="${order.getOrderStatus().getName()}"></button>
                                 </th:block>
 
                                 <th:block th:if="${order.getOrderStatus().name() == 'COURIER_DELIVERING'}">

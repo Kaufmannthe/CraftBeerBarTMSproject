@@ -18,7 +18,6 @@ public class CourierServiceImpl implements CourierService {
 
     private final CourierRepository courierRepository;
     private final OrderRepository orderRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
