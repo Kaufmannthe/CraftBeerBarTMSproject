@@ -22,7 +22,7 @@ public class Rating {
     @OneToOne(cascade = CascadeType.MERGE)
     private Product product;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private User user;
 
     public Rating(int rating, Product productId, User user) {

@@ -27,7 +27,7 @@ public class Producer {
     private String address;
     private String email;
     private String phoneNumber;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "signatory_id")
     private User signatory;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
