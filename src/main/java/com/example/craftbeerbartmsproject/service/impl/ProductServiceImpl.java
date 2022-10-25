@@ -5,6 +5,7 @@ import com.example.craftbeerbartmsproject.repository.ProducerRepository;
 import com.example.craftbeerbartmsproject.repository.ProductRepository;
 import com.example.craftbeerbartmsproject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,18 +38,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAllByType(ProductType type) {
-        return productRepository.findAllByType(type);
-    }
-
-    @Override
     public Product findById(long id) {
         return productRepository.findById(id);
-    }
-
-    @Override
-    public Product findByName(String name) {
-        return productRepository.findByName(name);
     }
 
     @Override
@@ -57,7 +48,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product add(Product product) {
+    public Product add(Product product, MultipartFile file) throws IOException {
+        product.setPicture(saveImage(file));
         productRepository.save(product);
         productRepository.flush();
         return product;
@@ -96,5 +88,15 @@ public class ProductServiceImpl implements ProductService {
         }
         return productList;
     }
+    @Override
+    public List<Product> sortedByRatingList(){
+        return productRepository.findAll(Sort.by("rating").descending());
+    }
+
+    @Override
+    public List<Product> sortedByDataCreated() {
+        return productRepository.findAll(Sort.by("dataCreated").descending());
+    }
+
 
 }

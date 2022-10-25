@@ -3,7 +3,6 @@ package com.example.craftbeerbartmsproject.controller;
 import com.example.craftbeerbartmsproject.model.Cart;
 import com.example.craftbeerbartmsproject.model.Order;
 import com.example.craftbeerbartmsproject.model.OrderStatus;
-import com.example.craftbeerbartmsproject.repository.OrderRepository;
 import com.example.craftbeerbartmsproject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,20 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
-
     private final OrderService orderService;
     private final CartService cartService;
     private final UserService userService;
-    private final OrderRepository orderRepository;
     private final CourierService courierService;
 
     @Autowired
     public OrderController(OrderService orderService, CartService cartService,
-                           UserService userService, OrderRepository orderRepository, CourierService courierService) {
+                           UserService userService, CourierService courierService) {
         this.orderService = orderService;
         this.cartService = cartService;
         this.userService = userService;
-        this.orderRepository = orderRepository;
         this.courierService = courierService;
     }
 
@@ -90,9 +86,10 @@ public class OrderController {
         view.setViewName("redirect:/courier/orders");
         return view;
     }
+
     @GetMapping("/delivered_orders")
     @PreAuthorize("hasAuthority('USER')")
-    public ModelAndView deliveredPage(Authentication authentication){
+    public ModelAndView deliveredPage(Authentication authentication) {
         ModelAndView view = new ModelAndView();
         view.addObject("orders", orderService.deliveredOrders(authentication));
         view.setViewName("/user/deliveredOrders");

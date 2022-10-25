@@ -13,14 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 @RequestMapping("/cart")
 @PreAuthorize("hasAuthority('USER')")
 public class CartController {
-
     private final ProductService productService;
     private final UserService userService;
     private final CartService cartService;
@@ -45,7 +41,7 @@ public class CartController {
 
     @PostMapping
     public ModelAndView addCart(Authentication authentication, @ModelAttribute("product") Product product) {
-        ModelAndView view = new ModelAndView();;
+        ModelAndView view = new ModelAndView();
         cartService.add(product, userService.getAuthUser(authentication));
         view.setViewName("redirect:/shop/product/all");
         return view;

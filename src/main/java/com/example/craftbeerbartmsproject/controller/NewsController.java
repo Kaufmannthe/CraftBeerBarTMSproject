@@ -17,7 +17,6 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/news")
 public class NewsController {
-
     private final NewsService newsService;
     private final UserService userService;
     private final ProducerService producerService;

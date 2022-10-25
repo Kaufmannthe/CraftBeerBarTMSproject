@@ -35,7 +35,7 @@
                             </div>
                             <div>
                                 <div><a><i class="fa fa-heart-o">
-                                    <th:block th:text="${product.getRating()}"></th:block>
+                                    <th:block th:text="${averageRating}"></th:block>
                                 </i></a></div>
                                 <th:block th:text="'IBU: ' +${product.getDensity()}"/>
                                 <br>
@@ -49,31 +49,85 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="stars">
-                                            <form method="post" th:action="@{/rating}"id="formId">
-                                                <input class="star star-5" id="star-5" type="radio" name="rating"
-                                                       value="5"/>
-                                                <label class="star star-5" for="star-5"></label>
-                                                <input class="star star-4" id="star-4" type="radio" name="rating"
-                                                       value="4"/>
-                                                <label class="star star-4" for="star-4"></label>
-                                                <input class="star star-3" id="star-3" type="radio" name="rating"
-                                                       value="3"/>
-                                                <label class="star star-3" for="star-3"></label>
-                                                <input class="star star-2" id="star-2" type="radio" name="rating"
-                                                       value="2"/>
-                                                <label class="star star-2" for="star-2"></label>
-                                                <input class="star star-1" id="star-1" type="radio" name="rating"
-                                                       value="1"/>
-                                                <label class="star star-1" for="star-1"></label>
-                                                <input hidden th:value="${product.id}" name="product"/>
-                                            </form>
+                                            <th:block th:if="${rating != null}" sec:authorize="hasAuthority('USER')">
+                                                <form method="post" th:action="@{/rating}" id="formId">
+                                                    <th:block th:if="${rating.rating == 5}">
+                                                        <input checked class="star star-5" id="star-5" type="radio"
+                                                               name="rating"
+                                                               value="5"/>
+                                                    </th:block>
+                                                    <label class="star star-5" for="star-5"></label>
+                                                    <th:block th:if="${rating.rating == 4}">
+                                                        <input checked class="star star-4" id="star-4" type="radio"
+                                                               name="rating"
+                                                               value="4"/>
+                                                    </th:block>
+                                                    <label class="star star-4" for="star-4"></label>
+                                                    <th:block th:if="${rating.rating == 3}">
+                                                        <input checked class="star star-3" id="star-3" type="radio"
+                                                               name="rating"
+                                                               value="3"/>
+                                                    </th:block>
+                                                    <label class="star star-3" for="star-3"></label>
+                                                    <th:block th:if="${rating.rating == 2}">
+                                                        <input checked class="star star-2" id="star-2" type="radio"
+                                                               name="rating"
+                                                               value="2"/>
+                                                    </th:block>
+                                                    <label class="star star-2" for="star-2"></label>
+                                                    <th:block th:if="${rating.rating == 1}">
+                                                        <input checked class="star star-1" id="star-1" type="radio"
+                                                               name="rating"
+                                                               value="1"/>
+                                                    </th:block>
+                                                    <label class="star star-1" for="star-1"></label>
+                                                    <input hidden th:value="${product.id}" name="product"/>
+                                                    <input hidden th:value="${user.id}" name="user"/>
+                                                </form>
+                                            </th:block>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="container d-flex justify-content-center mt-200">
-                                <button onclick="document.getElementById('formId').submit()" type="submit" class="btn">Submit</button>
-                            </div>
+                            <th:block sec:authorize="hasAuthority('USER')" th:if="${rating == null}">
+                                <div class="container d-flex justify-content-center mt-200">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="stars">
+                                                <form method="post" th:action="@{/rating}" id="formId">
+                                                    <input class="star star-5" id="star-5" type="radio"
+                                                           name="rating"
+                                                           value="5"/>
+                                                    <label class="star star-5" for="star-5"></label>
+                                                    <input class="star star-4" id="star-4" type="radio"
+                                                           name="rating"
+                                                           value="4"/>
+                                                    <label class="star star-4" for="star-4"></label>
+                                                    <input class="star star-3" id="star-3" type="radio"
+                                                           name="rating"
+                                                           value="3"/>
+                                                    <label class="star star-3" for="star-3"></label>
+                                                    <input class="star star-2" id="star-2" type="radio"
+                                                           name="rating"
+                                                           value="2"/>
+                                                    <label class="star star-2" for="star-2"></label>
+                                                    <input class="star star-1" id="star-1" type="radio" name="rating"
+                                                           value="1"/>
+                                                    <label class="star star-1" for="star-1"></label>
+                                                    <input hidden th:value="${product.id}" name="product"/>
+                                                    <input hidden th:value="${user.id}" name="user"/>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container d-flex justify-content-center mt-200">
+                                    <button onclick="document.getElementById('formId').submit()" type="submit"
+                                            class="btn">
+                                        Submit
+                                    </button>
+                                </div>
+                            </th:block>
                         </div>
                     </div>
                     <div class="row lower">

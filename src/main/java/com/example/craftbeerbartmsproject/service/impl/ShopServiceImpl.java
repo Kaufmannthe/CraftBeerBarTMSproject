@@ -51,17 +51,6 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<Product> findProducts(List<Product> productList) {
-        List<Product> products = new ArrayList<>();
-        for (Product product : productList) {
-            if (product.getName() != null) {
-                products.add(product);
-            }
-        }
-        return products;
-    }
-
-    @Override
     public List<Product> sortProductsByName(String name) {
         List<Product> productList = new ArrayList<>();
         for (Product p : productService.findAll()) {

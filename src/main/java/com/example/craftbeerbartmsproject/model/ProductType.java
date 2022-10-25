@@ -1,5 +1,8 @@
 package com.example.craftbeerbartmsproject.model;
 
+import lombok.Getter;
+
+@Getter
 public enum ProductType {
     BEER("Beer"),
     WINE("Wine"),
@@ -12,6 +15,9 @@ public enum ProductType {
     ONION_RINGS("Onion Rings"),
     MEAT("Meat");
 
+    private final String name;
+
     ProductType(String name) {
+        this.name = name;
     }
 }

@@ -1,13 +1,9 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
 import com.example.craftbeerbartmsproject.model.News;
-import com.example.craftbeerbartmsproject.model.Roles;
 import com.example.craftbeerbartmsproject.repository.NewsRepository;
 import com.example.craftbeerbartmsproject.service.NewsService;
-import com.example.craftbeerbartmsproject.service.ProducerService;
-import com.example.craftbeerbartmsproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,31 +11,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class NewsServiceImpl implements NewsService {
 
     private final NewsRepository newsRepository;
-    private final UserService userService;
-    private final ProducerService producerService;
 
     @Autowired
-    public NewsServiceImpl(NewsRepository newsRepository, UserService userService, ProducerService producerService) {
+    public NewsServiceImpl(NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
-        this.userService = userService;
-        this.producerService = producerService;
-    }
-
-    @Override
-    public List<News> findAllByRole(Roles role) {
-        return newsRepository.findAllByRole(role);
-    }
-
-    @Override
-    public List<News> findAllByDataCreated(Date date) {
-        return newsRepository.findAllByDataCreated(date);
     }
 
     @Override

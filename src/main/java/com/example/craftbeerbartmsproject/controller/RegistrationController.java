@@ -14,7 +14,6 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
-
     private final RegistrationService registrationService;
     private final UserService userService;
 

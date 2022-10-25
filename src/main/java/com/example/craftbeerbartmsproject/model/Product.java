@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -38,7 +37,6 @@ public class Product {
     private String picture;
 
     private double rating;
-
 
     public Product(long id, int price, Producer producer, String name, double weight, double strength, double density,
                    ProductType type, Date dataCreated) {

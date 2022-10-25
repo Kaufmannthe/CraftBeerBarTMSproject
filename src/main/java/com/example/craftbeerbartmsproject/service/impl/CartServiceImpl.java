@@ -6,14 +6,11 @@ import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.repository.CartRepository;
 import com.example.craftbeerbartmsproject.service.CartService;
 import com.example.craftbeerbartmsproject.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CartServiceImpl implements CartService {

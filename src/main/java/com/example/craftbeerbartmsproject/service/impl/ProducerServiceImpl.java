@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -32,16 +31,6 @@ public class ProducerServiceImpl implements ProducerService {
     @Override
     public List<Producer> findAll() {
         return repository.findAll();
-    }
-
-    @Override
-    public Optional<Producer> findById(Long id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public Producer findByName(String name) {
-        return repository.findByName(name);
     }
 
     @Override

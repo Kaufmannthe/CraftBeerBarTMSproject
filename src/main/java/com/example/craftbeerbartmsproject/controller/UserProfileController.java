@@ -18,7 +18,6 @@ import java.io.IOException;
 @RequestMapping("/profile")
 @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
 public class UserProfileController {
-
     private final UserService userService;
     private final RegistrationService registrationService;
     private final OrderService orderService;

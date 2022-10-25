@@ -44,8 +44,8 @@
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="">New Arrivals</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/by_rating}">Popular Items</a></li>
+                        <li><a class="dropdown-item" th:href="@{/shop/by_date}">New Arrivals</a></li>
                     </ul>
 
                 </li>
@@ -92,15 +92,7 @@
                             <!-- Product name-->
                             <h5 class="fw-bolder" th:text="${pl.getName()}"></h5>
                             <!-- Product reviews-->
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                            <th:block th:text="${pl.getPrice()}"/>
-                            $
+                            <th:block th:text="'By ' + ${pl.getProducer().name}"/>
                         </div>
                     </div>
                     <!-- Product actions-->

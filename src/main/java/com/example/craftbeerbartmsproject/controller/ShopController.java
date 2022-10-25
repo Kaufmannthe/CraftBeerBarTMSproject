@@ -3,10 +3,7 @@ package com.example.craftbeerbartmsproject.controller;
 import com.example.craftbeerbartmsproject.model.Product;
 import com.example.craftbeerbartmsproject.model.ProductType;
 import com.example.craftbeerbartmsproject.model.User;
-import com.example.craftbeerbartmsproject.service.ProducerService;
-import com.example.craftbeerbartmsproject.service.ProductService;
-import com.example.craftbeerbartmsproject.service.ShopService;
-import com.example.craftbeerbartmsproject.service.UserService;
+import com.example.craftbeerbartmsproject.service.*;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,19 +19,20 @@ import java.util.Arrays;
 @Controller
 @RequestMapping("/shop")
 public class ShopController {
-
     private final ShopService shopService;
     private final ProducerService producerService;
     private final ProductService productService;
     private final UserService userService;
+    private final RatingService ratingService;
 
     @Autowired
     public ShopController(ShopService shopService, ProducerService producerService,
-                          ProductService productService, UserService userService) {
+                          ProductService productService, UserService userService, RatingService ratingService) {
         this.shopService = shopService;
         this.producerService = producerService;
         this.productService = productService;
         this.userService = userService;
+        this.ratingService = ratingService;
     }
 
     @GetMapping
@@ -48,9 +46,12 @@ public class ShopController {
     @GetMapping("/product/{id}")
     public ModelAndView productPage(@PathVariable(name = "id") Product product, Authentication authentication) {
         ModelAndView view = new ModelAndView();
-        view.addObject("producer", producerService.findByLogin(authentication.getName()));
         view.addObject("products", productService.findAll());
         view.addObject("product", product);
+        view.addObject("user", userService.getAuthUser(authentication));
+        view.addObject("rating",
+                ratingService.findRatingByUserAndProduct(userService.getAuthUser(authentication), product));
+        view.addObject("averageRating", ratingService.averageRating(ratingService.findAllByProduct(product)));
         view.setViewName("user/product");
         return view;
     }
@@ -88,9 +89,24 @@ public class ShopController {
     public ModelAndView productRegistration(@ModelAttribute("product") Product product,
                                             @RequestParam("imageFile") MultipartFile file) throws IOException {
         ModelAndView view = new ModelAndView();
-        product.setPicture(userService.saveImage(file));
-        productService.add(product);
+        productService.add(product, file);
         view.setViewName("/moderator/all_products");
+        return view;
+    }
+
+    @GetMapping("/by_rating")
+    public ModelAndView productsByRating() {
+        ModelAndView view = new ModelAndView();
+        view.addObject("productList", productService.sortedByRatingList());
+        view.setViewName("/user/sortedProductsByRating");
+        return view;
+    }
+
+    @GetMapping("/by_date")
+    public ModelAndView productsByDate() {
+        ModelAndView view = new ModelAndView();
+        view.addObject("productList", productService.sortedByDataCreated());
+        view.setViewName("/user/sortedProductsByDateOfCreating");
         return view;
     }
 
