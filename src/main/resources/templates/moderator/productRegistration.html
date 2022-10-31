@@ -46,7 +46,7 @@
                                 <hr>
                                 <div class="form-outline mb-4">
                                     <label>Type of Product:</label>
-                                    <select th:field="*{product.type}" name="type" required>
+                                    <select th:field="*{product.type}" name="type" onchange="checker(this)" required>
                                         <option th:each="type : ${listOfProducts}"
                                                 th:value="${type.name()}"
                                                 th:text="${type.toString()}">
@@ -55,10 +55,11 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input maxlength="22" onchange="this.value = this.value.replace(/\W+|\d/g, '')" name="name"
+                                    <input maxlength="22" onchange="this.value = this.value.replace(/\W+|\d/g, '')"
+                                           name="name"
                                            type="text" id="productName"
                                            class="form-control form-control-lg" required/>
-                                    <label class="form-label"  for="productName">Product Name</label>
+                                    <label class="form-label" for="productName">Product Name</label>
                                 </div>
                                 <div class="form-outline mb-4" sec:authorize="hasAuthority('ADMIN')">
                                     <label>Choose Producer:</label>
@@ -73,19 +74,23 @@
                                     <input th:field="*{product.producer}" th:value="${product.setProducer(producer)}"
                                            th:name="producer" hidden>
                                 </div>
-                                <div style="width: 80px; text-align: center; float: left;" class="form-outline mb-4">
-                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
-                                           id="paramsAlc"
-                                           class="form-control form-control-lg" name="strength" required/>
-                                    <label class="form-label" for="paramsAlc">Alc%</label>
+                                <th:block th:if="${product.getType() != 'SNACKS'}">
+                                    <div id="alcDiv" style="width: 80px; text-align: center; float: left;"
+                                         class="form-outline mb-4">
+                                        <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
+                                               id="paramsAlc"
+                                               class="form-control form-control-lg" name="strength"/>
+                                        <label class="form-label" for="paramsAlc">Alc%</label>
 
-                                </div>
-                                <div style="width: 80px; text-align: center; float: left; margin-left: 5px">
-                                    <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
-                                           id="paramsIBU"
-                                           class="form-control form-control-lg" name="density" required/>
-                                    <label class="form-label" for="paramsIBU">IBU</label>
-                                </div>
+                                    </div>
+                                    <div id="IBUDiv"
+                                         style="width: 80px; text-align: center; float: left; margin-left: 5px">
+                                        <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
+                                               id="paramsIBU"
+                                               class="form-control form-control-lg" name="density"/>
+                                        <label class="form-label" for="paramsIBU">IBU</label>
+                                    </div>
+                                </th:block>
                                 <div style="width: 80px; text-align: center; float: left; margin-left: 5px">
                                     <input onchange="this.value = this.value.replace(/,/g, '.')" type="text"
                                            id="paramsWeight"
@@ -125,5 +130,6 @@
 </section>
 <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" src="/js/uploadProgress.js"></script>
+<script type="text/javascript" src="/js/snacksChecker.js"></script>
 </body>
 </html>

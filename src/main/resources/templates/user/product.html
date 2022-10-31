@@ -38,13 +38,20 @@
                                     <th:block th:if="${averageRating != 0}" th:text="${averageRating}"></th:block>
                                     <th:block th:if="${averageRating == 0}">0</th:block>
                                 </i></a></div>
-                                <th:block th:text="'IBU: ' +${product.getDensity()}"/>
-                                <br>
-                                <th:block th:text="'ABV: ' + ${product.getStrength()} + '%'"/>
-                                <br>
-                                <th:block th:text="'Weight: ' + ${product.getWeight()} + ' litres.'"/>
-                                <br>
-                                <th:block th:text="'$' + ${product.getPrice()}"/>
+                                <th:block th:if="${product.type.name() != 'SNACKS'}">
+                                    <th:block th:text="'IBU: ' +${product.getDensity()}"/>
+                                    <br>
+                                    <th:block th:text="'ABV: ' + ${product.getStrength()} + '%'"/>
+                                    <br>
+                                    <th:block th:text="'Weight: ' + ${product.getWeight()} + ' litres.'"/>
+                                    <br>
+                                    <th:block th:text="'$' + ${product.getPrice()}"/>
+                                </th:block>
+                                <th:block th:if="${product.type.name() == 'SNACKS'}">
+                                    <th:block th:text="'Weight: ' + ${product.getWeight()} + ' grams.'"/>
+                                    <br>
+                                    <th:block th:text="'$' + ${product.getPrice()}"/>
+                                </th:block>
                             </div>
                             <div class="container d-flex justify-content-center mt-200">
                                 <div class="row">
@@ -150,13 +157,17 @@
                                 <div class="col text-right align-self-center">
                                     <input th:value="${product.getId()}" name="product" type="hidden">
                                     <button sec:authorize="hasAuthority('USER')" class="btn">Add to Cart</button>
-                                    <th:block th:if="${product.producer == producer}">
-                                        <button sec:authorize="hasAuthority('MODERATOR')" class="btn">Delete</button>
-                                    </th:block>
-                                    <button sec:authorize="hasAuthority('ADMIN')" class="btn">Delete</button>
                                 </div>
                             </form>
                         </div>
+                        <form th:action="@{/products/delete/{id}(id = ${product.id})}">
+                            <th:block th:if="${product.producer == producer}"
+                                      sec:authorize="hasAuthority(('MODERATOR'))">
+                                <button type="submit" class="btn">Delete</button>
+                            </th:block>
+                            <button type="submit" sec:authorize="hasAuthority('ADMIN')" class="btn">Delete
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

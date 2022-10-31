@@ -8,6 +8,7 @@ import com.example.craftbeerbartmsproject.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
@@ -32,7 +33,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating findRatingByUserAndProduct(User user, Product product) {
-        if (ratingRepository.findRatingByUserAndProduct(user,product) == null){
+        if (ratingRepository.findRatingByUserAndProduct(user, product) == null) {
             return null;
         }
         return ratingRepository.findRatingByUserAndProduct(user, product);
@@ -44,17 +45,18 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public double averageRating(List<Rating> ratings) {
+    public String averageRating(List<Rating> ratings) {
         double rating = 0;
         double avRating;
         for (Rating r : ratings) {
             rating += r.getRating();
         }
         avRating = rating / ratings.size();
-        if (ratings.isEmpty()){
-            return 0;
+        if (ratings.isEmpty()) {
+            return "This product has no rating";
         }
-        return avRating;
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        return decimalFormat.format(avRating);
     }
 
 }

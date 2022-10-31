@@ -16,6 +16,6 @@ public interface RatingService {
 
     List<Rating> findAllByProduct(Product product);
 
-    double averageRating(List<Rating> ratings);
+    String averageRating(List<Rating> ratings);
 
 }

@@ -9,11 +9,7 @@ public enum ProductType {
     VODKA("Vodka"),
     COGNAC("Cognac"),
     WHISKEY("Whiskey"),
-    CHIPS("Chips"),
-    CHEESE("Cheese"),
-    TOAST("Toast"),
-    ONION_RINGS("Onion Rings"),
-    MEAT("Meat");
+    SNACKS("Snacks");
 
     private final String name;
 

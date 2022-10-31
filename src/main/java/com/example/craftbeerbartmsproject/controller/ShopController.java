@@ -52,6 +52,7 @@ public class ShopController {
         view.addObject("rating",
                 ratingService.findRatingByUserAndProduct(userService.getAuthUser(authentication), product));
         view.addObject("averageRating", ratingService.averageRating(ratingService.findAllByProduct(product)));
+        view.addObject("producer", producerService.findByLogin(authentication.getName()));
         view.setViewName("user/product");
         return view;
     }
