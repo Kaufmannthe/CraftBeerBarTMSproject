@@ -1,5 +1,6 @@
 package com.example.craftbeerbartmsproject.service.impl;
 
+import com.example.craftbeerbartmsproject.model.Roles;
 import com.example.craftbeerbartmsproject.model.User;
 import com.example.craftbeerbartmsproject.repository.UserRepository;
 import com.example.craftbeerbartmsproject.service.UserService;
@@ -50,6 +51,9 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (userRepository.findAll().isEmpty()){
+            user.setRole(new HashSet<>(List.of(Roles.ADMIN)));
+        }
         return userRepository.save(user);
     }
 
