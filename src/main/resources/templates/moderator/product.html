@@ -49,6 +49,13 @@
                                     <br>
                                     <th:block th:text="'$' + ${product.getPrice()}"/>
                                 </th:block>
+                                <th:block th:if="${product.type.name() != 'SNACKS' && product.type != 'BEER'}">
+                                    <th:block th:text="'ABV: ' + ${product.getStrength()} + '%'"/>
+                                    <br>
+                                    <th:block th:text="'Weight: ' + ${product.getWeight()} + ' litres.'"/>
+                                    <br>
+                                    <th:block th:text="'$' + ${product.getPrice()}"/>
+                                </th:block>
                             </div>
                         </div>
                     </div>

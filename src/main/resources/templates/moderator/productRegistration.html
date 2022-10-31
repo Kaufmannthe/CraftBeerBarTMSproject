@@ -46,7 +46,7 @@
                                 <hr>
                                 <div class="form-outline mb-4">
                                     <label>Type of Product:</label>
-                                    <select th:field="*{product.type}" name="type" onchange="checker(this)" required>
+                                    <select th:field="*{product.type}" name="type" onchange="checker(this.value)" required>
                                         <option th:each="type : ${listOfProducts}"
                                                 th:value="${type.name()}"
                                                 th:text="${type.toString()}">
@@ -130,6 +130,6 @@
 </section>
 <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" src="/js/uploadProgress.js"></script>
-<script type="text/javascript" src="/js/snacksChecker.js"></script>
+<script type="text/javascript" src="/js/productChecker.js"></script>
 </body>
 </html>
