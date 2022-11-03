@@ -30,18 +30,22 @@
                             <input type="file" name="imageFile"/>
                             <hr>
                             <label>Name</label>
-                            <input type="text" name="firstName" id="firstName" required>
+                            <input type="text" name="firstName" id="firstName"
+                                   onchange="this.value = this.value.replace(/\W+|\d/g, '')" required>
                             <label>Surname</label>
-                            <input onchange="this.value = this.value.replace(/\W+|\d/g, '')" type="text" name="lastName" id="lastName" required>
+                            <input onchange="this.value = this.value.replace(/\W+|\d/g, '')" type="text" name="lastName"
+                                   id="lastName" required>
                             <label>Login</label>
                             <input type="text" name="login" id="login" required>
                             <label>Email Address</label>
-                            <input pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" type="text" name="email" id="email" required>
+                            <input pattern="[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}" type="text" name="email" id="email"
+                                   required>
                             <label>Address</label>
                             <input type="text" name="address" id="address" required>
                             <label>Age</label>
                             <br>
-                            <input onchange="this.value = this.value.replace(/\D+/g, '')" type="text" name="age" id="age">
+                            <input onchange="this.value = this.value.replace(/\D+/g, '')" type="text" name="age"
+                                   id="age">
                             <span id="messageAge" style="color:red"></span><br><br>
                             <label>Mobile (375-29-1xxxxxx)</label>
                             <input onchange="this.value = this.value.replace(/\D+/g, '')" type="text" name="phoneNumber"
@@ -86,16 +90,6 @@
                             <button type="submit">Join Us</button>
                         </form>
                     </div>
-                    <!--                    <div class="social-login">
-                                            <p>- - - - - - - - - - - - - Register With - - - - - - - - - - - - - </p>
-                                            <ul>
-                                                <li><a href=""><i class="fa fa-facebook"></i> Facebook</a></li>
-                                                <li><a href=""><i class="fa fa-google-plus"></i> Google+</a></li>
-                                                <li><a href=""><i class="fa fa-twitter"></i> Twitter</a></li>
-                                            </ul>
-                                            <br>
-                                            <br>
-                                        </div>-->
                 </div>
             </div>
         </div>
